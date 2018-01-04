@@ -6,7 +6,7 @@
   "apps": [
     {
       "root": "src",
-      "outDir": "dist",
+      "outDir": "../server/src/static/ang",
       "assets": [
         "assets",
         "favicon.ico"
