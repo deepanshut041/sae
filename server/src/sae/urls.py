@@ -18,7 +18,7 @@ from django.urls import path, include, re_path
 from django.views.generic.base import TemplateView
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    re_path(r'^.*', TemplateView.as_view(template_name="ang_home.html"), name='home')
-
+    path('admin', admin.site.urls),
+    re_path(r'^api/v1/', include('main.api.urls')),
+    re_path(r'^.*', TemplateView.as_view(template_name="ang_home.html"), name='home'),
 ]
