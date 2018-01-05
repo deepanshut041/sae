@@ -30,6 +30,20 @@ class WorkshopModelSerializer(serializers.ModelSerializer):
             'status']
 
 
+class EventModelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Event
+        fields = [
+            'name',
+            'description',
+            'date',
+            'status',
+            'img',
+            'logo',
+            'offical_link'
+            ]
+
+
 class ProjectModelSerializer(serializers.ModelSerializer):
     class Meta:
         models = Project
