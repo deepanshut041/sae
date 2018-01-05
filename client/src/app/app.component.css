@@ -49,3 +49,47 @@
         display: none;
     }
 } 
+
+
+/* Footer Style here */
+.footer{
+    color: #84859d;
+}
+
+.footer p{
+    margin: 2px;
+    font-size: 14px;
+    font-weight: 600;
+}
+.footer p.phone{
+    color: #f6a665;
+    font-size: 16px;
+}
+
+.footer p a{
+    color: #f6a665;
+    font-size: 15px;
+}
+
+.footer div i{
+    padding: 10px;
+    color: #f6a665;
+    font-size: 20px;
+}
+
+.footer div.box{
+    padding: 20px 15px;
+}
+
+.footer-img{
+    margin-top: -90px;
+}
+
+.footer-img img{
+    min-height: 100px;
+}
+
+.footer div.row{
+    padding-top: 60px;
+    padding-bottom: 60px;
+}

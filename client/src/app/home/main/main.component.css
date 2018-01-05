@@ -114,6 +114,33 @@ header{
     color: #fff;
 }
 
+/* About Styles */
+#about{
+    background: #fff;
+    padding: 100px 20px; 
+}
+
+#about h1{
+    margin-bottom: 30px;
+    color: #f6a665;
+    font-weight: 200;
+    font-size: 45px;
+}
+
+#about div.row{
+    margin-top: 60px;
+    margin-bottom: 50px;
+}
+
+#about div.row .about-box{
+    padding: 20px 30px;
+}
+#about div.row .about-box p{
+    font-size: 14px;
+    font-weight: 600;
+}
+
+
 /* News style */
 #news{
     padding-top: 100px;
