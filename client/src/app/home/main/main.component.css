@@ -1,8 +1,25 @@
 /* Header Styling goes here */
 header{
     background: #84859d;
-    min-height: 70vh;
-    width: 100%;
+    color: #fff;
+}
+
+header h1{
+    margin-top: 100px;
+    margin-bottom: 20px;
+    padding: 10px;
+    font-weight: 200;
+}
+
+header p{
+    font-size: 18px;
+    padding: 10px;
+    margin-top: 10px;
+    font-weight: 400;
+}
+
+header img{
+    margin-top: -13vh;
 }
 
 /* Workshop styles */
@@ -60,7 +77,6 @@ header{
 
 /* Events styles */
 #event div.row{
-    z-index: initial;
 }
 #event div.event-container{
     padding: 15px;
