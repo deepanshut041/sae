@@ -68,13 +68,12 @@ class Member(models.Model):
         (Innovation, 'Innovation'),
         (Mechanical, 'Mechanical')
     )
-
     name = models.CharField(max_length=50, null=False)
     student_no = models.IntegerField(null=False, unique=True)
     year = models.IntegerField(null=False)
     branch = models.CharField(max_length=30, null=False)
     img = models.CharField(max_length=200, null=False, default="https://")
-    category = models.CharField(max_length=2, choices=CATEGORY_CHOICES, null=False, default=Mechanical) 
+    category = models.CharField(max_length=2, choices=CATEGORY_CHOICES, null=False, default=Mechanical)
     department = models.CharField(max_length=20, null=False)
     fb_id = models.CharField(max_length=200, null=False, default="https://")
 
@@ -83,9 +82,9 @@ class Member(models.Model):
 
 
 class Organiser(models.Model):
-    workshop = models.ForeignKey(Workshop,on_delete=models.CASCADE)
-    member_id = models.ForeignKey(Member,on_delete=models.CASCADE)
+    workshop = models.ForeignKey(Workshop, on_delete=models.CASCADE)
+    member_id = models.ForeignKey(Member, on_delete=models.CASCADE)
     contact_no = models.IntegerField(null=False)
 
     def __str__(self):
-        return str(self.workshop)
+        return str(self.workshop) + " " + str(self.member_id)
