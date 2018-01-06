@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  footer_img = '/static/ang/assets/footer_town.png';
+  footer_img = '/assets/footer_town.png';
 }

@@ -8,7 +8,7 @@ import { Component, OnInit } from "@angular/core";
 
 export class ContactComponent implements OnInit {
 
-  contact_img = "/static/ang/assets/contact.svg"
+  contact_img = "/assets/contact.svg"
   
   constructor() { 
 

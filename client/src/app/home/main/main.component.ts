@@ -1,4 +1,6 @@
 import { Component, OnInit } from "@angular/core";
+import { MainService } from "../services/main.service";
+
 
 @Component({
   selector: "app-main",
@@ -7,15 +9,23 @@ import { Component, OnInit } from "@angular/core";
 })
 
 export class MainComponent implements OnInit {
-  header_img = "/static/ang/assets/header.svg"
-  about_img = "/static/ang/assets/about.svg"
-  news_img = "/static/ang/assets/latest_news.svg"
-  
-  constructor() { 
+  header_img = "/assets/header.svg"
+  about_img = "/assets/about.svg"
+  news_img = "/assets/latest_news.svg"
+  events
+  workshops
+  constructor(private __mainService:MainService) { 
 
   }
 
   ngOnInit() {
-
+    this.__mainService.getEvents().subscribe((events)=>{
+      console.log(events.events)
+      this.events = events.events;
+    })
+    this.__mainService.getWorkshops().subscribe((workshops)=>{
+      console.log(workshops.workshops)
+      this.workshops = workshops.workshops
+    })
   }
 }

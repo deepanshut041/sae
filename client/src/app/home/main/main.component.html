@@ -17,56 +17,14 @@
 
 <!-- This is events Section -->
 <article id="event">
-    <div class="row no-gutters">
-        <div class="col-12 col-md-4 col-lg">
+    <div class="row no-gutters" *ngIf="events">
+        <div class="col-12 col-md-4 col-lg" *ngFor="let event of events">
             <div class="event-container">
                 <div>
                     <img src="../../../assets/car.png" class="mx-auto d-block">
                 </div>
                 <div class="text-center">
-                    <h5>Dealerships and Traders</h5>
-                    <p class="text-muted">
-                        From showrooms to sole agents, we have all the tools you need to take your business to the next level.
-                    </p>
-                    <button>Find out more</button>
-                </div>
-            </div>
-        </div>
-        <div class="col-12 col-md-4 col-lg">
-            <div class="event-container">
-                <div>
-                    <img src="../../../assets/car.png" class="mx-auto d-block">
-                </div>
-                <div class="text-center">
-                    <h5>Dealerships and Traders</h5>
-                    <p class="text-muted">
-                        From showrooms to sole agents, we have all the tools you need to take your business to the next level.
-                    </p>
-                    <button>Find out more</button>
-                </div>
-            </div>
-        </div>
-        <div class="col-12 col-md-4 col-lg">
-            <div class="event-container">
-                <div>
-                    <img src="../../../assets/car.png" class="mx-auto d-block">
-                </div>
-                <div class="text-center">
-                    <h5>Dealerships and Traders</h5>
-                    <p class="text-muted">
-                        From showrooms to sole agents, we have all the tools you need to take your business to the next level.
-                    </p>
-                    <button>Find out more</button>
-                </div>
-            </div>
-        </div>
-        <div class="col-12 col-md-4 col-lg">
-            <div class="event-container">
-                <div>
-                    <img src="../../../assets/car.png" class="mx-auto d-block">
-                </div>
-                <div class="text-center">
-                    <h5>Dealerships and Traders</h5>
+                    <h5>{{event.name}}</h5>
                     <p class="text-muted">
                         From showrooms to sole agents, we have all the tools you need to take your business to the next level.
                     </p>
@@ -79,42 +37,14 @@
 
 <!-- This is workshop section -->
 <article id="workshop">
-    <div class="row no-gutters">
-        <div class="col-12 col-md-6 col-lg">
+    <div class="row no-gutters" *ngIf="workshops">
+        <div class="col-12 col-md-6 col-lg" *ngFor="let workshop of workshops">
             <div class="work-container">
                 <div>
                     <img src="../../../assets/car.png" class="mx-auto d-block">
                 </div>
                 <div class="text-center">
-                    <h3>Dealerships and Traders</h3>
-                    <p class="text-muted">
-                        From showrooms to sole agents, we have all the tools you need to take your business to the next level.
-                    </p>
-                    <button>Find out more</button>
-                </div>
-            </div>
-        </div>
-        <div class="col-12 col-md-6 col-lg">
-            <div class="work-container">
-                <div>
-                    <img src="../../../assets/car.png" class="mx-auto d-block">
-                </div>
-                <div class="text-center">
-                    <h3>Dealerships and Traders</h3>
-                    <p class="text-muted">
-                        From showrooms to sole agents, we have all the tools you need to take your business to the next level.
-                    </p>
-                    <button>Find out more</button>
-                </div>
-            </div>
-        </div>
-        <div class="col-12 col-md-6 col-lg">
-            <div class="work-container">
-                <div>
-                    <img src="../../../assets/car.png" class="mx-auto d-block">
-                </div>
-                <div class="text-center">
-                    <h3>Dealerships and Traders</h3>
+                    <h3>{{workshop.name}}</h3>
                     <p class="text-muted">
                         From showrooms to sole agents, we have all the tools you need to take your business to the next level.
                     </p>
