@@ -3,10 +3,11 @@ import { NgModule } from '@angular/core';
 
 
 import { MainComponent } from './main/main.component';
+import { ContactComponent } from "./contact/contact.component";
 
 @NgModule({
   declarations: [
-    MainComponent
+    MainComponent, ContactComponent
   ],
   imports: [
     CommonModule
