@@ -93,3 +93,31 @@ class EventListAPIView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class EventDetailAPIView(APIView):
+    """
+    docstring here
+    :param APIView: 
+    """
+    def get_event(self, pk):
+        try:
+            return Event.objects.get(pk=pk)
+        except Event.DoesNotExist:
+            raise Http404
+    
+    def get_timeline(self, event_id):
+        try:
+            return Timeline.objects.filter(event=event_id)
+        except Timeline.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk):
+        event = self.get_event(pk)
+        event_serializer = EventModelSerializer(event)
+        event_id = event_serializer.data['id']
+        timeline = self.get_timeline(event_id)
+        timeline_serializer = TimelineModelSerializer(timeline, many=True)
+        
+        timeline_response = event_serializer.data
+        timeline_response.update({"timeline":timeline_serializer.data})
+        return Response(timeline_response)
