@@ -16,7 +16,8 @@ class Workshop(models.Model):
     reg_status = models.BooleanField(default=False)
     price = models.DecimalField(null=False, default=0.0, max_digits=8, decimal_places=3)
     team_limit = models.IntegerField(default=1)
-    status = models.CharField(max_length=60, default="Comming Soon..")
+    status = models.CharField(max_length=60, default = "Comming Soon..")
+    theme_color = models.CharField(max_length=10, default = "#84859d")
 
     def __str__(self):
         return str(self.name)
@@ -39,6 +40,7 @@ class Event(models.Model):
     img = models.CharField(max_length=200, null=False, default="https://")
     logo = models.CharField(max_length=200, null=False, default="https://")
     offical_link = models.CharField(max_length=200, null=False, default="https://")
+    theme_color = models.CharField(max_length=10, default = "#84859d")
 
     def __str__(self):
         return str(self.name)

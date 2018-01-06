@@ -77,6 +77,7 @@ class WorkshopDetailAPIView(APIView):
         workshop_response.update({"organisers":members})
         return Response(workshop_response)
 
+
 class EventListAPIView(APIView):
     """
     docstring here
@@ -93,6 +94,7 @@ class EventListAPIView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class EventDetailAPIView(APIView):
     """
@@ -121,3 +123,22 @@ class EventDetailAPIView(APIView):
         timeline_response = event_serializer.data
         timeline_response.update({"timeline":timeline_serializer.data})
         return Response(timeline_response)
+
+
+class MemberListAPIView(APIView):
+    """
+    docstring here
+        :param APIView: 
+    """
+
+    def get(self, request):
+        members = Member.objects.all()
+        serializer = MemberModelSerializer(members, many=True)
+        return Response({"members":serializer.data})
+
+    def post(self, request):
+        serializer = MemberModelSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

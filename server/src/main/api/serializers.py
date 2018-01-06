@@ -23,7 +23,9 @@ class WorkshopModelSerializer(serializers.ModelSerializer):
             'reg_status',
             'price',
             'team_limit',
-            'status']
+            'status',
+            'theme_color'
+            ]
 
 
 class EventModelSerializer(serializers.ModelSerializer):
@@ -42,7 +44,8 @@ class EventModelSerializer(serializers.ModelSerializer):
             'status',
             'img',
             'logo',
-            'offical_link'
+            'offical_link',
+            'theme_color'
             ]
 
 
