@@ -1,3 +1,5 @@
 {
-    "python.formatting.provider": "autopep8"
+    "python.formatting.provider": "autopep8",
+    "python.linting.pylintEnabled": false,
+    "python.pythonPath": "C:\\Users\\Deepanshu Tyagi\\Anaconda3\\envs\\sae\\python.exe"
 }

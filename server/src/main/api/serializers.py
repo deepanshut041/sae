@@ -15,6 +15,7 @@ class WorkshopModelSerializer(serializers.ModelSerializer):
             'name',
             'venue',
             'logo_url',
+            'short_description',
             'description',
             'reg_start_date',
             'reg_end_date',
@@ -39,6 +40,7 @@ class EventModelSerializer(serializers.ModelSerializer):
         fields = [
             'id',
             'name',
+            'short_description',
             'description',
             'date',
             'status',
@@ -100,7 +102,8 @@ class MemberModelSerializer(serializers.ModelSerializer):
             'img',
             'category',
             'department',
-            'fb_id'
+            'fb_id',
+            'gender'
         ]
 
 

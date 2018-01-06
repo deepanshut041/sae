@@ -9,6 +9,7 @@ class Workshop(models.Model):
     venue = models.CharField(max_length=50, null=False)
     logo_url = models.CharField(max_length=200, null=False, default="https://")
     description = models.TextField(null=False)
+    short_description = models.CharField(max_length=400, null=False)
     reg_start_date = models.DateField(null=True)
     reg_end_date = models.DateField(null=True)
     start_date = models.DateField(null=True)
@@ -41,6 +42,7 @@ class Event(models.Model):
     logo = models.CharField(max_length=200, null=False, default="https://")
     offical_link = models.CharField(max_length=200, null=False, default="https://")
     theme_color = models.CharField(max_length=10, default = "#84859d")
+    short_description = models.CharField(max_length=400, null=False)
 
     def __str__(self):
         return str(self.name)
@@ -62,6 +64,12 @@ class Member(models.Model):
         (Innovation, 'Innovation'),
         (Mechanical, 'Mechanical')
     )
+    GENDER_CHOICES = (
+        ('M', 'Male'),
+        ('F', 'Female'),
+        ('O', 'Others')
+    )
+
     name = models.CharField(max_length=50, null=False)
     student_no = models.IntegerField(null=False, unique=True)
     year = models.IntegerField(null=False)
@@ -70,6 +78,7 @@ class Member(models.Model):
     category = models.CharField(max_length=2, choices=CATEGORY_CHOICES, null=False, default=Mechanical)
     department = models.CharField(max_length=20, null=False)
     fb_id = models.CharField(max_length=200, null=False, default="https://")
+    gender = models.CharField(max_length=1, null=False, choices=GENDER_CHOICES, default='M')
 
     def __str__(self):
         return str(self.name)
@@ -78,7 +87,6 @@ class Member(models.Model):
 class Organiser(models.Model):
     workshop = models.ForeignKey(Workshop, on_delete=models.CASCADE)
     member_id = models.ForeignKey(Member, on_delete=models.CASCADE)
-    contact_no = models.IntegerField(null=False)
 
     def __str__(self):
         return str(self.workshop) + " " + str(self.member_id)

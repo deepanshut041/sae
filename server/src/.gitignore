@@ -1,49 +1,50 @@
-# See http://help.github.com/ignore-files/ for more about ignoring files.
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
 
-# compiled output
-/dist
-/tmp
-/out-tsc
+# C extensions
+*.so
 
-# dependencies
-/node_modules
+# Distribution / packaging
+bin/
+build/
+develop-eggs/
+dist/
+eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
 
-# IDEs and editors
-/.idea
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+.tox/
+.coverage
+.cache
+nosetests.xml
+coverage.xml
+
+# Translations
+*.mo
+
+# Mr Developer
+.mr.developer.cfg
 .project
-.classpath
-.c9/
-*.launch
-.settings/
-*.sublime-workspace
+.pydevproject
 
-# IDE - VSCode
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
+# Rope
+.ropeproject
 
-# misc
-/.sass-cache
-/connect.lock
-/coverage
-/libpeerconnection.log
-npm-debug.log
-testem.log
-/typings
-yarn-error.log
+# Django stuff:
+*.log
+*.pot
 
-#Databases
-db.sqlite3
-main/__pycache__/
-sae/__pycache__/
-
-# e2e
-/e2e/*.js
-/e2e/*.map
-
-# System Files
-.DS_Store
-Thumbs.db
-/localization/migrations/
+# Sphinx documentation
+docs/_build/

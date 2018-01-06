@@ -16,5 +16,8 @@ export class MainService {
   getWorkshops(){
     return this.httpClient.get('http://localhost:8000/api/v1/workshops/')
   }
+  getMembers(){
+    return this.httpClient.get('http://localhost:8000/api/v1/members/')
+  }
 
 }
