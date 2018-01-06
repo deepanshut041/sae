@@ -1,21 +1,17 @@
 from rest_framework import serializers
 
-from ..models import (Car, Workshop, Project, Event, Timeline, Member, Organiser)
+from ..models import (Workshop, Project, Event, Timeline, Member, Organiser)
 
-
-class CarModelSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Car
-        fields = [
-            'car_id',
-            'car_password',
-            'car_type',
-        ]
 
 class WorkshopModelSerializer(serializers.ModelSerializer):
-    class Meta:
+    """
+    docstring here
+        :param serializers.ModelSerializer: 
+    """
+    class Meta: 
         model = Workshop
         fields = [
+            'id',
             'name',
             'venue',
             'logo_url',
@@ -31,9 +27,15 @@ class WorkshopModelSerializer(serializers.ModelSerializer):
 
 
 class EventModelSerializer(serializers.ModelSerializer):
+    """
+    docstring here
+        :param serializers.ModelSerializer: 
+    """
+    
     class Meta:
         model = Event
         fields = [
+            'id',
             'name',
             'description',
             'date',
@@ -45,9 +47,15 @@ class EventModelSerializer(serializers.ModelSerializer):
 
 
 class ProjectModelSerializer(serializers.ModelSerializer):
+    """
+    docstring here
+        :param serializers.ModelSerializer: 
+    """
+    
     class Meta:
-        models = Project
+        model = Project
         fields = [
+            'id',
             'name',
             'tech',
             'details',
@@ -57,9 +65,15 @@ class ProjectModelSerializer(serializers.ModelSerializer):
 
 
 class TimelineModelSerializer(serializers.ModelSerializer):
+    """
+    docstring here
+        :param serializers.ModelSerializer: 
+    """
+    
     class Meta:
-        models = Timeline
+        model = Timeline
         fields = [
+            'id',
             'date',
             'venue',
             'event',
@@ -68,9 +82,14 @@ class TimelineModelSerializer(serializers.ModelSerializer):
 
 
 class MemberModelSerializer(serializers.ModelSerializer):
+    """
+    docstring here
+    :param serializers.ModelSerializer: 
+    """
     class Meta:
-        models = Member
+        model = Member
         fields = [
+            'id',
             'name',
             'student_no',
             'year',
@@ -83,9 +102,14 @@ class MemberModelSerializer(serializers.ModelSerializer):
 
 
 class OrganiserModelSerializer(serializers.ModelSerializer):
+    """
+    docstring here
+    :param serializers.ModelSerializer: 
+    """
     class Meta:
-        models = Organiser
+        model = Organiser
         fields = [
+            'id',
             'workshop',
             'member_id',
             'contact_no'
