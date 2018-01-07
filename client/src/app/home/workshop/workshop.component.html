@@ -1,0 +1,131 @@
+<div *ngIf="workshop">
+    <!-- Header  goes here -->
+    <header>
+        <div class="text-center">
+            <h1>{{workshop.name}}</h1>
+            <h3>Registration</h3>
+            <p *ngIf="workshop.reg_status">{{workshop.reg_start_date}} to {{workshop.reg_end_date}}</p>
+            <p *ngIf="!workshop.reg_status">Registration are closed!!</p>
+        </div>
+    </header>
+
+    <!-- Logo goes here -->
+    <article>
+        <div>
+            <img src="{{workshop.logo}}">
+        </div>
+    </article>
+
+    <!-- Descriptions with date block goes here -->
+    <article>
+        <div class="row no-gutters justify-content-center">
+            <div class="col-12 col-md-7 col-lg-8">
+                <h3>Description</h3>
+                <p>{{workshop.description}}</p>
+            </div>
+            <div class="col-12 col-sm-9 col-md-5 col-lg-4">
+                <div>
+                    <h4>Important Dates</h4>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>Registration Starts</td>
+                                <td>{{workshop.reg_start_date}}</td>
+                            </tr>
+                            <tr>
+                                <td>Registration Ends</td>
+                                <td>{{workshop.reg_end_date}}</td>
+                            </tr>
+                            <tr>
+                                <td>Workshop Starts</td>
+                                <td>{{workshop.start_date}}</td>
+                            </tr>
+                            <tr>
+                                <td>Workshop End</td>
+                                <td>{{workshop.end_date}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <!-- Projects section goes here -->
+    <article>
+        <div *ngIf="workshop.projects">
+            <h3>Projects</h3>
+            <div *ngFor="let project of workshop.projects">
+                <div class="row no-gutters">
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <img src="{{project.img}}">
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-8">
+                        <h5>{{project.name}}</h5>
+                        <p class="text-muted">{{project.tech}}</p>
+                        <p>{{project.details}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <!-- Team section goes here -->
+    <article>
+        <div *ngIf="workshop.organisers">
+            <h3>Coordinators</h3>
+            <div class="row no-gutters justify-content-center">
+                <div *ngFor="let member of workshop.organisers" class="col-6 col-sm-4 col-md-3 col-lg-2">
+                    <div>
+                        <div>
+                            <img src="{{member.img}}">
+                        </div>
+                        <div class="text-center">
+                            <h5>{{member.name}}</h5>
+                            <p>Contact At: {{member.contact}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <!-- Plans section Goes here -->
+    <article>
+        <div *ngIf="workshop.plans">
+            <h3>Plans</h3>
+            <div class="row no-gutters justify-content-center">
+                <div *ngFor="let plan of workshop.plans" class="col-12 col-sm-6 col-md-5 clo-lg-3">
+                    <div>
+                        <h5>{{plan.title}}</h5>
+                        <h6>{{plan.price}}</h6>
+                        <div>
+                            <p>{{plan.details}}</p>
+                        </div>
+                    </div>
+                    <div>
+                        <p>Team Limit : {{plan.team_limit}}</p>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <button>Register Know</button>
+            </div>  
+        </div>
+    </article>
+
+    <!-- Faqs section Goes here -->
+    <article>
+        <div *ngIf="workshop.faqs">
+            <h3>Faqs</h3>
+            <div *ngFor="let faq of workshop.faqs" class="row no-gutters">
+                <div class="col-12 col-md-10 col-lg-8">
+                    <div>
+                        <h6><span><i class="fa fa-plus"></i></span>{{faq.question}}</h6>
+                        <p>{{faq.answer}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+</div>

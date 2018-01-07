@@ -100,6 +100,7 @@ class MemberModelSerializer(serializers.ModelSerializer):
             'branch',
             'img',
             'category',
+            'contact',
             'department',
             'fb_id',
             'gender'

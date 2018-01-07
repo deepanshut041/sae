@@ -11,6 +11,7 @@ import { MainService } from "../services/main.service";
 export class WorkshopComponent implements OnInit {
 
   workshop_name
+  workshop
   constructor(private route: ActivatedRoute, private router: Router, private __mainService: MainService) {
     this.workshop_name = this.route.snapshot.paramMap.get('name');
   }
@@ -18,6 +19,7 @@ export class WorkshopComponent implements OnInit {
   ngOnInit() {
     this.__mainService.getWorkshop(this.workshop_name).subscribe(
       (workshop) => {
+        this.workshop = workshop
         console.log(workshop)
       },
       (error) => {

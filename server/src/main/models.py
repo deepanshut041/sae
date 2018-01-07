@@ -101,6 +101,7 @@ class Member(models.Model):
     department = models.CharField(max_length=20, null=False)
     fb_id = models.CharField(max_length=200, null=False, default="https://")
     gender = models.CharField(max_length=1, null=False, choices=GENDER_CHOICES, default='M')
+    contact = models.IntegerField(default=9560779366, null=False)
 
     def __str__(self):
         return str(self.name)
