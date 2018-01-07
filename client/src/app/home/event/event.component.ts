@@ -11,6 +11,7 @@ import { MainService } from "../services/main.service";
 
 export class EventComponent implements OnInit {
   event_id
+  event
   constructor(private route:ActivatedRoute, private router: Router, private __mainService:MainService) { 
     this.event_id = this.route.snapshot.paramMap.get('id');
   }
@@ -18,6 +19,7 @@ export class EventComponent implements OnInit {
   ngOnInit() {
     this.__mainService.getEvent(this.event_id).subscribe(
       (event) => {
+        this.event = event;
         console.log(event)
       },
       (error) => {

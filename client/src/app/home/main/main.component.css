@@ -57,7 +57,7 @@ header img{
 #workshop div.work-container p{
     padding: 20px 30px 10px 30px;
     font-weight: 600;
-    height: 230px;
+    height: 200px;
 }
 
 #workshop div.work-container button{
@@ -110,9 +110,10 @@ header img{
 }
 
 #event div.event-container p{
-    padding: 10px 20px;
+    padding: 10px 10px;
     font-weight: 600;
-    height: 150px;
+    height: 180px;
+    font-size: 14px;
 }
 
 #event div.event-container button{
