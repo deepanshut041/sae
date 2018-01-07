@@ -1,0 +1,68 @@
+#workshop{
+    background: #fff;
+}
+/* Header Style goes here */
+#header{
+    color:white;
+}
+#header h1{
+    padding-top:100px;
+    padding-bottom:20px;
+    font-weight: 400;
+}
+#header h4{
+    font-weight: 600;
+}
+#header button{
+    padding: 5px 30px;
+    border-radius: 30px;
+    transition: all 1s fade-in;
+    font-weight: 400;
+    margin-top: 10px;
+    margin-bottom: 100px;
+    font-size:16px;
+
+}
+#header button:focus{
+    outline: none;
+}
+
+/* Logo Style goes here */
+#logo div img{
+    height: 160px;
+    margin-top: -80px;
+    background: #fff;
+    padding: 3px;
+    border-radius: 80px;
+}
+
+
+/* Description style goes here */
+#description{
+    padding-top:10px;
+    padding-bottom: 50px;
+    background-color: #fff;   
+}
+#description h3{
+    padding:0px 10px 10px 15px;
+    font-weight: 600;
+}
+
+#description p{
+    padding: 15px;
+}
+
+#description .date-container h4{
+    padding: 10px;
+    color: #fff;
+    margin:0px;
+}
+
+#description .date-container td{
+    font-size: 14px;
+}
+#description .date-container td strong{
+    font-weight: 600;
+}
+
+

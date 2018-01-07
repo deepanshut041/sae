@@ -1,47 +1,63 @@
-<div *ngIf="workshop">
+<div *ngIf="workshop" id="workshop">
     <!-- Header  goes here -->
-    <header>
+    <header id="header" [ngStyle]="{'background-image': 'url('+workshop.background_url+')'}">
         <div class="text-center">
-            <h1>{{workshop.name}}</h1>
-            <h3>Registration</h3>
+            <h1 [ngStyle]="{'color': workshop.theme_color}">{{workshop.name}}</h1>
+            <h4>Registration</h4>
             <p *ngIf="workshop.reg_status">{{workshop.reg_start_date}} to {{workshop.reg_end_date}}</p>
             <p *ngIf="!workshop.reg_status">Registration are closed!!</p>
+            <div><button
+                (mouseover)="hover = true" (mouseout)="hover = false" [ngStyle]="hover
+                        ?{
+                            'border': '2px solid ' + workshop.theme_color,
+                            'background':workshop.theme_color,
+                            'color':'#fff'
+                        }
+                        :{
+                            'border': '2px solid ' + workshop.theme_color,
+                            'background': 'transparent',
+                            'color': workshop.theme_color
+                        }"
+                
+                >Register Now</button></div>
         </div>
     </header>
 
     <!-- Logo goes here -->
-    <article>
+    <article id="logo">
         <div>
-            <img src="{{workshop.logo}}">
+            <img src="{{workshop.logo_url}}" class="mx-auto d-block "
+                [ngStyle]="{'border': '2px solid ' + workshop.theme_color}"
+            >
         </div>
     </article>
 
     <!-- Descriptions with date block goes here -->
-    <article>
+    <article id="description">
         <div class="row no-gutters justify-content-center">
             <div class="col-12 col-md-7 col-lg-8">
                 <h3>Description</h3>
-                <p>{{workshop.description}}</p>
+                <p class="text-muted">{{workshop.description}}</p>
             </div>
-            <div class="col-12 col-sm-9 col-md-5 col-lg-4">
-                <div>
-                    <h4>Important Dates</h4>
-                    <table>
+            <div class="col-12 col-sm-9 col-md-5 col-lg-4" class="date">
+                <div class="date-container" [ngStyle]="{'border': '2px solid ' + workshop.theme_color}">
+                    <h4 class="text-center" [ngStyle]="{'background': workshop.theme_color}">Important Dates</h4>
+                    <table class="table table-striped">
                         <tbody>
                             <tr>
-                                <td>Registration Starts</td>
+                                <td><strong>Registration Starts</strong></td>
                                 <td>{{workshop.reg_start_date}}</td>
                             </tr>
                             <tr>
-                                <td>Registration Ends</td>
+                                <td><strong>Registration Ends</strong></td>
                                 <td>{{workshop.reg_end_date}}</td>
                             </tr>
                             <tr>
-                                <td>Workshop Starts</td>
+                                <td><strong>Workshop Starts</strong></td>
                                 <td>{{workshop.start_date}}</td>
                             </tr>
                             <tr>
-                                <td>Workshop End</td>
+                                <td><strong>Workshop End</strong></td>
                                 <td>{{workshop.end_date}}</td>
                             </tr>
                         </tbody>
