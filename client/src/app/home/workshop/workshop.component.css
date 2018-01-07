@@ -1,3 +1,11 @@
+.row-eq-height {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
 #workshop{
     background: #fff;
 }
@@ -70,8 +78,12 @@
 }
 #projects h3{
     padding-top: 50px;
-    padding-bottom: 50px;
+    margin-bottom: 50px;
     font-weight: 600;
+    padding-bottom: 10px;
+}
+#projects h3 span{
+    padding: 10px 30px;
 }
 
 #projects div.project-detail{
@@ -105,8 +117,13 @@
     padding:50px 10px; 
 }
 #team h3{
-    padding-bottom: 50px;
+    padding-top: 50px;
+    margin-bottom: 50px;
     font-weight: 600;
+    padding-bottom: 10px;
+}
+#team h3 span{
+    padding: 10px 30px;
 }
 #team .team-container{
     margin: 10px;
@@ -129,9 +146,13 @@
 
 }
 #plans h3{
-    padding-top: 50px;
-    padding-bottom: 50px;
+    padding-top: 70px;
+    margin-bottom: 50px;
     font-weight: 600;
+    padding-bottom: 10px;
+}
+#plans h3 span{
+    padding: 10px 30px;
 }
 
 #plans div.plan-container{
@@ -177,12 +198,12 @@
 
 /* Faqs style goes here */
 #faqs{
-    padding-bottom: 50px;
+    margin-bottom: 50px;
     background-size: cover;
 }
 #faqs h3{
     padding-top: 50px;
-    padding-bottom: 60px;
+    margin-bottom: 60px;
     font-weight: 600;
 }
 #faqs .faq-container{

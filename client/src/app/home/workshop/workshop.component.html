@@ -75,7 +75,12 @@
     <!-- Projects section goes here -->
     <article id="projects">
         <div *ngIf="workshop.projects">
-            <h3 class="text-center">Projects</h3>
+            <h3 class="text-center"><span
+                [ngStyle]="{
+                    'color': workshop.theme_color,
+                    'border-bottom':'2px solid ' + workshop.theme_color
+                }"
+                >Projects</span></h3>
             <div *ngFor="let project of workshop.projects">
                 <div class="row no-gutters justify-content-center equal">
                     <div class="col-12 col-md-5 col-lg-4 project-img" [ngStyle]="{'background-image': 'url('+project.img+')'}">
@@ -93,7 +98,12 @@
     <!-- Team section goes here -->
     <article id="team">
         <div *ngIf="workshop.organisers">
-            <h3 class="text-center">Coordinators</h3>
+            <h3 class="text-center"><span
+                [ngStyle]="{
+                    'color': workshop.theme_color,
+                    'border-bottom':'2px solid ' + workshop.theme_color
+                }"
+                >Coordinators</span></h3>
             <div class="row no-gutters justify-content-center equal">
                 <div *ngFor="let member of workshop.organisers" class="col-6 col-sm-4 col-md-3 col-lg-2">
                     <div class="team-container">
@@ -113,10 +123,15 @@
     <!-- Plans section Goes here -->
     <article id="plans">
         <div *ngIf="workshop.plans">
-            <h3 class="text-center">Plans</h3>
-            <div class="row no-gutters justify-content-center equal">
-                <div *ngFor="let plan of workshop.plans" class="col-12 col-sm-6 col-md-6 col-lg-3">
-                    <div class="plan-container" [ngStyle]="{'border': '2px solid ' + workshop.theme_color}">
+                <h3 class="text-center"><span
+                    [ngStyle]="{
+                        'color': workshop.theme_color,
+                        'border-bottom':'2px solid ' + workshop.theme_color
+                    }"
+                    >Plans</span></h3>
+            <div class="row no-gutters justify-content-center row-eq-height">
+                <div *ngFor="let plan of workshop.plans" class="col-12 col-sm-6 col-md-6 col-lg-3 plan-container" [ngStyle]="{'border': '2px solid ' + workshop.theme_color}">
+                    <div>
                         <div class="text-center">
                             <p [ngStyle]="{'background': workshop.theme_color}">Team Limit : {{plan.team_limit}}</p>
                         </div>
