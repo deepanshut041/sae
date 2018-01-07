@@ -147,17 +147,24 @@
     </article>
 
     <!-- Faqs section Goes here -->
-    <article>
+    <article id="faqs" [ngStyle]="{'background-image': 'url('+faqs_background+')'}">
         <div *ngIf="workshop.faqs">
-            <h3>Faqs</h3>
-            <div *ngFor="let faq of workshop.faqs" class="row no-gutters">
+            <h3 class="text-center">Faqs</h3>
+            <div *ngFor="let faq of workshop.faqs; let j=index" class="row no-gutters">
+                <div class="col-lg-1 col-md-1"></div>
                 <div class="col-12 col-md-10 col-lg-8">
-                    <div>
+                    <div class="faq-container">
                         <h6>
-                            <span>
+                            <button class="text-center"(click)="btn = j">
                                 <i class="fa fa-plus"></i>
-                            </span>{{faq.question}}</h6>
-                        <p>{{faq.answer}}</p>
+                            </button>{{faq.question}}</h6>
+                        <p [ngStyle]="btn ===j
+                        ?{
+                            'display': 'block'
+                        }
+                        :{
+                            'display':'none'
+                        }">{{faq.answer}}</p>
                     </div>
                 </div>
             </div>
