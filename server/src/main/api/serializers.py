@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from ..models import (Workshop, Project, Event, Timeline, Member, Organiser, WorkshopPlan, WorkshopFaqs)
+from ..models import (Workshop, Project, Event, Timeline, Member, Organiser, WorkshopPlan, WorkshopFaqs, EventTeam)
 
 
 class WorkshopModelSerializer(serializers.ModelSerializer):
@@ -148,4 +148,17 @@ class WorkshopFaqsModelSerializer(serializers.ModelSerializer):
             'workshop',
             'question',
             'answer',
+        ]
+
+class EventTeamModelSerializer(serializers.ModelSerializer):
+    """
+    docstring here
+    :param serializers.ModelSerializer: 
+    """
+    class Meta:
+        model = EventTeam
+        fields = [
+            'id',
+            'event',
+            'member_id',
         ]

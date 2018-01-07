@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Workshop, Project, Event, Member, Timeline, Organiser, WorkshopPlan, WorkshopFaqs
+from .models import Workshop, Project, Event, Member, Timeline, Organiser, WorkshopPlan, WorkshopFaqs, EventTeam
 
 
 admin.site.register(Workshop)
@@ -12,3 +12,4 @@ admin.site.register(Timeline)
 admin.site.register(Organiser)
 admin.site.register(WorkshopPlan)
 admin.site.register(WorkshopFaqs)
+admin.site.register(EventTeam)

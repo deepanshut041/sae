@@ -63,6 +63,7 @@
 /* Teams css goes here */
 
 #team {
+    background: #f7f7f9;
     padding: 50px 10px;
 }
 
@@ -73,7 +74,7 @@
 
 #team .team-container {
     margin: 10px;
-    background: #f7f7f9;
+    background: #fff;
 }
 
 #team .team-container h6 {

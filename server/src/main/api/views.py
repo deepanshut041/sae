@@ -2,11 +2,11 @@ from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from ..models import Workshop, Project, Member, Timeline, Organiser, Event, WorkshopFaqs, WorkshopPlan
+from ..models import Workshop, Project, Member, Timeline, Organiser, Event, WorkshopFaqs, WorkshopPlan, EventTeam
 from .serializers import ( WorkshopModelSerializer, ProjectModelSerializer,
                             MemberModelSerializer, TimelineModelSerializer,
                             OrganiserModelSerializer,EventModelSerializer,
-                             WorkshopFaqsModelSerializer, WorkshopPlanModelSerializer)
+                             WorkshopFaqsModelSerializer, WorkshopPlanModelSerializer, EventTeamModelSerializer)
 
 
 class WorkshopListAPIView(APIView):
@@ -133,15 +133,38 @@ class EventDetailAPIView(APIView):
         except Timeline.DoesNotExist:
             raise Http404
 
+    def get_team(self, event_id):
+        try:
+            return EventTeam.objects.filter(event=event_id)
+        except EventTeam.DoesNotExist:
+            raise Http404
+
+    def get_member(self, pk):
+        try:
+            return Member.objects.get(pk=pk)
+        except Member.DoesNotExist:
+            raise Http404
+
     def get(self, request, pk):
         event = self.get_event(pk)
         event_serializer = EventModelSerializer(event)
         event_id = event_serializer.data['id']
         timeline = self.get_timeline(event_id)
         timeline_serializer = TimelineModelSerializer(timeline, many=True)
+        team = self.get_team(event_id)
+        team_serializer = EventTeamModelSerializer(team, many=True)
+
+        members = []
+        # Fetching team member details on basis of orgnaiser
+        for team_member in team_serializer.data:
+            member_id = team_member['member_id']
+            member = self.get_member(member_id)
+            member_serializer = MemberModelSerializer(member)
+            members.append(member_serializer.data)
         
         timeline_response = event_serializer.data
         timeline_response.update({"timeline":timeline_serializer.data})
+        timeline_response.update({"team":members})
         return Response(timeline_response)
 
 

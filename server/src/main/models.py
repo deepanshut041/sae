@@ -69,6 +69,7 @@ class Event(models.Model):
         return str(self.name)
 
 
+
 class Timeline(models.Model):
     date = models.DateField(null=False)
     venue = models.CharField(max_length=50, null=False)
@@ -113,3 +114,11 @@ class Organiser(models.Model):
 
     def __str__(self):
         return str(self.workshop) + " " + str(self.member_id)
+
+class EventTeam(models.Model):
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    member_id = models.ForeignKey(Member, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.event) + " " + str(self.member_id)
+
