@@ -116,8 +116,7 @@ class OrganiserModelSerializer(serializers.ModelSerializer):
         fields = [
             'id',
             'workshop',
-            'member_id',
-            'contact_no'
+            'member_id'
         ]
 
 class WorkshopPlanModelSerializer(serializers.ModelSerializer):

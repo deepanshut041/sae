@@ -17,18 +17,31 @@
 
 <!-- This is events Section -->
 <article id="event">
+    <div class="text-center">
+        <h1>Events</h1>
+    </div>
     <div class="row no-gutters" *ngIf="events">
-        <div class="col-12 col-md-4 col-lg" *ngFor="let event of events">
+        <div class="col-12 col-md-6 col-lg" *ngFor="let event of events; let i = index">
             <div class="event-container">
                 <div>
-                    <img src="../../../assets/car.png" class="mx-auto d-block">
+                    <img src="{{event.logo}}" class="mx-auto d-block">
                 </div>
                 <div class="text-center">
-                    <h5>{{event.name}}</h5>
-                    <p class="text-muted">
-                        From showrooms to sole agents, we have all the tools you need to take your business to the next level.
-                    </p>
-                    <button>Find out more</button>
+                    <h5 [ngStyle]="{'color': event.theme_color}">{{event.name}}</h5>
+                    <p class="text-muted">{{event.short_description}}</p>
+                    <button (mouseover)="evhovered = i" (mouseout)="evhovered = -1" [ngStyle]="evhovered === i
+                        ?{
+                            'border': '2px solid ' + event.theme_color,
+                            'background':event.theme_color,
+                            'color':'#fff'
+                        }
+                        :{
+                            'border': '2px solid ' + event.theme_color,
+                            'background': '#fff',
+                            'color': event.theme_color
+                        }"
+                        (click)="eventRouter(event.id)"
+                        >Know more</button>
                 </div>
             </div>
         </div>
@@ -37,18 +50,31 @@
 
 <!-- This is workshop section -->
 <article id="workshop">
-    <div class="row no-gutters" *ngIf="workshops">
-        <div class="col-12 col-md-6 col-lg" *ngFor="let workshop of workshops">
+    <div class="text-center">
+        <h1>Workshop</h1>
+    </div>
+    <div class="row no-gutters clearfix" *ngIf="workshops">
+        <div class="col-12 col-md-6 col-lg" *ngFor="let workshop of workshops; let i = index">
             <div class="work-container">
                 <div>
-                    <img src="../../../assets/car.png" class="mx-auto d-block">
+                    <img src="{{workshop.logo_url}}" class="mx-auto d-block">
                 </div>
                 <div class="text-center">
-                    <h3>{{workshop.name}}</h3>
-                    <p class="text-muted">
-                        From showrooms to sole agents, we have all the tools you need to take your business to the next level.
-                    </p>
-                    <button>Find out more</button>
+                    <h3 [ngStyle]="{'color': workshop.theme_color}">{{workshop.name}}</h3>
+                    <p class="text-muted">{{workshop.short_description}}</p>
+                    <button (mouseover)="wrhovered = i" (mouseout)="wrhovered = -1" [ngStyle]="wrhovered === i
+                        ?{
+                            'border': '2px solid ' + workshop.theme_color,
+                            'background':workshop.theme_color,
+                            'color':'#fff'
+                        }
+                        :{
+                            'border': '2px solid ' + workshop.theme_color,
+                            'background': '#fff',
+                            'color': workshop.theme_color
+                        }"
+                        (click)="workshopRouter(workshop.name)"
+                        >Find out more</button>
                 </div>
             </div>
         </div>

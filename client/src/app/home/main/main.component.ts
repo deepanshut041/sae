@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { MainService } from "../services/main.service";
+import { Router } from "@angular/router";
 
 
 @Component({
@@ -14,7 +15,7 @@ export class MainComponent implements OnInit {
   news_img = "/assets/latest_news.svg"
   events
   workshops
-  constructor(private __mainService:MainService) { 
+  constructor(private __mainService:MainService, private router:Router) { 
 
   }
 
@@ -28,4 +29,11 @@ export class MainComponent implements OnInit {
       this.workshops = workshops['workshops']
     })
   }
+  workshopRouter(name){
+    this.router.navigate(['workshop',name])
+  }
+  eventRouter(id:Number){
+    this.router.navigate(['event',id])
+  }
+
 }

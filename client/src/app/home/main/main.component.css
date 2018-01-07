@@ -23,8 +23,12 @@ header img{
 }
 
 /* Workshop styles */
-#workshop div.row{
-    width: 100%;
+#workshop h1{
+    padding-top: 50px;
+    margin-bottom: 30px;
+    color: #f6a665;
+    font-weight: 200;
+    font-size: 45px;
 }
 #workshop div.work-container{
     padding: 30px;
@@ -42,25 +46,23 @@ header img{
 
 #workshop div.work-container img{
     margin: 50px auto;
-    height: 60px;
+    max-height: 100px !important;
+    min-height: 100px !important;
 }
 
 #workshop div.work-container h3{
     font-weight: 500;
-    color: #656684;
 }
 
 #workshop div.work-container p{
-    padding: 20px 40px;
+    padding: 20px 30px 10px 30px;
     font-weight: 600;
+    height: 230px;
 }
 
 #workshop div.work-container button{
     padding: 12px 50px;
     border-radius: 25px;
-    background: transparent;
-    border: 2px solid #84859d;
-    color: #656684;
     transition: all 1s fade-in;
     font-weight: 600;
     margin-top: 10px;
@@ -70,13 +72,17 @@ header img{
 #workshop div.work-container button:focus{
     outline: none;
 }
-#workshop div.work-container button:hover{
-    background: #84859d;
-    color: #fff;
-}
 
 /* Events styles */
-#event div.row{
+#event{
+    background: #fff
+}
+#event h1{
+    padding-top: 50px;
+    margin-bottom: 30px;
+    color: #f6a665;
+    font-weight: 200;
+    font-size: 45px;
 }
 #event div.event-container{
     padding: 15px;
@@ -96,25 +102,22 @@ header img{
 #event div.event-container img{
     margin: 25px auto;
     margin-top: 60px;
-    height: 30px;
+    height: 70px;
 }
 
 #event div.event-container h5{
     font-weight: 500;
-    color: #656684;
 }
 
 #event div.event-container p{
     padding: 10px 20px;
     font-weight: 600;
+    height: 150px;
 }
 
 #event div.event-container button{
     padding: 8px 30px;
     border-radius: 20px;
-    background: transparent;
-    border: 2px solid #84859d;
-    color: #656684;
     transition: all 1s fade-in;
     font-weight: 600;
     margin-top: 10px;
@@ -124,10 +127,6 @@ header img{
 }
 #event div.event-container button:focus{
     outline: none;
-}
-#event div.event-container button:hover{
-    background: #84859d;
-    color: #fff;
 }
 
 /* About Styles */
