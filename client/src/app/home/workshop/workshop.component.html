@@ -106,7 +106,12 @@
                 >Coordinators</span></h3>
             <div class="row no-gutters justify-content-center equal">
                 <div *ngFor="let member of workshop.organisers" class="col-6 col-sm-4 col-md-3 col-lg-2">
-                    <div class="team-container">
+                    <div class="team-container"
+                    [ngStyle]="{
+                        'border-bottom':'10px solid ' + workshop.theme_color,
+                        'border-radius':'10px'
+                    }"
+                    >
                         <div>
                             <img src="{{member.img}}" class="img-fluid">
                         </div>
@@ -138,6 +143,10 @@
                         <div class="plan-details text-center">
                             <h6 [ngStyle]="{'color': workshop.theme_color}"><i class="fa fa-inr fa-2x"></i> <span> {{plan.price}}</span></h6>
                             <h5 class="text-muted">{{plan.title}}</h5>
+                            <hr [ngStyle]="{
+                                'color': workshop.theme_color,
+                                'border-top':'2px solid ' + workshop.theme_color
+                            }">
                             <div>
                                 <p>{{plan.details}}</p>
                             </div>
@@ -164,10 +173,15 @@
     <!-- Faqs section Goes here -->
     <article id="faqs" [ngStyle]="{'background-image': 'url('+faqs_background+')'}">
         <div *ngIf="workshop.faqs">
-            <h3 class="text-center">Faqs</h3>
+                <h3 class="text-center"><span
+                    [ngStyle]="{
+                        'color': workshop.theme_color,
+                        'border-bottom':'2px solid ' + workshop.theme_color
+                    }"
+                    >Faqs</span></h3>
             <div *ngFor="let faq of workshop.faqs; let j=index" class="row no-gutters">
                 <div class="col-lg-1 col-md-1"></div>
-                <div class="col-12 col-md-10 col-lg-8">
+                <div class="col-12 col-md-8 col-lg-6">
                     <div class="faq-container">
                         <h6>
                             <button class="text-center"(click)="btn = j">

@@ -59,7 +59,12 @@
             <h3 class="text-center">Current Team</h3>
             <div class="row no-gutters justify-content-center equal">
                 <div *ngFor="let member of event.team" class="col-6 col-sm-4 col-md-3 col-lg-2">
-                    <div class="team-container">
+                    <div class="team-container"
+                    [ngStyle]="{
+                        'border-bottom':'10px solid ' + event.theme_color,
+                        'border-radius':'10px'
+                    }"
+                    >
                         <div>
                             <img src="{{member.img}}" class="img-fluid">
                         </div>
