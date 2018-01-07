@@ -47,22 +47,130 @@
     padding:0px 10px 10px 15px;
     font-weight: 600;
 }
-
 #description p{
     padding: 15px;
 }
-
-#description .date-container h4{
+#description .date-container h5{
     padding: 10px;
     color: #fff;
     margin:0px;
 }
-
 #description .date-container td{
-    font-size: 14px;
+    font-size: 13px;
 }
 #description .date-container td strong{
     font-weight: 600;
 }
 
+/* Project Css goes here */
+#projects{
+    background: #f7f7f9;
+    padding-bottom: 50px;
 
+}
+#projects h3{
+    padding-top: 50px;
+    padding-bottom: 50px;
+    font-weight: 600;
+}
+
+#projects div.project-detail{
+    background: #fff;
+    padding: 20px;
+}
+#projects h5{
+    font-weight: 600;
+}
+#projects div.row{
+    margin: 10px;
+}
+#projects p{
+    font-size: 14px;
+    font-weight: 400;
+}
+
+#projects p.text-muted{
+    font-size: 16px;
+}
+
+#projects .project-img{
+    background-size: cover;
+    min-height: 200px;
+    background-position: center;
+}
+
+/* Teams css goes here */
+
+#team{
+    padding:50px 10px; 
+}
+#team h3{
+    padding-bottom: 50px;
+    font-weight: 600;
+}
+#team .team-container{
+    margin: 10px;
+    background: #f7f7f9;
+}
+
+#team .team-container h6{
+    margin-top: 20px;
+    font-weight: 600;
+}
+#team .team-container p{
+    padding-bottom: 10px;
+    font-size: 12px;
+}
+
+/* Plans styling goes here */
+#plans{
+    background: #f7f7f9;
+    padding-bottom: 50px;
+
+}
+#plans h3{
+    padding-top: 50px;
+    padding-bottom: 50px;
+    font-weight: 600;
+}
+
+#plans div.plan-container{
+    margin: 20px;
+    border-radius: 5px;
+    background: #fff
+}
+#plans div.text-center p{
+    padding: 10px;
+    color: #fff;
+    font-weight: 600;
+}
+#plans div.plan-details h6{
+    padding-top: 20px;
+    font-weight: 600;
+}
+#plans div.plan-details h6 span{
+    font-size: 36px;
+}
+#plans div.plan-details h5{
+    font-size: 16px;
+    padding-bottom: 10px;
+}
+#plans div.plan-details p{
+    color: rgb(46, 44, 44);
+    padding-bottom: 20px;
+    font-size: 14px;
+    font-weight: 400;
+}
+#plans button{
+    padding: 5px 30px;
+    border-radius: 30px;
+    transition: all 1s fade-in;
+    font-weight: 400;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    font-size:16px;
+
+}
+#plans button:focus{
+    outline: none;
+}

@@ -6,8 +6,8 @@
             <h4>Registration</h4>
             <p *ngIf="workshop.reg_status">{{workshop.reg_start_date}} to {{workshop.reg_end_date}}</p>
             <p *ngIf="!workshop.reg_status">Registration are closed!!</p>
-            <div><button
-                (mouseover)="hover = true" (mouseout)="hover = false" [ngStyle]="hover
+            <div>
+                <button (mouseover)="hover = true" (mouseout)="hover = false" [ngStyle]="hover
                         ?{
                             'border': '2px solid ' + workshop.theme_color,
                             'background':workshop.theme_color,
@@ -17,18 +17,15 @@
                             'border': '2px solid ' + workshop.theme_color,
                             'background': 'transparent',
                             'color': workshop.theme_color
-                        }"
-                
-                >Register Now</button></div>
+                        }">Register Now</button>
+            </div>
         </div>
     </header>
 
     <!-- Logo goes here -->
     <article id="logo">
         <div>
-            <img src="{{workshop.logo_url}}" class="mx-auto d-block "
-                [ngStyle]="{'border': '2px solid ' + workshop.theme_color}"
-            >
+            <img src="{{workshop.logo_url}}" class="mx-auto d-block " [ngStyle]="{'border': '2px solid ' + workshop.theme_color}">
         </div>
     </article>
 
@@ -41,23 +38,31 @@
             </div>
             <div class="col-12 col-sm-9 col-md-5 col-lg-4" class="date">
                 <div class="date-container" [ngStyle]="{'border': '2px solid ' + workshop.theme_color}">
-                    <h4 class="text-center" [ngStyle]="{'background': workshop.theme_color}">Important Dates</h4>
+                    <h5 class="text-center" [ngStyle]="{'background': workshop.theme_color}">Important Dates</h5>
                     <table class="table table-striped">
                         <tbody>
                             <tr>
-                                <td><strong>Registration Starts</strong></td>
+                                <td>
+                                    <strong>Registration Starts</strong>
+                                </td>
                                 <td>{{workshop.reg_start_date}}</td>
                             </tr>
                             <tr>
-                                <td><strong>Registration Ends</strong></td>
+                                <td>
+                                    <strong>Registration Ends</strong>
+                                </td>
                                 <td>{{workshop.reg_end_date}}</td>
                             </tr>
                             <tr>
-                                <td><strong>Workshop Starts</strong></td>
+                                <td>
+                                    <strong>Workshop Starts</strong>
+                                </td>
                                 <td>{{workshop.start_date}}</td>
                             </tr>
                             <tr>
-                                <td><strong>Workshop End</strong></td>
+                                <td>
+                                    <strong>Workshop End</strong>
+                                </td>
                                 <td>{{workshop.end_date}}</td>
                             </tr>
                         </tbody>
@@ -68,15 +73,14 @@
     </article>
 
     <!-- Projects section goes here -->
-    <article>
+    <article id="projects">
         <div *ngIf="workshop.projects">
-            <h3>Projects</h3>
+            <h3 class="text-center">Projects</h3>
             <div *ngFor="let project of workshop.projects">
-                <div class="row no-gutters">
-                    <div class="col-12 col-md-6 col-lg-4">
-                        <img src="{{project.img}}">
+                <div class="row no-gutters justify-content-center equal">
+                    <div class="col-12 col-md-5 col-lg-4 project-img" [ngStyle]="{'background-image': 'url('+project.img+')'}">
                     </div>
-                    <div class="col-12 col-md-6 col-lg-8">
+                    <div class="col-12 col-md-7 col-lg-7 project-detail">
                         <h5>{{project.name}}</h5>
                         <p class="text-muted">{{project.tech}}</p>
                         <p>{{project.details}}</p>
@@ -87,18 +91,18 @@
     </article>
 
     <!-- Team section goes here -->
-    <article>
+    <article id="team">
         <div *ngIf="workshop.organisers">
-            <h3>Coordinators</h3>
-            <div class="row no-gutters justify-content-center">
+            <h3 class="text-center">Coordinators</h3>
+            <div class="row no-gutters justify-content-center equal">
                 <div *ngFor="let member of workshop.organisers" class="col-6 col-sm-4 col-md-3 col-lg-2">
-                    <div>
+                    <div class="team-container">
                         <div>
-                            <img src="{{member.img}}">
+                            <img src="{{member.img}}" class="img-fluid">
                         </div>
                         <div class="text-center">
-                            <h5>{{member.name}}</h5>
-                            <p>Contact At: {{member.contact}}</p>
+                            <h6 [ngStyle]="{'color': workshop.theme_color}">{{member.name}}</h6>
+                            <p class="text-muted">Contact At: {{member.contact}}</p>
                         </div>
                     </div>
                 </div>
@@ -107,26 +111,38 @@
     </article>
 
     <!-- Plans section Goes here -->
-    <article>
+    <article id="plans">
         <div *ngIf="workshop.plans">
-            <h3>Plans</h3>
-            <div class="row no-gutters justify-content-center">
-                <div *ngFor="let plan of workshop.plans" class="col-12 col-sm-6 col-md-5 clo-lg-3">
-                    <div>
-                        <h5>{{plan.title}}</h5>
-                        <h6>{{plan.price}}</h6>
-                        <div>
-                            <p>{{plan.details}}</p>
+            <h3 class="text-center">Plans</h3>
+            <div class="row no-gutters justify-content-center equal">
+                <div *ngFor="let plan of workshop.plans" class="col-12 col-sm-6 col-md-6 col-lg-3">
+                    <div class="plan-container" [ngStyle]="{'border': '2px solid ' + workshop.theme_color}">
+                        <div class="text-center">
+                            <p [ngStyle]="{'background': workshop.theme_color}">Team Limit : {{plan.team_limit}}</p>
                         </div>
-                    </div>
-                    <div>
-                        <p>Team Limit : {{plan.team_limit}}</p>
+                        <div class="plan-details text-center">
+                            <h6 [ngStyle]="{'color': workshop.theme_color}"><i class="fa fa-inr fa-2x"></i> <span> {{plan.price}}</span></h6>
+                            <h5 class="text-muted">{{plan.title}}</h5>
+                            <div>
+                                <p>{{plan.details}}</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div>
-                <button>Register Know</button>
-            </div>  
+            <div class="text-center">
+                <button (mouseover)="hover = true" (mouseout)="hover = false" [ngStyle]="hover
+                        ?{
+                            'border': '2px solid ' + workshop.theme_color,
+                            'background':workshop.theme_color,
+                            'color':'#fff'
+                        }
+                        :{
+                            'border': '2px solid ' + workshop.theme_color,
+                            'background': 'transparent',
+                            'color': workshop.theme_color
+                        }">Register Now</button>
+            </div>
         </div>
     </article>
 
@@ -137,7 +153,10 @@
             <div *ngFor="let faq of workshop.faqs" class="row no-gutters">
                 <div class="col-12 col-md-10 col-lg-8">
                     <div>
-                        <h6><span><i class="fa fa-plus"></i></span>{{faq.question}}</h6>
+                        <h6>
+                            <span>
+                                <i class="fa fa-plus"></i>
+                            </span>{{faq.question}}</h6>
                         <p>{{faq.answer}}</p>
                     </div>
                 </div>
