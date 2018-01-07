@@ -2,10 +2,11 @@ from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from ..models import Workshop, Project, Member, Timeline, Organiser, Event
+from ..models import Workshop, Project, Member, Timeline, Organiser, Event, WorkshopFaqs, WorkshopPlan
 from .serializers import ( WorkshopModelSerializer, ProjectModelSerializer,
                             MemberModelSerializer, TimelineModelSerializer,
-                            OrganiserModelSerializer,EventModelSerializer)
+                            OrganiserModelSerializer,EventModelSerializer,
+                             WorkshopFaqsModelSerializer, WorkshopPlanModelSerializer)
 
 
 class WorkshopListAPIView(APIView):
@@ -55,6 +56,18 @@ class WorkshopDetailAPIView(APIView):
         except Member.DoesNotExist:
             raise Http404
 
+    def get_plans(self, workshop_id):
+        try:
+            return WorkshopPlan.objects.filter(workshop=workshop_id)
+        except Organiser.DoesNotExist:
+            raise Http404
+
+    def get_faqs(self, workshop_id):
+        try:
+            return WorkshopFaqs.objects.filter(workshop=workshop_id)
+        except Organiser.DoesNotExist:
+            raise Http404
+
     def get(self, request, name):
         workshop = self.get_workshop(name)
         workshop_serializer = WorkshopModelSerializer(workshop)
@@ -63,6 +76,10 @@ class WorkshopDetailAPIView(APIView):
         projects_serializer = ProjectModelSerializer(projects, many=True)
         organisers = self.get_organisers(workshop_id)
         organisers_serializer = OrganiserModelSerializer(organisers, many=True)
+        plans = self.get_plans(workshop_id)
+        plans_serializer = WorkshopPlanModelSerializer(plans, many=True)
+        faqs = self.get_faqs(workshop_id)
+        faqs_serializer = WorkshopFaqsModelSerializer(faqs, many=True)
 
         members = []
         # Fetching team member details on basis of orgnaiser
@@ -75,6 +92,9 @@ class WorkshopDetailAPIView(APIView):
         workshop_response = workshop_serializer.data
         workshop_response.update({"projects":projects_serializer.data})
         workshop_response.update({"organisers":members})
+        workshop_response.update({"plans":plans_serializer.data})
+        workshop_response.update({"faqs":faqs_serializer.data})
+        
         return Response(workshop_response)
 
 

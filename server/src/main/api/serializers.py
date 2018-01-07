@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from ..models import (Workshop, Project, Event, Timeline, Member, Organiser)
+from ..models import (Workshop, Project, Event, Timeline, Member, Organiser, WorkshopPlan, WorkshopFaqs)
 
 
 class WorkshopModelSerializer(serializers.ModelSerializer):
@@ -15,6 +15,7 @@ class WorkshopModelSerializer(serializers.ModelSerializer):
             'name',
             'venue',
             'logo_url',
+            'background_url',
             'short_description',
             'description',
             'reg_start_date',
@@ -22,8 +23,6 @@ class WorkshopModelSerializer(serializers.ModelSerializer):
             'start_date',
             'end_date',
             'reg_status',
-            'price',
-            'team_limit',
             'status',
             'theme_color'
             ]
@@ -119,4 +118,34 @@ class OrganiserModelSerializer(serializers.ModelSerializer):
             'workshop',
             'member_id',
             'contact_no'
+        ]
+
+class WorkshopPlanModelSerializer(serializers.ModelSerializer):
+    """
+    docstring here
+    :param serializers.ModelSerializer: 
+    """
+    class Meta:
+        model = WorkshopPlan
+        fields = [
+            'id',
+            'workshop',
+            'team_limit',
+            'details',
+            'title',
+            'price',
+        ]
+
+class WorkshopFaqsModelSerializer(serializers.ModelSerializer):
+    """
+    docstring here
+    :param serializers.ModelSerializer: 
+    """
+    class Meta:
+        model = WorkshopFaqs
+        fields = [
+            'id',
+            'workshop',
+            'question',
+            'answer',
         ]

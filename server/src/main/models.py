@@ -8,6 +8,7 @@ class Workshop(models.Model):
     name = models.CharField(max_length=200, unique=True, null=False)
     venue = models.CharField(max_length=50, null=False)
     logo_url = models.CharField(max_length=200, null=False, default="https://")
+    background_url = models.CharField(max_length=200, null=False, default="https://")
     description = models.TextField(null=False)
     short_description = models.CharField(max_length=400, null=False)
     reg_start_date = models.DateField(null=True)
@@ -15,13 +16,12 @@ class Workshop(models.Model):
     start_date = models.DateField(null=True)
     end_date = models.DateField(null=True)
     reg_status = models.BooleanField(default=False)
-    price = models.DecimalField(null=False, default=0.0, max_digits=8, decimal_places=3)
-    team_limit = models.IntegerField(default=1)
     status = models.CharField(max_length=60, default = "Comming Soon..")
     theme_color = models.CharField(max_length=10, default = "#84859d")
 
     def __str__(self):
         return str(self.name)
+
 
 class Project(models.Model):
     name = models.CharField(max_length=200, unique=True, null=False)
@@ -32,6 +32,27 @@ class Project(models.Model):
 
     def __str__(self):
         return str(self.name)
+
+
+class WorkshopPlan(models.Model):
+    workshop = models.ForeignKey(Workshop, on_delete=models.CASCADE)
+    team_limit = models.IntegerField(default=1)
+    details = models.CharField(max_length=600, null=False)
+    title = models.CharField(max_length = 50, null=False)
+    price = models.IntegerField(default=1)
+
+    def __str__(self):
+        return str(self.workshop) +"  "+ str(self.title)
+
+
+class WorkshopFaqs(models.Model):
+    workshop = models.ForeignKey(Workshop, on_delete=models.CASCADE)
+    question = models.CharField(max_length=200, null=False)
+    answer = models.TextField(null=False)
+
+    def __str__(self):
+        return str(self.workshop) +"  Faq"
+
 
 class Event(models.Model):
     name =  models.CharField(max_length=50, unique=True, null=False)
@@ -46,6 +67,7 @@ class Event(models.Model):
 
     def __str__(self):
         return str(self.name)
+
 
 class Timeline(models.Model):
     date = models.DateField(null=False)
