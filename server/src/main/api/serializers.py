@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from django.db.models import Q
+from rest_framework_jwt.settings import api_settings
 from ..models import (Workshop, Project, Event, Timeline, Member, Organiser, WorkshopPlan, WorkshopFaqs, EventTeam)
 
 
@@ -233,6 +234,6 @@ class UserLoginSerializer(serializers.ModelSerializer):
         if user_obj:
             if not user_obj.check_password(password):
                 raise serializers.ValidationError("Incorrect credentials please try again")
-
-        data["token"] = "Some Random token"
+        payload = api_settings.JWT_PAYLOAD_HANDLER(user_obj)
+        data["token"] = api_settings.JWT_ENCODE_HANDLER(payload)
         return data
