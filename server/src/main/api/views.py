@@ -1,7 +1,8 @@
 from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status, permissions
+from .permission import IsAdminOrReadOnly
 from django.contrib.auth.models import User
 from ..models import Workshop, Project, Member, Timeline, Organiser, Event, WorkshopFaqs, WorkshopPlan, EventTeam
 from .serializers import ( WorkshopModelSerializer, ProjectModelSerializer,
@@ -10,12 +11,17 @@ from .serializers import ( WorkshopModelSerializer, ProjectModelSerializer,
                              WorkshopFaqsModelSerializer, WorkshopPlanModelSerializer, EventTeamModelSerializer,
                              UserRegisterSerializer,UserLoginSerializer)
 
+from rest_framework_jwt.authentication import JSONWebTokenAuthentication
+
 
 class WorkshopListAPIView(APIView):
     """
     docstring here
         :param APIView: 
     """
+    serializer_class = WorkshopModelSerializer
+    permission_classes = (IsAdminOrReadOnly,permissions.IsAuthenticatedOrReadOnly)
+    authentication_classes = (JSONWebTokenAuthentication, )
     def get(self, request):
         workshops = Workshop.objects.all()
         serializer = WorkshopModelSerializer(workshops, many=True)
@@ -105,6 +111,8 @@ class EventListAPIView(APIView):
     docstring here
         :param APIView: 
     """
+    serializer_class = EventModelSerializer
+    permission_classes = (IsAdminOrReadOnly,permissions.IsAuthenticatedOrReadOnly,)
     def get(self, request):
         events = Event.objects.all()
         serializer = EventModelSerializer(events, many=True)
@@ -175,7 +183,8 @@ class MemberListAPIView(APIView):
     docstring here
         :param APIView: 
     """
-
+    serializer_class = MemberModelSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     def get(self, request):
         members = Member.objects.all()
         serializer = MemberModelSerializer(members, many=True)
@@ -193,9 +202,9 @@ class UserRegisterAPIView(APIView):
     docstring here
         :param APIView: 
     """
-
+    serializer_class = UserRegisterSerializer
     def post(self, request):
-        serializer = UserSerializer(data=request.data)
+        serializer = UserRegisterSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
