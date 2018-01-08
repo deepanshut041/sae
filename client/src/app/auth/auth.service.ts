@@ -44,7 +44,8 @@ export class AuthService {
   
   logout(){
     this.authToken = null;
-    this.user = null;
+    this.username = null;
+    this.email = null;
     localStorage.clear();
   }
 
