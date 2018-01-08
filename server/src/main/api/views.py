@@ -2,7 +2,7 @@ from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, permissions
-from .permission import IsAdminOrReadOnly
+from .permission import IsAdminOrReadOnly, IsSuperuserOrWriteOnly
 from django.contrib.auth.models import User
 from ..models import Workshop, Project, Member, Timeline, Organiser, Event, WorkshopFaqs, WorkshopPlan, EventTeam
 from .serializers import ( WorkshopModelSerializer, ProjectModelSerializer,
@@ -11,7 +11,6 @@ from .serializers import ( WorkshopModelSerializer, ProjectModelSerializer,
                              WorkshopFaqsModelSerializer, WorkshopPlanModelSerializer, EventTeamModelSerializer,
                              UserRegisterSerializer,UserLoginSerializer)
 
-from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 
 class WorkshopListAPIView(APIView):
@@ -21,7 +20,6 @@ class WorkshopListAPIView(APIView):
     """
     serializer_class = WorkshopModelSerializer
     permission_classes = (IsAdminOrReadOnly,permissions.IsAuthenticatedOrReadOnly)
-    authentication_classes = (JSONWebTokenAuthentication, )
     def get(self, request):
         workshops = Workshop.objects.all()
         serializer = WorkshopModelSerializer(workshops, many=True)
@@ -40,6 +38,7 @@ class WorkshopDetailAPIView(APIView):
     docstring here
     :param APIView: 
     """
+    permission_classes = (permissions.AllowAny,)
     def get_workshop(self, workshop_name):
         try:
             return Workshop.objects.get(name=workshop_name)
@@ -111,6 +110,7 @@ class EventListAPIView(APIView):
     docstring here
         :param APIView: 
     """
+    
     serializer_class = EventModelSerializer
     permission_classes = (IsAdminOrReadOnly,permissions.IsAuthenticatedOrReadOnly,)
     def get(self, request):
@@ -131,6 +131,7 @@ class EventDetailAPIView(APIView):
     docstring here
     :param APIView: 
     """
+    permission_classes = (permissions.AllowAny,)
     def get_event(self, pk):
         try:
             return Event.objects.get(pk=pk)
@@ -183,8 +184,9 @@ class MemberListAPIView(APIView):
     docstring here
         :param APIView: 
     """
+    
     serializer_class = MemberModelSerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsAdminOrReadOnly)
     def get(self, request):
         members = Member.objects.all()
         serializer = MemberModelSerializer(members, many=True)
@@ -203,6 +205,7 @@ class UserRegisterAPIView(APIView):
         :param APIView: 
     """
     serializer_class = UserRegisterSerializer
+    permission_classes = (permissions.AllowAny,)
     def post(self, request):
         serializer = UserRegisterSerializer(data=request.data)
         if serializer.is_valid():
@@ -216,9 +219,13 @@ class UserLoginAPIView(APIView):
         :param APIView: 
     """
     serializer_class = UserLoginSerializer
-
+    permission_classes = (IsSuperuserOrWriteOnly,)
     def post(self, request, *args, **kwargs):
         serializer = UserLoginSerializer(data=request.data)
         if serializer.is_valid():
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def get(self, request):
+        users = User.objects.all()
+        serializer = UserRegisterSerializer(users, many=True)
+        return Response({"user":serializer.data})
