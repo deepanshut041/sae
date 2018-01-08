@@ -13,20 +13,23 @@
             <div class="col-lg-8">
               <form (submit)="submitForm(currentPassword.value,
               newPassword.value,confirmPassword.value)">
-                <div class="form-group text-left">
-                  <label for="resetPasswordCurrent">Current Password</label>
-                  <input type="password" class="form-control" id="resetPasswordCurrent" #currentPassword>
+                <div class="textBox">
+                  <input class="text" type="password" onkeyup="this.setAttribute('value', this.value);" value="" />
+                  <label class="label">Current Password</label>
+                  <label class="error"></label>
                 </div>
-                <div class="form-group text-left">
-                  <label for="resetPasswordNew">New Password</label>
-                  <input type="password" class="form-control" id="resetPasswordNew" #newPassword>
+                <div class="textBox">
+                  <input class="text" type="password" onkeyup="this.setAttribute('value', this.value);" value="" />
+                  <label class="label">New Password</label>
+                  <label class="error"></label>
                 </div>
-                <div class="form-group text-left">
-                  <label for="resetPasswordConfirm">Confirm Password</label>
-                  <input type="password" class="form-control" id="resetPasswordConfirm" #confirmPassword>
+                <div class="textBox">
+                  <input class="text" type="password" onkeyup="this.setAttribute('value', this.value);" value="" />
+                  <label class="label">Confirm Password</label>
+                  <label class="error"></label>
                 </div>
                 <div class="verify-button-box" id="resetPassWordButton">
-                  <button class="btn btn-info" type="submit" >Reset</button>
+                  <button class="btn" type="submit">Reset</button>
                 </div>
               </form>
             </div>
@@ -49,12 +52,6 @@
           <br>
           <br>
           <br>
-        </div>
-        <div class="panel-footer">
-          <div class="text-right">
-            <br>
-            <button class="btn btn-secondary" (click)="logout()">Sign Out</button>
-          </div>
         </div>
       </div>
     </div>
