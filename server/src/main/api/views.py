@@ -2,11 +2,13 @@ from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from django.contrib.auth.models import User
 from ..models import Workshop, Project, Member, Timeline, Organiser, Event, WorkshopFaqs, WorkshopPlan, EventTeam
 from .serializers import ( WorkshopModelSerializer, ProjectModelSerializer,
                             MemberModelSerializer, TimelineModelSerializer,
                             OrganiserModelSerializer,EventModelSerializer,
-                             WorkshopFaqsModelSerializer, WorkshopPlanModelSerializer, EventTeamModelSerializer)
+                             WorkshopFaqsModelSerializer, WorkshopPlanModelSerializer, EventTeamModelSerializer,
+                             UserRegisterSerializer,UserLoginSerializer)
 
 
 class WorkshopListAPIView(APIView):
@@ -184,4 +186,30 @@ class MemberListAPIView(APIView):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class UserRegisterAPIView(APIView):
+    """
+    docstring here
+        :param APIView: 
+    """
+
+    def post(self, request):
+        serializer = UserSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class UserLoginAPIView(APIView):
+    """
+    docstring here
+        :param APIView: 
+    """
+    serializer_class = UserLoginSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = UserLoginSerializer(data=request.data)
+        if serializer.is_valid():
+            return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

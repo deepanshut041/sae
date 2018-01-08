@@ -1,5 +1,6 @@
 from rest_framework import serializers
-
+from django.contrib.auth.models import User
+from django.db.models import Q
 from ..models import (Workshop, Project, Event, Timeline, Member, Organiser, WorkshopPlan, WorkshopFaqs, EventTeam)
 
 
@@ -162,3 +163,76 @@ class EventTeamModelSerializer(serializers.ModelSerializer):
             'event',
             'member_id',
         ]
+
+class UserRegisterSerializer(serializers.ModelSerializer):
+    """
+    docstring here
+    :param serializers.ModelSerializer: 
+    """
+    class Meta:
+        model= User
+        fields = [
+            'username',
+            'password',
+            'email',
+            'first_name',
+            'last_name'
+        ]
+        extra_kwargs = {"password":{"write_only":True}}
+
+    def create(self, validated_data):
+        username = validated_data['username']
+        password = validated_data['password']
+        email = validated_data['email']
+        first_name = validated_data['first_name']
+        last_name = validated_data['last_name']
+        user_obj = User(username=username, email=email,
+                    first_name=first_name, last_name=last_name)
+        user_obj.set_password(password)
+        user_obj.save()
+        return validated_data
+
+
+class UserLoginSerializer(serializers.ModelSerializer):
+    """
+    docstring here
+    :param serializers.ModelSerializer: 
+    """
+    token = serializers.CharField(allow_blank=True, read_only=True)
+    username = serializers.CharField(label='Student Number', required=False, allow_blank=True)
+    email = serializers.EmailField(label='Email Address', required=False, allow_blank=True)
+
+    class Meta:
+        model= User
+        fields = [
+            'username',
+            'email',
+            'password',
+            'token'
+        ]
+        extra_kwargs = {"password":{"write_only":True}}
+
+    def validate(self, data):
+        user_obj = None
+        username = data.get("username", None)
+        email = data.get("email", None)
+        password = data["password"]
+        if not email and not username:
+            raise serializers.ValidationError("username or Email is Required to login")
+        
+        user = User.objects.filter(
+            Q(email=email) |
+            Q(username=username)
+        ).distinct()
+        user = user.exclude(email__isnull=True).exclude(email__iexact='')
+        if user.exists and user.count() == 1:
+            user_obj = user.first()
+        else:
+            raise serializers.ValidationError("A Username or Email is not valid")
+
+        if user_obj:
+            if not user_obj.check_password(password):
+                raise serializers.ValidationError("Incorrect credentials please try again")
+
+        data["token"] = "Some Random token"
+        return data

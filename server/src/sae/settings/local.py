@@ -74,6 +74,18 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'sae.wsgi.application'
 
+# Django RestFarmework Json WebToken
+# https://getblimp.github.io/django-rest-framework-jwt/
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ),
+}
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
