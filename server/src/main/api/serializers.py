@@ -196,8 +196,8 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         user_obj = User(username=username, email=email,
                     first_name=first_name, last_name=last_name)
         user_obj.is_active = False
-        user_obj.save()
         user_obj.set_password(password)
+        user_obj.save()
         mail_subject = 'Activate your Sae-Akgec Account'
         message = render_to_string('acc_active_email.html', {
                 'user': user_obj,
