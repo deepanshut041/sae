@@ -3,7 +3,13 @@ from django.contrib.auth.models import User
 from django.db.models import Q
 from rest_framework_jwt.settings import api_settings
 from ..models import (Workshop, Project, Event, Timeline, Member, Organiser, WorkshopPlan, WorkshopFaqs, EventTeam)
-
+#  For Sending Email
+from django.template.loader import render_to_string
+from .token import account_activation_token
+from django.core.mail import EmailMessage
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.contrib.sites.shortcuts import get_current_site
+from django.utils.encoding import force_bytes, force_text
 
 class WorkshopModelSerializer(serializers.ModelSerializer):
     """
@@ -189,8 +195,21 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         last_name = validated_data['last_name']
         user_obj = User(username=username, email=email,
                     first_name=first_name, last_name=last_name)
-        user_obj.set_password(password)
+        user_obj.is_active = False
         user_obj.save()
+        user_obj.set_password(password)
+        mail_subject = 'Activate your Sae-Akgec Account'
+        message = render_to_string('acc_active_email.html', {
+                'user': user_obj,
+                'domain': 'localhost:8000',
+                'uid':urlsafe_base64_encode(force_bytes(user_obj.pk)).decode(),
+                'token':account_activation_token.make_token(user_obj),
+            })
+        to_email = email
+        send_mail = EmailMessage(
+                    mail_subject, message, to=[to_email]
+        )
+        send_mail.send()
         return validated_data
 
 
@@ -232,8 +251,11 @@ class UserLoginSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("A Username or Email is not valid")
 
         if user_obj:
+            if not user_obj.is_active:
+                raise serializers.ValidationError("Please Verify your confirmation Email")
             if not user_obj.check_password(password):
                 raise serializers.ValidationError("Incorrect credentials please try again")
+                
         payload = api_settings.JWT_PAYLOAD_HANDLER(user_obj)
         data["token"] = api_settings.JWT_ENCODE_HANDLER(payload)
         return data

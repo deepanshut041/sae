@@ -1,7 +1,7 @@
 from django.conf.urls import re_path, include, url
 from .views import (WorkshopListAPIView, EventListAPIView, 
                     WorkshopDetailAPIView, EventDetailAPIView, MemberListAPIView,
-                    UserRegisterAPIView, UserLoginAPIView)
+                    UserRegisterAPIView, UserLoginAPIView, UserEmailVerificationView)
 
 urlpatterns = [
     url(r'^events/$', EventListAPIView.as_view(), name='events'),
@@ -10,5 +10,7 @@ urlpatterns = [
     url(r'^events/detail/(?P<pk>[0-9]+)/$', EventDetailAPIView.as_view(), name='event-details'),
     url(r'^members/$', MemberListAPIView.as_view(), name='members'),
     url(r'^auth/register/$', UserRegisterAPIView.as_view(), name='user-register'),
-    url(r'^auth/login/$', UserLoginAPIView.as_view(), name='user-register')
+    url(r'^auth/login/$', UserLoginAPIView.as_view(), name='user-register'),
+    url(r'^auth/activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+        UserEmailVerificationView.as_view(), name='email-activation')
 ]

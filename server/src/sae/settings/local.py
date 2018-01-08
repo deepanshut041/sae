@@ -127,6 +127,13 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# For Sending Email
+# https://medium.com/@frfahim/django-registration-with-confirmation-email-bb5da011e4ef
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'tyagideepu133@gmail.com'
+EMAIL_HOST_PASSWORD = 'iluvmyself'
+EMAIL_PORT = 587
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
