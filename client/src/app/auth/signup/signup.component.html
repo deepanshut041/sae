@@ -1,0 +1,45 @@
+<div id="login-page">
+    <div class="container">
+        <form class="form-login">
+            <h2 class="form-login-heading">sign up</h2>
+            <div class="login-wrap">
+                <div class="textBox">
+                    <input class="text" type="textbox" onkeyup="this.setAttribute('value', this.value);" value="" />
+                    <label class="label">Full Name</label>
+                    <label class="error"></label>
+                </div>
+                <div class="textBox">
+                    <input class="text" type="textbox" onkeyup="this.setAttribute('value', this.value);" value="" />
+                    <label class="label">Student Number</label>
+                    <label class="error"></label>
+                </div>
+                <div class="textBox">
+                    <input class="text" type="textbox" onkeyup="this.setAttribute('value', this.value);" value="" />
+                    <label class="label">Email</label>
+                    <label class="error"></label>
+                </div>
+                <div class="textBox">
+                    <input class="text" type="password" onkeyup="this.setAttribute('value', this.value);" value="" />
+                    <label class="label">Password</label>
+                    <label class="error"></label>
+                </div>
+                <button class="btn btn-theme btn-block" type="submit" (click)="signup(
+                  email.value,
+                  password.value)">
+                    <i class="fa fa-lock"></i> SIGN UP</button>
+                <hr>
+                <div class="registration text-center">
+                    Already have an account?
+                    <br>
+                    <a  routerLink="../signin" routerLinkState="active">
+                        Signin
+                    </a>
+                </div>
+
+            </div>
+
+
+        </form>
+
+    </div>
+</div>
