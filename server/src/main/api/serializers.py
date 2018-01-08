@@ -219,6 +219,7 @@ class UserLoginSerializer(serializers.ModelSerializer):
     :param serializers.ModelSerializer: 
     """
     token = serializers.CharField(allow_blank=True, read_only=True)
+    id = serializers.CharField(allow_blank=True, read_only=True)
     username = serializers.CharField(label='Student Number', required=False, allow_blank=True)
     email = serializers.EmailField(label='Email Address', required=False, allow_blank=True)
 
@@ -228,7 +229,8 @@ class UserLoginSerializer(serializers.ModelSerializer):
             'username',
             'email',
             'password',
-            'token'
+            'token',
+            'id'
         ]
         extra_kwargs = {"password":{"write_only":True}}
 
@@ -258,4 +260,5 @@ class UserLoginSerializer(serializers.ModelSerializer):
                 
         payload = api_settings.JWT_PAYLOAD_HANDLER(user_obj)
         data["token"] = api_settings.JWT_ENCODE_HANDLER(payload)
+        data['username'] = user_obj.get_username()
         return data

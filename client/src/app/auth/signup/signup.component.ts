@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { AuthService } from "../auth.service";
 import { Router } from "@angular/router";
+import { FormGroup,FormControl, FormBuilder, Validators,ReactiveFormsModule} from "@angular/forms";
 
 
 @Component({
@@ -11,6 +12,7 @@ import { Router } from "@angular/router";
 
 export class SignupComponent implements OnInit {
   msg:any;
+  registerForm:FormGroup;
   constructor(private _authService:AuthService, private router:Router) { 
 
   }
@@ -21,16 +23,21 @@ export class SignupComponent implements OnInit {
     // if(user){
     //   this.router.navigate(['provider/dashboard']);
     // }
+    this.registerForm = new FormGroup({
+      email: new FormControl(''),
+      first_name: new FormControl(''),
+      last_name: new FormControl(''),
+      password: new FormControl(''),
+      username: new FormControl('')
+    });
   }
-  signup(email:string,password:string){
-    // var send = this._authService.signup(email,password)
-    // send.then((success)=>{
-    //   this._authService.getUser().sendEmailVerification().then(()=>{
-    //     this.router.navigate(['/provider/auth/verify']);
-    //   })
-    // }).catch((err)=>{
-    //   this.msg = err.message
-    //   console.log(this.msg);
-    // })
+  signup(){
+    console.log(this.registerForm.value)
+    this._authService.registerUser(this.registerForm.value).subscribe((response)=>{
+      console.log("User registered")
+      console.log(response)
+    },(err)=>{
+      console.log(err)
+    })
   }
 }
