@@ -87,6 +87,17 @@ REST_FRAMEWORK = {
     ),
 }
 
+# JWT_AUTH = {
+#     # how long the original token is valid for
+#     'JWT_EXPIRATION_DELTA': datetime.timedelta(days=2),
+
+#     # allow refreshing of tokens
+#     'JWT_ALLOW_REFRESH': True,
+
+#     # this is the maximum time AFTER the token was issued that
+#     # it can be refreshed.  exprired tokens can't be refreshed.
+#     'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
+# }
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
@@ -135,6 +146,7 @@ EMAIL_HOST_USER = 'tyagideepu133@gmail.com'
 EMAIL_HOST_PASSWORD = 'iluvmyself'
 EMAIL_PORT = 587
 
+
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
@@ -147,7 +159,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
