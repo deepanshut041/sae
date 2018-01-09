@@ -1,0 +1,26 @@
+<div *ngIf="classroom">
+    <div id="workshops" *ngIf="classroom.workshops" [ngStyle]="{'background-image': 'url('+workshops_background+')'}">
+        <div class="workshop-header text-center">
+            <h3><span>Workshops Enrolled</span></h3>
+        </div>
+        <div class="workshop-body">
+            <div class="row no-gutters justify-content-center row-eq-height">
+                <div class="col-lg-4 col-xl-3 col-md-6 col-sm-8 col-11" *ngFor="let workshop of classroom.workshops">
+                    <div routerLink="../course/{{workshop.id}}" class="inner-container" [ngStyle]="{
+                        'border-bottom': '6px solid ' + workshop.theme_color,
+                        'border-top': '4px solid ' + workshop.theme_color
+                    }">
+                        <div class="workshop-body-header" [ngStyle]="{'background': workshop.theme_color}">
+                            <h3 class="text-center">{{workshop.name}}</h3>
+                        </div>
+                        <div class="workshop-body-footer">
+                            <p class="text-muted">{{workshop.short_description}}</p>
+                            <h6>Date : {{workshop.start_date}}</h6>
+                            <h6>Venue: {{workshop.venue}}</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

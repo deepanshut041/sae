@@ -10,6 +10,7 @@ import { UserService } from "../user.service";
 export class ClassroomComponent implements OnInit {
   
   classroom:any;
+  workshops_background="/assets/classroom.svg"
   constructor(private __userService:UserService) { 
 
   }
