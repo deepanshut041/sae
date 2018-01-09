@@ -4,12 +4,14 @@ from rest_framework.response import Response
 from rest_framework import status, permissions
 from .permission import IsAdminOrReadOnly, IsSuperuserOrWriteOnly
 from django.contrib.auth.models import User
-from ..models import Workshop, Project, Member, Timeline, Organiser, Event, WorkshopFaqs, WorkshopPlan, EventTeam
+from ..models import (Workshop, Project, Member, Timeline, Organiser, Event,
+ WorkshopFaqs, WorkshopPlan, EventTeam, ProjectMaterial, PreWorkshopMaterial, WorkshopEnrollment, UserProfile)
 from .serializers import ( WorkshopModelSerializer, ProjectModelSerializer,
-                            MemberModelSerializer, TimelineModelSerializer,
-                            OrganiserModelSerializer,EventModelSerializer,
+                            MemberModelSerializer, TimelineModelSerializer,OrganiserModelSerializer,EventModelSerializer,
                              WorkshopFaqsModelSerializer, WorkshopPlanModelSerializer, EventTeamModelSerializer,
-                             UserRegisterSerializer,UserLoginSerializer)
+                             UserRegisterSerializer,UserLoginSerializer, ProjectMaterialModelSerializer,  PreWorkshopMaterialModelSerializer,
+                             WorkshopEnrollmentModelSerializer, UserProfileModelSerializer, UserModelSerializer)
+
 from .token import account_activation_token
 from django.core.mail import EmailMessage
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
@@ -250,4 +252,41 @@ class UserEmailVerificationView(View):
             user.save()
             return HttpResponse("Thank you for your email confirmation. Now you can login your account.")
         return HttpResponse("Activation link is invalid!")
-        
+
+# User View Goes here
+
+class ClassRoomView(APIView):
+
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get_workshop(self, pk):
+        try:
+            return Workshop.objects.get(pk=pk)
+        except Workshop.DoesNotExist:
+            raise Http404
+
+    def get_enrollment(self,user_id):
+        try:
+            return WorkshopEnrollment.objects.filter(user_id=user_id, enroll_status=True)
+        except EventTeam.DoesNotExist:
+            raise Http404
+    def get(self,request):
+        user = User.objects.get(username=request.user.username)
+        user_serializer = UserModelSerializer(user)
+        user_id =  user_serializer.data['id']
+
+        #Getting  Workshop in which user is enrolled 
+        enrollments = self.get_enrollment(user_id)
+        enrollments_serializer = WorkshopEnrollmentModelSerializer(enrollments, many=True)
+        workshops = []
+        for enrollment in enrollments_serializer.data:
+            workshop = self.get_workshop(enrollment['workshop_id'])
+            workshop_seralizer = WorkshopModelSerializer(workshop)
+            workshops.append(workshop_seralizer.data)
+
+        classroom_response ={}
+        classroom_response.update({"enrollments":enrollments_serializer.data})
+        classroom_response.update({"workshops":workshops}) 
+        return Response(classroom_response)
+
+

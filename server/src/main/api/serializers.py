@@ -173,6 +173,17 @@ class EventTeamModelSerializer(serializers.ModelSerializer):
             'member_id',
         ]
 
+
+class UserModelSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = ['id',
+        'username',
+        'email',
+        'first_name',
+        'last_name']
+
 class UserRegisterSerializer(serializers.ModelSerializer):
     """
     docstring here
@@ -311,7 +322,8 @@ class WorkshopEnrollmentModelSerializer(serializers.ModelSerializer):
             'payment_id',
             'leader_id',
             'enroll_date',
-            'is_user_local'
+            'is_user_local',
+            'enroll_status',
         ]
 
 class UserProfileModelSerializer(serializers.ModelSerializer):
