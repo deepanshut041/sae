@@ -2,7 +2,7 @@ from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, permissions
-from .permission import IsAdminOrReadOnly, IsSuperuserOrWriteOnly
+from .permission import IsAdminOrReadOnly, IsSuperuserOrWriteOnly, IsUserEnrolled
 from django.contrib.auth.models import User
 from ..models import (Workshop, Project, Member, Timeline, Organiser, Event,
  WorkshopFaqs, WorkshopPlan, EventTeam, ProjectMaterial, PreWorkshopMaterial, WorkshopEnrollment, UserProfile)
@@ -281,12 +281,63 @@ class ClassRoomView(APIView):
         workshops = []
         for enrollment in enrollments_serializer.data:
             workshop = self.get_workshop(enrollment['workshop_id'])
-            workshop_seralizer = WorkshopModelSerializer(workshop)
-            workshops.append(workshop_seralizer.data)
+            workshop_serializer = WorkshopModelSerializer(workshop)
+            workshops.append(workshop_serializer.data)
 
         classroom_response ={}
         classroom_response.update({"enrollments":enrollments_serializer.data})
         classroom_response.update({"workshops":workshops}) 
         return Response(classroom_response)
+
+
+class ClassCourseView(APIView):
+
+    permission_classes = (permissions.IsAuthenticated,IsUserEnrolled,)
+    def get_workshop(self, pk):
+        try:
+            return Workshop.objects.get(pk=pk)
+        except Workshop.DoesNotExist:
+            raise Http404
+    def get_projects(self, workshop_id):
+        try:
+            return Project.objects.filter(workshop=workshop_id)
+        except Project.DoesNotExist:
+            raise Http404
+    def get_project_material(self, project):
+        try:
+            return ProjectMaterial.objects.filter(project=project)
+        except ProjectMaterial.DoesNotExist:
+            raise Http404
+            
+    def get_pre_workshop_material(self, workshopid):
+        try:
+            return PreWorkshopMaterial.objects.filter(workshop=workshopid)
+        except PreWorkshopMaterial.DoesNotExist:
+            raise Http404
+
+    def get(self,request,workshopid):
+        workshop = self.get_workshop(workshopid)
+        workshop_serializer = WorkshopModelSerializer(workshop)
+        pre_material = self.get_pre_workshop_material(workshopid)
+        pre_material_serializer = PreWorkshopMaterialModelSerializer(pre_material,many=True)
+        projects = self.get_projects(workshopid)
+        projects_serializer = ProjectModelSerializer(projects, many=True)
+
+
+        # Give projects with material emmbeded in them
+        projects_response = []
+        for project in projects_serializer.data:
+            project_materials = self.get_project_material(project['id'])
+            material_serializer = ProjectMaterialModelSerializer(project_materials, many=True)
+            project['materials'] = material_serializer.data
+            projects_response.append(project)
+
+        course_response = {}
+        course_response.update(workshop_serializer.data)
+        course_response.update({"pre_material": pre_material_serializer.data})
+        course_response.update({"projects":projects_response})
+        return Response(course_response)
+        
+        
 
 

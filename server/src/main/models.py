@@ -125,7 +125,6 @@ class EventTeam(models.Model):
         return str(self.event) + " " + str(self.member_id)
 
 class ProjectMaterial(models.Model):
-    workshop = models.ForeignKey(Workshop, on_delete=models.CASCADE)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     material_link =  models.CharField(max_length=200, null=False, default="https://")
     material_name =   models.CharField(max_length=100, null=False) 

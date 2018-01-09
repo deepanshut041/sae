@@ -285,7 +285,6 @@ class ProjectMaterialModelSerializer(serializers.ModelSerializer):
         model = ProjectMaterial
         fields = [
             'id',
-            'workshop',
             'project',
             'material_link',
             'material_name',
