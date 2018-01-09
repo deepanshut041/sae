@@ -1,4 +1,27 @@
 <div *ngIf="course">
+    <div id="pre">
+        <div *ngIf="course.pre_material">
+            <div class="pre-header text-center">
+                <h3 [ngStyle]="{'color': course.theme_color}">
+                    <span>Pre Course Material</span>
+                </h3>
+            </div>
+            <div>
+                <section class="row clearfix" id="pre-container" *ngFor="let pre of course.pre_material">
+                    <div class="col-md-6 col-12" id="pre-container-image">
+                        <img src="{{pre.material_img}}" class="pre-image">
+                    </div>
+                    <div class="col-md-6 col-12" id="pre-container-text">
+                        <h1 class="heading" [ngStyle]="{'color': course.theme_color}">{{pre.material_name}}</h1>
+                        <p class="paragraph-2">{{pre.material_detail}}</p>
+                        <p class="material text-right">
+                            <a href="{{pre.material_link}}"> Know More</a>
+                        </p>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
     <div id="projects">
         <div *ngIf="course.projects">
             <div class="projects-header text-center">
@@ -17,7 +40,10 @@
                         <p class="paragraph-2">{{project.details}}</p>
                         <h6>Material</h6>
                         <div *ngFor="let material of project.materials">
-                            <p class="material"><i class="fa fa-play"></i><a href="{{material.material_link}}"> {{material.material_name}}</a></p>
+                            <p class="material">
+                                <i class="fa fa-play"></i>
+                                <a href="{{material.material_link}}"> {{material.material_name}}</a>
+                            </p>
                         </div>
                     </div>
                 </section>
