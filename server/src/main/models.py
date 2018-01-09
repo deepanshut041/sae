@@ -1,6 +1,7 @@
 """ This file contain model of website """
 from django.db import models
-
+from django.utils import timezone
+from django.contrib.auth.models import User
 # Create your models here.
 
 
@@ -17,6 +18,7 @@ class Workshop(models.Model):
     end_date = models.DateField(null=True)
     reg_status = models.BooleanField(default=False)
     status = models.CharField(max_length=60, default = "Comming Soon..")
+    wall_status = models.BooleanField(default=False)
     theme_color = models.CharField(max_length=10, default = "#84859d")
 
     def __str__(self):
@@ -121,4 +123,47 @@ class EventTeam(models.Model):
 
     def __str__(self):
         return str(self.event) + " " + str(self.member_id)
+
+class ProjectMaterial(models.Model):
+    workshop = models.ForeignKey(Workshop, on_delete=models.CASCADE)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    material_link =  models.CharField(max_length=200, null=False, default="https://")
+    material_name =   models.CharField(max_length=100, null=False) 
+
+    def __str__(self):
+        return str(self.project) + " " + str(self.material_name)
+
+class PreWorkshopMaterial(models.Model):
+    workshop = models.ForeignKey(Workshop, on_delete=models.CASCADE)
+    material_detail = models.TextField(null=False)
+    material_link =  models.CharField(max_length=200, default="https://")
+    material_name =   models.CharField(max_length=100, null=False)
+    material_img =  models.CharField(max_length=200, default="https://")
+
+    def __str__(self):
+        return str(self.workshop) + " " + str(self.material_name)
+
+class WorkshopEnrollment(models.Model):
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE,related_name='user')
+    team_id = models.CharField(max_length=30, null=False, editable=False)
+    workshop_id = models.ForeignKey(Workshop, on_delete=models.CASCADE)
+    payment_id = models.CharField(max_length=200, null=False, editable=False)
+    leader_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name='leader')
+    enroll_date = models.DateField(default=timezone.now, editable=False)
+    is_user_local = models.BooleanField(default=True)
+
+    class Meta:
+        unique_together = ('user_id', 'workshop_id',)
+    def __str__(self):
+        return str(self.workshop_id) + " " + str(self.team_id)
+
+class UserProfile(models.Model):
+    user_college = models.CharField(max_length=100, null=False)
+    user_id = models.OneToOneField(User, on_delete=models.CASCADE)
+    user_contact = models.IntegerField(null=False)
+    user_address = models.TextField(null=False)
+    user_local = models.BooleanField(default=True)
+
+
+
 

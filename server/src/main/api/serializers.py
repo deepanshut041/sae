@@ -2,7 +2,8 @@ from rest_framework import serializers
 from django.contrib.auth.models import User
 from django.db.models import Q
 from rest_framework_jwt.settings import api_settings
-from ..models import (Workshop, Project, Event, Timeline, Member, Organiser, WorkshopPlan, WorkshopFaqs, EventTeam)
+from ..models import (Workshop, Project, Event, Timeline, Member, Organiser, WorkshopPlan,
+ WorkshopFaqs, EventTeam, ProjectMaterial, PreWorkshopMaterial, WorkshopEnrollment, UserProfile)
 #  For Sending Email
 from django.template.loader import render_to_string
 from .token import account_activation_token
@@ -32,7 +33,8 @@ class WorkshopModelSerializer(serializers.ModelSerializer):
             'end_date',
             'reg_status',
             'status',
-            'theme_color'
+            'theme_color',
+            'wall_status'
             ]
 
 
@@ -262,3 +264,69 @@ class UserLoginSerializer(serializers.ModelSerializer):
         data["token"] = api_settings.JWT_ENCODE_HANDLER(payload)
         data['username'] = user_obj.get_username()
         return data
+
+class ProjectMaterialModelSerializer(serializers.ModelSerializer):
+    """
+    docstring here
+    :param serializers.ModelSerializer: 
+    """
+    class Meta:
+        model = ProjectMaterial
+        fields = [
+            'id',
+            'workshop',
+            'project',
+            'material_link',
+            'material_name',
+        ]
+
+class PreWorkshopMaterialModelSerializer(serializers.ModelSerializer):
+    """
+    docstring here
+    :param serializers.ModelSerializer: 
+    """
+    class Meta:
+        model = PreWorkshopMaterial
+        fields = [
+            'id',
+            'workshop',
+            'material_detail',
+            'material_link',
+            'material_name',
+            'material_img',
+        ]
+
+class WorkshopEnrollmentModelSerializer(serializers.ModelSerializer):
+    """
+    docstring here
+    :param serializers.ModelSerializer: 
+    """
+    class Meta:
+        model = WorkshopEnrollment
+        fields = [
+            'id',
+            'user_id',
+            'team_id',
+            'workshop_id',
+            'payment_id',
+            'leader_id',
+            'enroll_date',
+            'is_user_local'
+        ]
+
+class UserProfileModelSerializer(serializers.ModelSerializer):
+    """
+    docstring here
+    :param serializers.ModelSerializer: 
+    """
+    class Meta:
+        model = UserProfile
+        fields = [
+            'id',
+            'user_college',
+            'user_id',
+            'user_contact',
+            'user_address',
+            'user_local',
+        ]
+
