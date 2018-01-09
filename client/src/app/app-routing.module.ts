@@ -25,6 +25,9 @@ import { UserComponent } from "./user/user.component";
 // Shared Component
 import { Error404Component } from "./shared/error404/error404.component";
 
+// Auth Gaurd
+import { AuthGaurd } from "./auth/auth-gaurd.service";
+
 const routes: Routes = [
     { path: '', component: MainComponent },
     { path: 'contact', component: ContactComponent },
@@ -40,7 +43,7 @@ const routes: Routes = [
         ]
     },
     {
-        path: 'user', component: UserComponent, children: [
+        path: 'user', component: UserComponent,canActivate:[AuthGaurd], children: [
             { path: 'classroom', component: ClassroomComponent },
             { path: 'course/:id', component: CourseComponent },
             { path: 'register', component: RegisterComponent }

@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { AuthService } from "../auth.service";
 import { Router } from "@angular/router";
 import { FormGroup, FormControl, FormBuilder, Validators, ReactiveFormsModule } from "@angular/forms";
-
+import { AuthGaurd } from "../auth-gaurd.service";
 @Component({
   selector: "app-signin",
   templateUrl: "./signin.component.html",
@@ -13,17 +13,14 @@ export class SigninComponent implements OnInit {
 
   err: String;
   loginForm: FormGroup
-  constructor(private _authService: AuthService, private router: Router) {
+  constructor(private _authService: AuthService, private router: Router, private _authGaurd:AuthGaurd) {
 
   }
 
   ngOnInit() {
-    // const userKey = Object.keys(window.localStorage).filter(it => it.startsWith('firebase:authUser'))[0];
-    // const user = userKey ? JSON.parse(localStorage.getItem(userKey)) : undefined;
-    // if(user){
-    //   this.router.navigate(['provider/dashboard']);
-    // }
-
+    if(this._authGaurd.isLoggedIn){
+      this.router.navigateByUrl('')
+    }
     this.loginForm = new FormGroup({
       email: new FormControl(''),
       password: new FormControl('')
@@ -39,12 +36,9 @@ export class SigninComponent implements OnInit {
     let result = this._authService.loginUser(this.loginForm.value)
     result.subscribe((response) => {
       this._authService.storeUserData(response['token'], response['username'] ,response['email'])
-      console.log(response)
-      this._authService.getUsers().subscribe((response2)=>{
-        console.log(response2)
-      },(err)=>{
-        console.log(err)
-      })
+      this._authGaurd.changeLoginStatus(true)
+      let redirect_url = this._authGaurd.redirectUrl || ''
+      this.router.navigateByUrl(redirect_url)
     },
       (err) => {
         document.getElementById("form").style.display = "block";

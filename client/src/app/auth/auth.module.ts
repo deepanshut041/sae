@@ -10,6 +10,7 @@ import { SignupComponent } from "./signup/signup.component";
 import { VerifyComponent } from "./verify/verify.component";
 import { ResetComponent } from "./reset/reset.component";
 import { AuthService } from "./auth.service";
+import { AuthGaurd } from "./auth-gaurd.service";
 import { AuthComponent } from "./auth.component";
 
 @NgModule({
@@ -20,7 +21,7 @@ import { AuthComponent } from "./auth.component";
     ],
     exports: [
     ],
-    providers:[ AuthService]
+    providers:[ AuthService, AuthGaurd]
 })
 export class AuthModule {
 }
