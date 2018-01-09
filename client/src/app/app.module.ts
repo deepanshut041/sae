@@ -8,13 +8,14 @@ import { HomeModule } from "./home/home.module";
 import { AuthModule } from "./auth/auth.module";
 import { UserModule } from "./user/user.module";
 import { AppRoutingModule } from "./app-routing.module";
+import { SharedModule } from "./shared/shared.module";
 
 @NgModule({
   declarations: [
     AppComponent
   ],
   imports: [
-    BrowserModule, CoreModule, HomeModule, AppRoutingModule, AuthModule, UserModule
+    BrowserModule, CoreModule, HomeModule, AppRoutingModule, AuthModule, UserModule, SharedModule
   ],
   providers: [],
   bootstrap: [AppComponent]
