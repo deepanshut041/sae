@@ -16,25 +16,38 @@ import { ResetComponent } from "./auth/reset/reset.component";
 import { AuthService } from "./auth/auth.service";
 import { AuthComponent } from "./auth/auth.component";
 
-
+// User Module Component
+import { ClassroomComponent } from "./user/classroom/classroom.component";
+import { CourseComponent } from "./user/course/course.component";
+import { RegisterComponent } from "./user/register/register.component";
+import { UserComponent } from "./user/user.component";
 
 const routes: Routes = [
-     {path:'', component:MainComponent},
-     {path:'contact', component:ContactComponent},
-     {path:'team', component:TeamComponent},
-     {path:'workshop/:name', component:WorkshopComponent},
-     {path:'event/:id', component:EventComponent},
-     {path:'auth', component:AuthComponent,children:[
-        {path:'signin', component:SigninComponent},
-        {path: 'signup', component:SignupComponent},
-        {path: 'verify', component:VerifyComponent},
-        {path: 'reset', component:ResetComponent},
-        ]}
+    { path: '', component: MainComponent },
+    { path: 'contact', component: ContactComponent },
+    { path: 'team', component: TeamComponent },
+    { path: 'workshop/:name', component: WorkshopComponent },
+    { path: 'event/:id', component: EventComponent },
+    {
+        path: 'auth', component: AuthComponent, children: [
+            { path: 'signin', component: SigninComponent },
+            { path: 'signup', component: SignupComponent },
+            { path: 'verify', component: VerifyComponent },
+            { path: 'reset', component: ResetComponent },
+        ]
+    },
+    {
+        path: 'user', component: UserComponent, children: [
+            { path: 'classroom', component: ClassroomComponent },
+            { path: 'course/:id', component: CourseComponent },
+            { path: 'register', component: RegisterComponent }
+        ]
+    }
 ]
 
 @NgModule({
-    imports:[RouterModule.forRoot(routes)],
-    exports:[RouterModule]
+    imports: [RouterModule.forRoot(routes)],
+    exports: [RouterModule]
 })
 
 export class AppRoutingModule {
