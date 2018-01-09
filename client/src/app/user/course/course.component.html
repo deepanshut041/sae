@@ -1,0 +1,27 @@
+<div *ngIf="course">
+    <div id="projects">
+        <div *ngIf="course.projects">
+            <div class="projects-header text-center">
+                <h3 [ngStyle]="{'color': course.theme_color}">
+                    <span>Projects</span>
+                </h3>
+            </div>
+            <div>
+                <section class="row clearfix" id="project-container" *ngFor="let project of course.projects">
+                    <div class="col-md-6 col-12" id="project-container-image">
+                        <div class="type" [ngStyle]="{'background': course.theme_color}">{{project.tech}}</div>
+                        <img src="{{project.img}}" class="project-image">
+                    </div>
+                    <div class="col-md-6 col-12" id="project-container-text">
+                        <h1 class="heading" [ngStyle]="{'color': course.theme_color}">{{project.name}}</h1>
+                        <p class="paragraph-2">{{project.details}}</p>
+                        <h6>Material</h6>
+                        <div *ngFor="let material of project.materials">
+                            <p class="material"><i class="fa fa-play"></i><a href="{{material.material_link}}"> {{material.material_name}}</a></p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>

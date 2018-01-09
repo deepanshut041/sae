@@ -75,84 +75,87 @@
     <!-- Projects section goes here -->
     <article id="projects">
         <div *ngIf="workshop.projects">
-            <h3 class="text-center"><span
-                [ngStyle]="{
+            <div class="projects-header text-center">
+                <h3 [ngStyle]="{'color': workshop.theme_color}">
+                    <span>Projects</span>
+                </h3>
+            </div>
+            <div>
+                <section class="row clearfix" id="project-container" *ngFor="let project of workshop.projects">
+                    <div class="col-md-6 col-12" id="project-container-image">
+                        <div class="type" [ngStyle]="{'background': workshop.theme_color}">{{project.tech}}</div>
+                        <img src="{{project.img}}" class="project-image">
+                    </div>
+                    <div class="col-md-6 col-12" id="project-container-text">
+                        <h1 class="heading" [ngStyle]="{'color': workshop.theme_color}">{{project.name}}</h1>
+                        <p class="paragraph-2">{{project.details}}</p>
+                    </div>
+                </section>
+            </div>
+        </div>
+        </article>
+
+        <!-- Team section goes here -->
+        <article id="team" [ngStyle]="{'background-image': 'url('+team_background+')'}">
+            <div *ngIf="workshop.organisers">
+                <h3 class="text-center">
+                    <span [ngStyle]="{
                     'color': workshop.theme_color,
                     'border-bottom':'2px solid ' + workshop.theme_color
-                }"
-                >Projects</span></h3>
-            <div *ngFor="let project of workshop.projects">
+                }">Coordinators</span>
+                </h3>
                 <div class="row no-gutters justify-content-center equal">
-                    <div class="col-12 col-md-5 col-lg-4 project-img" [ngStyle]="{'background-image': 'url('+project.img+')'}">
-                    </div>
-                    <div class="col-12 col-md-7 col-lg-7 project-detail">
-                        <h5>{{project.name}}</h5>
-                        <p class="text-muted">{{project.tech}}</p>
-                        <p>{{project.details}}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </article>
-
-    <!-- Team section goes here -->
-    <article id="team" [ngStyle]="{'background-image': 'url('+team_background+')'}">
-        <div *ngIf="workshop.organisers">
-            <h3 class="text-center"><span
-                [ngStyle]="{
-                    'color': workshop.theme_color,
-                    'border-bottom':'2px solid ' + workshop.theme_color
-                }"
-                >Coordinators</span></h3>
-            <div class="row no-gutters justify-content-center equal">
-                <div class="col-6 col-sm-4 col-md-3 col-lg-2" *ngFor="let member of workshop.organisers">
-                    <div class="team-member image-fluid">
-                        <div class="member-pic" [ngStyle]="{'background-image': 'url('+member.img+')'}">
-                        </div>
-                        <div class="member-info">
-                            <h6>{{member.name}}</h6>
-                            <h6>{{member.contact}}</h6>                    
-                        </div>
-                        <div class="member-dept" [ngStyle]="{'background': workshop.theme_color}">
-                            <h6>{{member.department}}</h6>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </article>
-
-    <!-- Plans section Goes here -->
-    <article id="plans">
-        <div *ngIf="workshop.plans">
-                <h3 class="text-center"><span
-                    [ngStyle]="{
-                        'color': workshop.theme_color,
-                        'border-bottom':'2px solid ' + workshop.theme_color
-                    }"
-                    >Plans</span></h3>
-            <div class="row no-gutters justify-content-center row-eq-height">
-                <div *ngFor="let plan of workshop.plans" class="col-12 col-sm-6 col-md-6 col-lg-3 plan-container" [ngStyle]="{'border': '2px solid ' + workshop.theme_color}">
-                    <div>
-                        <div class="text-center">
-                            <p [ngStyle]="{'background': workshop.theme_color}">Team Limit : {{plan.team_limit}}</p>
-                        </div>
-                        <div class="plan-details text-center">
-                            <h6 [ngStyle]="{'color': workshop.theme_color}"><i class="fa fa-inr fa-2x"></i> <span> {{plan.price}}</span></h6>
-                            <h5 class="text-muted">{{plan.title}}</h5>
-                            <hr [ngStyle]="{
-                                'color': workshop.theme_color,
-                                'border-top':'2px solid ' + workshop.theme_color
-                            }">
-                            <div>
-                                <p>{{plan.details}}</p>
+                    <div class="col-6 col-sm-4 col-md-3 col-lg-2" *ngFor="let member of workshop.organisers">
+                        <div class="team-member image-fluid">
+                            <div class="member-pic" [ngStyle]="{'background-image': 'url('+member.img+')'}">
+                            </div>
+                            <div class="member-info">
+                                <h6>{{member.name}}</h6>
+                                <h6>{{member.contact}}</h6>
+                            </div>
+                            <div class="member-dept" [ngStyle]="{'background': workshop.theme_color}">
+                                <h6>{{member.department}}</h6>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="text-center">
-                <button (mouseover)="hover = true" (mouseout)="hover = false" [ngStyle]="hover
+        </article>
+
+        <!-- Plans section Goes here -->
+        <article id="plans">
+            <div *ngIf="workshop.plans">
+                <h3 class="text-center">
+                    <span [ngStyle]="{
+                        'color': workshop.theme_color,
+                        'border-bottom':'2px solid ' + workshop.theme_color
+                    }">Plans</span>
+                </h3>
+                <div class="row no-gutters justify-content-center row-eq-height">
+                    <div *ngFor="let plan of workshop.plans" class="col-12 col-sm-6 col-md-6 col-lg-3 plan-container" [ngStyle]="{'border': '2px solid ' + workshop.theme_color}">
+                        <div>
+                            <div class="text-center">
+                                <p [ngStyle]="{'background': workshop.theme_color}">Team Limit : {{plan.team_limit}}</p>
+                            </div>
+                            <div class="plan-details text-center">
+                                <h6 [ngStyle]="{'color': workshop.theme_color}">
+                                    <i class="fa fa-inr fa-2x"></i>
+                                    <span> {{plan.price}}</span>
+                                </h6>
+                                <h5 class="text-muted">{{plan.title}}</h5>
+                                <hr [ngStyle]="{
+                                'color': workshop.theme_color,
+                                'border-top':'2px solid ' + workshop.theme_color
+                            }">
+                                <div>
+                                    <p>{{plan.details}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button (mouseover)="hover = true" (mouseout)="hover = false" [ngStyle]="hover
                         ?{
                             'border': '2px solid ' + workshop.theme_color,
                             'background':workshop.theme_color,
@@ -163,37 +166,37 @@
                             'background': 'transparent',
                             'color': workshop.theme_color
                         }">Register Now</button>
+                </div>
             </div>
-        </div>
-    </article>
+        </article>
 
-    <!-- Faqs section Goes here -->
-    <article id="faqs" [ngStyle]="{'background-image': 'url('+faqs_background+')'}">
-        <div *ngIf="workshop.faqs">
-                <h3 class="text-center"><span
-                    [ngStyle]="{
+        <!-- Faqs section Goes here -->
+        <article id="faqs" [ngStyle]="{'background-image': 'url('+faqs_background+')'}">
+            <div *ngIf="workshop.faqs">
+                <h3 class="text-center">
+                    <span [ngStyle]="{
                         'color': workshop.theme_color,
                         'border-bottom':'2px solid ' + workshop.theme_color
-                    }"
-                    >Faqs</span></h3>
-            <div *ngFor="let faq of workshop.faqs; let j=index" class="row no-gutters">
-                <div class="col-lg-1 col-md-1"></div>
-                <div class="col-12 col-md-8 col-lg-6">
-                    <div class="faq-container">
-                        <h6>
-                            <button class="text-center"(click)="btn = j">
-                                <i class="fa fa-plus"></i>
-                            </button>{{faq.question}}</h6>
-                        <p [ngStyle]="btn ===j
+                    }">Faqs</span>
+                </h3>
+                <div *ngFor="let faq of workshop.faqs; let j=index" class="row no-gutters">
+                    <div class="col-lg-1 col-md-1"></div>
+                    <div class="col-12 col-md-8 col-lg-6">
+                        <div class="faq-container">
+                            <h6>
+                                <button class="text-center" (click)="btn = j">
+                                    <i class="fa fa-plus"></i>
+                                </button>{{faq.question}}</h6>
+                            <p [ngStyle]="btn ===j
                         ?{
                             'display': 'block'
                         }
                         :{
                             'display':'none'
                         }">{{faq.answer}}</p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </article>
+        </article>
 </div>
