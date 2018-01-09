@@ -13,6 +13,7 @@ export class WorkshopComponent implements OnInit {
   workshop_name
   workshop
   faqs_background='/assets/faqs.jpg'
+  team_background = 'assets/auth.png'
   constructor(private route: ActivatedRoute, private router: Router, private __mainService: MainService) {
     this.workshop_name = this.route.snapshot.paramMap.get('name');
   }

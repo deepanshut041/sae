@@ -7,7 +7,7 @@ import { Component, OnInit } from "@angular/core";
 })
 
 export class AuthComponent implements OnInit {
-  auth_background = 'assets/auth.gif'
+  auth_background = 'assets/auth.png'
   constructor() { 
 
   }

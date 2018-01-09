@@ -114,7 +114,9 @@
 /* Teams css goes here */
 
 #team{
-    padding:50px 10px; 
+    padding:50px 10px;
+    background-size:cover;
+    background-position: center;
 }
 #team h3{
     padding-top: 50px;
@@ -125,18 +127,42 @@
 #team h3 span{
     padding: 10px 30px;
 }
-#team .team-container{
-    margin: 10px;
-    background: #f7f7f9;
+#team div .team-member{
+    background-color: #000;
+    height: 250px;
+    overflow: hidden;
+    margin: 15px 0;  
+    position: relative;    
 }
 
-#team .team-container h6{
-    margin-top: 20px;
-    font-weight: 600;
+#team div .member-pic{
+    height: 200px;
+    background-size: cover;
 }
-#team .team-container p{
-    padding-bottom: 10px;
-    font-size: 12px;
+#team div .member-info{
+    height: 100px;
+    color: #fff;
+    background-color: #212121;
+    transition: 1s;
+    text-align: center;
+    z-index: 15;
+}
+#team div .member-info:hover{
+    margin-top: -50px;
+}
+#team div .member-dept{
+    color: #fff;
+    top: 10px;
+    width: 100px;
+    left:0;
+    z-index: 10;
+    padding-left: 10px;
+    padding-top: 3px;
+    position: absolute;
+}
+
+#team div .member-dept h6{
+    font-weight: 600;
 }
 
 /* Plans styling goes here */
