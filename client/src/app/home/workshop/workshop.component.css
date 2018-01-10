@@ -196,16 +196,19 @@
 #team h3 span{
     padding: 10px 30px;
 }
+#team .team-container{
+    width: 170px;
+    margin: 10px;
+}
 #team div .team-member{
     background-color: #000;
-    height: 250px;
-    overflow: hidden;
-    margin: 15px 0;  
+    height: 200px;
+    overflow: hidden;  
     position: relative;    
 }
 
 #team div .member-pic{
-    height: 200px;
+    height: 150px;
     background-size: cover;
 }
 #team div .member-info{
@@ -213,25 +216,49 @@
     color: #fff;
     background-color: #212121;
     transition: 1s;
-    text-align: center;
     z-index: 15;
+    padding-left: 10px;
 }
 #team div .member-info:hover{
     margin-top: -50px;
+    transform: scale(1.05);
+    transition: all .1 fade-in;
 }
+#team div .member-info h6.text-name{
+    padding-top: 15px;
+    padding-bottom:10px;
+    font-size: 15px;
+}
+#team div .member-info h6.text-left{
+    padding-top: 5px;
+    font-size: 10px;
+    font-weight: 600; 
+}
+#team div .member-info h6.text-contact{
+    font-size: 12px;
+    font-weight: 600; 
+}
+#team div .member-info h6.text-contact a{
+    text-decoration: none;
+}
+#team div .member-info h6.text-contact a i{
+    padding-right: 5px;
+}
+
 #team div .member-dept{
     color: #fff;
-    top: 10px;
-    width: 100px;
+    top: 0px;
     left:0;
     z-index: 10;
-    padding-left: 10px;
-    padding-top: 3px;
+    padding-top: 0px;
     position: absolute;
 }
 
 #team div .member-dept h6{
-    font-weight: 600;
+    font-weight: 400;
+    padding: 5px 15px;
+    margin-bottom: 0px;
+    font-size: 13px;
 }
 
 /* Plans styling goes here */
@@ -307,12 +334,18 @@
     font-weight: 600;
     padding-bottom: 10px;
 }
+
 #faqs h3 span{
-    padding: 10px 30px;
+    color: #d49261;
+    border-bottom: 1px solid #d49261;
+    padding-bottom: 5px;
 }
 #faqs .faq-container{
     margin-bottom: 10px;
-    padding: 10px;
+    margin:5px;
+    padding: 15px;
+    border: 0.3px solid #e7e7eb;
+
 }
 #faqs .faq-container h6{
     font-weight: 600;
@@ -321,14 +354,21 @@
 #faqs .faq-container h6 button{
     padding: 2px 4px;
     border-radius: 2px;
-    background: #000;
-    color: #fff;
     border:0px;
-    margin-right: 10px;
+    font-weight: 600;
+    background: transparent;
+}
+
+#faqs .faq-container h6 i{
+    padding-right: 10px;
+    color:#d49261;
+    font-weight: 900;
+    padding-left: 15px;
 }
 #faqs .faq-container p{
-    margin-left: 30px;
+    margin-left: 40px;
     margin-top: 0px;
-    padding-top: 0px;
-    font-size: 14px;
+    padding-top: 5px;
+    font-size: 13px;
+    font-weight: 600;
 }

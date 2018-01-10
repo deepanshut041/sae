@@ -83,8 +83,8 @@ class Timeline(models.Model):
 
 
 class Member(models.Model):
-    Mechanical = 'Me'
-    Innovation = 'In'
+    Mechanical = 'Mechanical'
+    Innovation = 'Innovation'
     CATEGORY_CHOICES = (
         (Innovation, 'Innovation'),
         (Mechanical, 'Mechanical')
@@ -100,7 +100,7 @@ class Member(models.Model):
     year = models.IntegerField(null=False)
     branch = models.CharField(max_length=30, null=False)
     img = models.CharField(max_length=200, null=False, default="https://")
-    category = models.CharField(max_length=2, choices=CATEGORY_CHOICES, null=False, default=Mechanical)
+    category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, null=False, default=Mechanical)
     department = models.CharField(max_length=20, null=False)
     fb_id = models.CharField(max_length=200, null=False, default="https://")
     gender = models.CharField(max_length=1, null=False, choices=GENDER_CHOICES, default='M')
