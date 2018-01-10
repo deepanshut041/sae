@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { AuthService } from "../auth.service";
 import { Router } from "@angular/router";
 import { FormGroup,FormControl, FormBuilder, Validators,ReactiveFormsModule} from "@angular/forms";
-
+import { AuthGaurd } from "../auth-gaurd.service";
 
 @Component({
   selector: "app-signup",
@@ -15,7 +15,7 @@ export class SignupComponent implements OnInit {
   registerForm:FormGroup;
   err:any;
   email_pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-  constructor(private _authService:AuthService, private router:Router, private fb:FormBuilder) {
+  constructor(private _authService:AuthService, private router:Router, private fb:FormBuilder, private _authGaurd:AuthGaurd) {
     this.registerForm = fb.group({
       'first_name':[null, Validators.compose([Validators.required, Validators.minLength(2)])],
       'last_name':[null, Validators.compose([Validators.required, Validators.minLength(2)])],
@@ -31,6 +31,9 @@ export class SignupComponent implements OnInit {
   ngOnInit() {
     this.turnOffSpinner()
     this.turnOffSuccess()
+    if(this._authGaurd.isLoggedIn){
+      this.router.navigateByUrl('')
+    }
   }
   signup(){
     this.turnOnSpinner()

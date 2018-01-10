@@ -1,4 +1,8 @@
 import { Component, OnInit,AfterViewInit } from "@angular/core";
+import { CoreService } from "../core.service";
+import { AuthGaurd } from "../../auth/auth-gaurd.service";
+import { AuthService } from "../../auth/auth.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-navbar",
@@ -7,13 +11,27 @@ import { Component, OnInit,AfterViewInit } from "@angular/core";
 })
 
 export class NavbarComponent implements OnInit {
-
-  constructor() {
+  isActive:boolean = false;
+  auth_subscription: any;
+  constructor(private coreService:CoreService,
+     private authGaurd:AuthGaurd, private router:Router, private authService:AuthService) {
 
   }
 
   ngOnInit() {
+    this.coreService.verifyUser().subscribe((res)=>{
+      console.log(res)
+      this.isActive = true
+      this.authGaurd.isLoggedIn = true
+      this.authService.changeState(true)
+    },(err)=>{
+      this.isActive = false
+      this.authService.changeState(false)
+    })
 
+    this.auth_subscription = this.authService.status.subscribe(status => {
+      this.isActive = status;
+  });
   }
 
   ngAfterViewInit() {
@@ -32,5 +50,13 @@ export class NavbarComponent implements OnInit {
         empty_nav.classList.remove("do");
       }
     })
+  }
+
+  signOut(){
+    this.coreService.logout()
+    this.isActive = false
+    this.authGaurd.isLoggedIn = false
+    this.router.navigate([''])
+    this.authService.changeState(false)
   }
 }

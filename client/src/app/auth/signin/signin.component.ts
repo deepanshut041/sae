@@ -3,6 +3,8 @@ import { AuthService } from "../auth.service";
 import { Router } from "@angular/router";
 import { FormGroup, FormControl, FormBuilder, Validators, ReactiveFormsModule } from "@angular/forms";
 import { AuthGaurd } from "../auth-gaurd.service";
+import {CoreService} from '../../core/core.service'
+
 @Component({
   selector: "app-signin",
   templateUrl: "./signin.component.html",
@@ -15,7 +17,7 @@ export class SigninComponent implements OnInit {
   loginForm: FormGroup
   email_pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
   constructor(private _authService: AuthService, private router: Router,
-     private _authGaurd:AuthGaurd, private fb:FormBuilder) {
+     private _authGaurd:AuthGaurd, private fb:FormBuilder, private coreService:CoreService) {
       this.loginForm = fb.group({
         'password':[null, Validators.compose([Validators.required, Validators.minLength(6)])],
         'email':[null, Validators.compose([
@@ -32,7 +34,6 @@ export class SigninComponent implements OnInit {
   }
   login() {
     this.err = null;
-
     this.turnOnSpinner()
     let result = this._authService.loginUser(this.loginForm.value)
     result.subscribe((response) => {
@@ -40,6 +41,7 @@ export class SigninComponent implements OnInit {
       this._authGaurd.changeLoginStatus(true)
       let redirect_url = this._authGaurd.redirectUrl || ''
       this.router.navigateByUrl(redirect_url)
+      this._authService.changeState(true);
     },
       (err) => {
         this.turnOffSpinner()

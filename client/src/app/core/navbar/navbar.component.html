@@ -6,27 +6,27 @@
         </button>
         <div class="justify-content-end order-md-2 order-1">
             <ul class="nav navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link active" href="#questions"><i class="fa fa-user-o"></i>  Login in</a>
+                <li class="nav-item" *ngIf="!isActive">
+                    <a class="nav-link active" routerLink="./auth/signin"><i class="fa fa-user-o"></i>  Sign in</a>
+                </li>
+                <li class="nav-item" *ngIf="isActive">
+                    <a class="nav-link active" (click)="signOut()"><i class="fa fa-user-o"></i>  Sign out</a>
                 </li>
             </ul>
         </div>
         <div class="collapse navbar-collapse order-md-1 order-2" id="navbarSupportedContent">
             <ul class="nav navbar-nav">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#about">About</a>
+                    <a class="nav-link" routerLink="">Home</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="#service">Events</a>
+                    <a class="nav-link" routerLink="./team">Team</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="#whyus">Team</a>
+                    <a class="nav-link active" routerLink="./user/classroom">Classroom</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="#whyus">Workshop</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="#questions">Contact Us</a>
+                    <a class="nav-link active" routerLink="./contact">Contact Us</a>
                 </li>
             </ul>
         </div>

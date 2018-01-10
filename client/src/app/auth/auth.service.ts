@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-
+import { Observable,Observer } from "rxjs/Rx"
 /**
  * @description
  * @class
@@ -11,8 +11,12 @@ export class AuthService {
   authToken:any;
   email:any;
   username:any;
+  status: Observable<boolean>;
+  private observer: Observer<boolean>;
   constructor(private http:HttpClient) {
-    
+    this.status = new Observable<boolean>(observer =>
+      this.observer = observer
+  ).share();
   }
 
   registerUser(user){
@@ -52,6 +56,9 @@ export class AuthService {
   loadToken(){
     const token = localStorage.getItem('id_token');
     this.authToken = token
+  }
+  changeState(newState: boolean) {
+    if (this.observer !== undefined) this.observer.next(newState);
   }
 
 }
