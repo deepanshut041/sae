@@ -17,7 +17,7 @@ export class SigninComponent implements OnInit {
   constructor(private _authService: AuthService, private router: Router,
      private _authGaurd:AuthGaurd, private fb:FormBuilder) {
       this.loginForm = fb.group({
-        'password':[null, Validators.compose([Validators.required, Validators.minLength(8)])],
+        'password':[null, Validators.compose([Validators.required, Validators.minLength(6)])],
         'email':[null, Validators.compose([
           Validators.required, Validators.pattern (this.email_pattern)
         ])]
@@ -28,14 +28,12 @@ export class SigninComponent implements OnInit {
     if(this._authGaurd.isLoggedIn){
       this.router.navigateByUrl('')
     }
-    document.getElementById("spinner").style.display = "none";
-    document.getElementById("login-page").style.display = "block";
+    this.turnOffSpinner()
   }
   login() {
     this.err = null;
 
-    document.getElementById("form").style.display = "none";
-    document.getElementById("spinner").style.display = "block";
+    this.turnOnSpinner()
     let result = this._authService.loginUser(this.loginForm.value)
     result.subscribe((response) => {
       this._authService.storeUserData(response['token'], response['username'] ,response['email'])
@@ -44,13 +42,22 @@ export class SigninComponent implements OnInit {
       this.router.navigateByUrl(redirect_url)
     },
       (err) => {
-        document.getElementById("form").style.display = "block";
-        document.getElementById("spinner").style.display = "none";
+        this.turnOffSpinner()
         let error = err['error']
         let non_field_errors = error['non_field_errors']
         this.err = non_field_errors[0];
       }
     )
   }
+
+  turnOffSpinner(){
+    document.getElementById("form").style.display = "block";
+    document.getElementById("spinner").style.display = "none";
+  }
+  turnOnSpinner(){
+    document.getElementById("form").style.display = "none";
+    document.getElementById("spinner").style.display = "block";
+  }
+  
 
 }

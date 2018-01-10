@@ -4,15 +4,22 @@
             <h2 class="form-login-heading">sign in now</h2>
             <div class="login-wrap" id="form">
                 <div class="textBox">
-                    <input class="text" type="textbox" onkeyup="this.setAttribute('value', this.value);" value="" formControlName="email"/>
-                    <label class="label">Email</label>
+                    <input class="text" type="textbox" onkeyup="this.setAttribute('value', this.value);" value="" formControlName="email"
+                    [ngStyle]="!loginForm.controls['email'].valid && loginForm.controls['email'].touched ?{'border-color': '#EF9A9A'}:{}"
+                    />
+                    <label class="label"
+                    [ngStyle]="!loginForm.controls['email'].valid && loginForm.controls['email'].touched ?{'color': '#FF5252'}:{}">Email</label>
                     <label class="error text-right" *ngIf="!loginForm.controls['email'].valid && loginForm.controls['email'].touched"
                     >Please Enter a valid email</label>
                 </div>
                 <div class="textBox">
-                    <input class="text" type="password" onkeyup="this.setAttribute('value', this.value);" value="" formControlName="password"/>
-                    <label class="label">Password</label>
-                    <label class="error text-right" *ngIf="!loginForm.controls['password'].valid && loginForm.controls['password'].touched">Please Enter a valid Password</label>
+                    <input class="text" type="password" onkeyup="this.setAttribute('value', this.value);" value="" formControlName="password"
+                    [ngStyle]="!loginForm.controls['password'].valid && loginForm.controls['password'].touched ?{'border-color': '#EF9A9A'}:{}"
+                    />
+                    <label class="label"
+                    [ngStyle]="!loginForm.controls['password'].valid && loginForm.controls['password'].touched ?{'color': '#FF5252'}:{}">Password</label>
+                    <label class="error text-right" *ngIf="!loginForm.controls['password'].valid && loginForm.controls['password'].touched"
+                    >Please Enter a valid Password</label>
                 </div>
                 <label class="checkbox">
                     <span class="pull-right">
