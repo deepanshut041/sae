@@ -26,7 +26,7 @@ header img{
 #workshop h1{
     padding-top: 50px;
     margin-bottom: 30px;
-    color: #f6a665;
+    color: rgb(245, 152, 77);
     font-weight: 200;
     font-size: 45px;
 }
@@ -80,7 +80,7 @@ header img{
 #event h1{
     padding-top: 50px;
     margin-bottom: 30px;
-    color: #f6a665;
+    color: rgb(245, 152, 77);
     font-weight: 200;
     font-size: 45px;
 }
@@ -138,7 +138,7 @@ header img{
 
 #about h1{
     margin-bottom: 30px;
-    color: #f6a665;
+    color: rgb(245, 152, 77);
     font-weight: 200;
     font-size: 45px;
 }
@@ -171,8 +171,8 @@ header img{
     padding: 12px 50px;
     border-radius: 25px;
     background: transparent;
-    border: 2px solid #f6a665;
-    color: #f6a665;
+    border: 2px solid rgb(245, 152, 77);
+    color: rgb(245, 152, 77);
     transition: all 1s fade-in;
     font-weight: 600;
     margin-top: 10px;
@@ -183,6 +183,6 @@ header img{
     outline: none;
 }
 #news button:hover{
-    background: #f6a665;
+    background: rgb(245, 152, 77);
     color: #fff;
 }

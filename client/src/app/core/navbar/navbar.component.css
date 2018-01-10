@@ -1,7 +1,7 @@
 nav{
     background: #fff;
     padding:0px 0px;
-    color: #f6a665;
+    color: rgb(245, 152, 77);
 }
 .container {
     padding-left: 1px;
@@ -23,7 +23,7 @@ nav{
     margin-right: 4%;
 }
 .nav-link{
-    color: #fac192;
+    color: rgb(245, 152, 77);
     font-weight: 600;
     padding: 25px 20px!important;
     border-bottom: 3px solid #fff;
@@ -32,7 +32,7 @@ nav{
     
 }
 .nav-link:hover{
-    border-bottom: 3px solid #f6a665;
+    border-bottom: 3px solid rgb(245, 152, 77);
     background-color: #f7f7f9;
 }
 
@@ -40,7 +40,7 @@ nav{
     outline: 0px;
 }
 button.navbar-toggler span i{
-    color: #f6a665;
+    color: rgb(245, 152, 77);
     padding-right: 10px;
 }
 div.justify-content-end a{
@@ -48,9 +48,9 @@ div.justify-content-end a{
     transition: all .4s fade-out;
 }
 div.justify-content-end a:hover{
-    background: #f6a665;
+    background: rgb(240, 168, 110);
     color: #fff;
-    border-bottom: 3px solid #f6a665;
+    border-bottom: 3px solid rgb(240, 168, 110);
 }
 
 #empty-navbar{
