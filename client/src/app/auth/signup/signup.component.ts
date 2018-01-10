@@ -13,23 +13,21 @@ import { FormGroup,FormControl, FormBuilder, Validators,ReactiveFormsModule} fro
 export class SignupComponent implements OnInit {
   msg:any;
   registerForm:FormGroup;
-  constructor(private _authService:AuthService, private router:Router) { 
+  email_pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  constructor(private _authService:AuthService, private router:Router, private fb:FormBuilder) {
+    this.registerForm = fb.group({
+      'first_name':[null, Validators.compose([Validators.required, Validators.minLength(2)])],
+      'last_name':[null, Validators.compose([Validators.required, Validators.minLength(2)])],
+      'username':[null, Validators.compose([Validators.required, Validators.minLength(2)])],
+      'password':[null, Validators.compose([Validators.required, Validators.minLength(8)])],
+      'email':[null, Validators.compose([
+        Validators.required, Validators.pattern (this.email_pattern)
+      ])]
+    })  
 
   }
 
   ngOnInit() {
-    // const userKey = Object.keys(window.localStorage).filter(it => it.startsWith('firebase:authUser'))[0];
-    // const user = userKey ? JSON.parse(localStorage.getItem(userKey)) : undefined;
-    // if(user){
-    //   this.router.navigate(['provider/dashboard']);
-    // }
-    this.registerForm = new FormGroup({
-      email: new FormControl(''),
-      first_name: new FormControl(''),
-      last_name: new FormControl(''),
-      password: new FormControl(''),
-      username: new FormControl('')
-    });
   }
   signup(){
     console.log(this.registerForm.value)

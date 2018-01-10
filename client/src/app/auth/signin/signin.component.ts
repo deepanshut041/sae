@@ -13,22 +13,25 @@ export class SigninComponent implements OnInit {
 
   err: String;
   loginForm: FormGroup
-  constructor(private _authService: AuthService, private router: Router, private _authGaurd:AuthGaurd) {
-
+  email_pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  constructor(private _authService: AuthService, private router: Router,
+     private _authGaurd:AuthGaurd, private fb:FormBuilder) {
+      this.loginForm = fb.group({
+        'password':[null, Validators.compose([Validators.required, Validators.minLength(8)])],
+        'email':[null, Validators.compose([
+          Validators.required, Validators.pattern (this.email_pattern)
+        ])]
+      }) 
   }
 
   ngOnInit() {
     if(this._authGaurd.isLoggedIn){
       this.router.navigateByUrl('')
     }
-    this.loginForm = new FormGroup({
-      email: new FormControl(''),
-      password: new FormControl('')
-    });
     document.getElementById("spinner").style.display = "none";
     document.getElementById("login-page").style.display = "block";
   }
-  login(email: any, password: any) {
+  login() {
     this.err = null;
 
     document.getElementById("form").style.display = "none";

@@ -34,7 +34,9 @@
     background-color: #656684;
     border-color: #656684;
 }
-
+.checkbox{
+    margin-top: 10px;
+}
 
 .login-wrap .registration {
     text-align: center;
@@ -105,10 +107,11 @@ div.alert-danger{
   
   .textBox .error {
     position: absolute;
-    margin-top: 48px;
+    margin-top: 40px;
     width: 100%;
     color: #e74c3c;
-    text-align: center;
+    font-size: 12px;
+    font-weight: 400;
   }
   
   .textBox > input.text:focus ~ .label, .textBox > input.text:not([value=""]) ~ .label {

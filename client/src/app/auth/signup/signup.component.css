@@ -12,6 +12,7 @@
     color: #fff;
     background-color: #656684;
     border-color: #656684;
+    margin-top: 15px;
 }
 
 .form-login h2.form-login-heading {
@@ -80,10 +81,14 @@
   
   .textBox .error {
     position: absolute;
-    margin-top: 48px;
+    margin-top: 40px;
     width: 100%;
     color: #e74c3c;
-    text-align: center;
+    font-size: 12px;
+    font-weight: 400;
+  }
+  .error-border{
+    border-color: #e74c3c;
   }
   
   .textBox > input.text:focus ~ .label, .textBox > input.text:not([value=""]) ~ .label {

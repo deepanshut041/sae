@@ -1,24 +1,25 @@
 <div id="login-page">
     <div class="container">
-        <form class="form-login" [formGroup]="loginForm">
+        <form class="form-login" [formGroup]="loginForm" (ngSubmit)="login()">
             <h2 class="form-login-heading">sign in now</h2>
             <div class="login-wrap" id="form">
                 <div class="textBox">
                     <input class="text" type="textbox" onkeyup="this.setAttribute('value', this.value);" value="" formControlName="email"/>
                     <label class="label">Email</label>
-                    <label class="error"></label>
+                    <label class="error text-right" *ngIf="!loginForm.controls['email'].valid && loginForm.controls['email'].touched"
+                    >Please Enter a valid email</label>
                 </div>
                 <div class="textBox">
                     <input class="text" type="password" onkeyup="this.setAttribute('value', this.value);" value="" formControlName="password"/>
                     <label class="label">Password</label>
-                    <label class="error"></label>
+                    <label class="error text-right" *ngIf="!loginForm.controls['password'].valid && loginForm.controls['password'].touched">Please Enter a valid Password</label>
                 </div>
                 <label class="checkbox">
                     <span class="pull-right">
                         <a data-toggle="modal" href="#myModal"> Forgot Password?</a>
                     </span>
                 </label>
-                <button class="btn btn-theme btn-block" type="submit" (click)="login()">
+                <button class="btn btn-theme btn-block" type="submit" [disabled]="!loginForm.valid">
                     <i class="fa fa-lock"></i> SIGN IN</button>
                 <hr>
 

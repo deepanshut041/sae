@@ -1,34 +1,39 @@
 <div id="login-page">
     <div class="container">
-        <form class="form-login" [formGroup]="registerForm">
+        <form class="form-login" [formGroup]="registerForm" (ngSubmit)="signup()">
             <h2 class="form-login-heading">sign up</h2>
             <div class="login-wrap">
                 <div class="textBox">
-                    <input class="text" type="textbox" onkeyup="this.setAttribute('value', this.value);" value="" formControlName="first_name" />
+                    <input class="text" type="textbox" onkeyup="this.setAttribute('value', this.value);" value="" formControlName="first_name"/>
                     <label class="label">First Name</label>
-                    <label class="error"></label>
+                    <label class="error text-right" *ngIf="!registerForm.controls['first_name'].valid && registerForm.controls['first_name'].touched"
+                    >Please enter your first name</label>
                 </div>
                 <div class="textBox">
-                    <input class="text" type="textbox" onkeyup="this.setAttribute('value', this.value);" value="" formControlName="last_name" />
+                    <input class="text" type="textbox" onkeyup="this.setAttribute('value', this.value);" value="" formControlName="last_name"/>
                     <label class="label">Last Name</label>
-                    <label class="error"></label>
-                </div>
-                <div class="textBox">
-                    <input class="text" type="textbox" onkeyup="this.setAttribute('value', this.value);" value="" formControlName="username"/>
-                    <label class="label">User Name</label>
-                    <label class="error"></label>
+                    <label class="error text-right" *ngIf="!registerForm.controls['last_name'].valid && registerForm.controls['last_name'].touched"
+                    >Please enter your last name</label>
                 </div>
                 <div class="textBox">
                     <input class="text" type="textbox" onkeyup="this.setAttribute('value', this.value);" value="" formControlName="email"/>
                     <label class="label">Email</label>
-                    <label class="error"></label>
+                    <label class="error text-right" *ngIf="!registerForm.controls['email'].valid && registerForm.controls['email'].touched"
+                    >Please enter a valid email</label>
                 </div>
                 <div class="textBox">
-                    <input class="text" type="password" onkeyup="this.setAttribute('value', this.value);" value="" formControlName="password"/>
-                    <label class="label">Password</label>
-                    <label class="error"></label>
+                    <input class="text" type="textbox" onkeyup="this.setAttribute('value', this.value);" value="" formControlName="username"/>
+                    <label class="label">Username</label>
+                    <label class="error text-right" *ngIf="!registerForm.controls['username'].valid && registerForm.controls['username'].touched"
+                    >Please enter a valid Username</label>
                 </div>
-                <button class="btn btn-theme btn-block" type="submit" (click)="signup()">
+                <div class="textBox">
+                    <input class="text" type="textbox" onkeyup="this.setAttribute('value', this.value);" value="" formControlName="password"/>
+                    <label class="label">Password</label>
+                    <label class="error text-right" *ngIf="!registerForm.controls['password'].valid && registerForm.controls['password'].touched"
+                    >Password required and it must be 8 digit long</label>
+                </div>
+                <button class="btn btn-theme btn-block" type="submit" [disabled]="!registerForm.valid">
                     <i class="fa fa-lock"></i> SIGN UP</button>
                 <hr>
                 <div class="registration text-center">
