@@ -9,15 +9,17 @@
             <div>
                 <button (mouseover)="hover = true" (mouseout)="hover = false" [ngStyle]="hover
                         ?{
-                            'border': '2px solid ' + workshop.theme_color,
+                            'border': '1px solid ' + workshop.theme_color,
                             'background':workshop.theme_color,
-                            'color':'#fff'
+                            'color':'#fff',
+                            'transition':'all .3s'
                         }
                         :{
-                            'border': '2px solid ' + workshop.theme_color,
+                            'border': '1px solid ' + workshop.theme_color,
                             'background': 'transparent',
-                            'color': workshop.theme_color
-                        }">Register Now</button>
+                            'color': workshop.theme_color,
+                            'transition':'all .3s'
+                        }">Enroll Now</button>
             </div>
         </div>
     </header>
@@ -101,7 +103,7 @@
             <h3 class="text-center">
                 <span [ngStyle]="{
                     'color': workshop.theme_color,
-                    'border-bottom':'2px solid ' + workshop.theme_color
+                    'border-bottom':'1px solid ' + workshop.theme_color
                 }">Coordinators</span>
             </h3>
             <div class="row no-gutters justify-content-center equal">
@@ -124,16 +126,16 @@
     </article>
 
     <!-- Plans section Goes here -->
-    <article id="plans">
+    <article id="plans" [ngStyle]="{'background-image': 'linear-gradient(to bottom right,#fff,'+workshop.theme_color+'21)'}">
         <div *ngIf="workshop.plans">
             <h3 class="text-center">
                 <span [ngStyle]="{
                         'color': workshop.theme_color,
-                        'border-bottom':'2px solid ' + workshop.theme_color
-                    }">Plans</span>
+                        'border-bottom':'1px solid ' + workshop.theme_color
+                    }">Start Learning</span>
             </h3>
             <div class="row no-gutters justify-content-center row-eq-height">
-                <div *ngFor="let plan of workshop.plans" class="col-12 col-sm-6 col-md-5 col-lg-3 plan-container" [ngStyle]="{'border': '2px solid ' + workshop.theme_color}">
+                <div *ngFor="let plan of workshop.plans" class="plan-container" [ngStyle]="{'border': '2px solid #fff'}">
                     <div>
                         <div class="text-center">
                             <p [ngStyle]="{'background': workshop.theme_color}">Team Limit : {{plan.team_limit}}</p>
@@ -156,17 +158,19 @@
                 </div>
             </div>
             <div class="text-center">
-                <button (mouseover)="hover = true" (mouseout)="hover = false" [ngStyle]="hover
-                        ?{
-                            'border': '2px solid ' + workshop.theme_color,
-                            'background':workshop.theme_color,
-                            'color':'#fff'
-                        }
-                        :{
-                            'border': '2px solid ' + workshop.theme_color,
-                            'background': 'transparent',
-                            'color': workshop.theme_color
-                        }">Register Now</button>
+                    <button (mouseover)="hover = true" (mouseout)="hover = false" [ngStyle]="hover
+                    ?{
+                        'border': '1px solid ' + workshop.theme_color,
+                        'background':workshop.theme_color,
+                        'color':'#fff',
+                        'transition':'all .3s'
+                    }
+                    :{
+                        'border': '1px solid ' + workshop.theme_color,
+                        'background': 'transparent',
+                        'color': workshop.theme_color,
+                        'transition':'all .3s'
+                    }">Enroll Now</button>
             </div>
         </div>
     </article>
