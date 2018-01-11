@@ -1,7 +1,8 @@
 from django.conf.urls import re_path, include, url
 from .views import (WorkshopListAPIView, EventListAPIView, 
                     WorkshopDetailAPIView, EventDetailAPIView, MemberListAPIView,
-                    UserRegisterAPIView, UserLoginAPIView, UserEmailVerificationView, ClassRoomView,ClassCourseView)
+                    UserRegisterAPIView, UserLoginAPIView, UserEmailVerificationView,
+                    ClassRoomView, ClassCourseView, ContactUsAPIView)
 from rest_framework_jwt.views import verify_jwt_token
 
 urlpatterns = [
@@ -17,5 +18,6 @@ urlpatterns = [
         UserEmailVerificationView.as_view(), name='email-activation'),
     url(r'^user/classroom/$', ClassRoomView.as_view(), name='user-classroom'),
     url(r'^user/classroom/(?P<workshopid>[0-9]+)/$', ClassCourseView.as_view(), name='class-course'),
+    url(r'^contact/$', ContactUsAPIView.as_view(), name="contact-us"),
 
 ]

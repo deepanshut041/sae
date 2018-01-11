@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status, permissions
 from .permission import IsAdminOrReadOnly, IsSuperuserOrWriteOnly, IsUserEnrolled
 from django.contrib.auth.models import User
+from django.core.mail import EmailMessage
 from ..models import (Workshop, Project, Member, Timeline, Organiser, Event,
  WorkshopFaqs, WorkshopPlan, EventTeam, ProjectMaterial, PreWorkshopMaterial, WorkshopEnrollment, UserProfile)
 from .serializers import ( WorkshopModelSerializer, ProjectModelSerializer,
@@ -19,6 +20,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_text
 from django.http import HttpResponse
 from django.views import View
+from django.template.loader import render_to_string
 
 
 
@@ -337,7 +339,38 @@ class ClassCourseView(APIView):
         course_response.update({"pre_material": pre_material_serializer.data})
         course_response.update({"projects":projects_response})
         return Response(course_response)
+
+# Contact Email View 
+
+class ContactUsAPIView(APIView):
+    """
+    docstring here
+        :param APIView: 
+    """
+    permission_classes = (permissions.AllowAny,)
+    def post(self, request):
+        data = request.data
+        full_name = data['full_name']
+        email_address = data['email']
+        phone_number = data['phone_number']
+        description = data['description']
         
+        mail_subject = data['subject']
+
+        if full_name and email_address and phone_number and description and mail_subject:
+            mail_message = render_to_string('contact_mail.html', {
+                'full_name': full_name,
+                'email_address': email_address,
+                'phone_number': phone_number,
+                'description':description,
+            })
+            to_email = "deepanshut041@gmail.com"
+            send_mail = EmailMessage(
+                        mail_subject, mail_message, to=[to_email]
+            )
+            send_mail.send()
+            return Response({"status":"Email Sent"}, status=status.HTTP_201_CREATED)
+        return Response({"status":"Email Not Sent"}, status=status.HTTP_400_BAD_REQUEST)   
         
 
 

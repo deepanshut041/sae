@@ -57,37 +57,49 @@
             </div>
             <div class="col-12 col-lg-6 order-1 order-lg-2">
                 <div class="form-right">
-                <h3>Contact Form</h3>
-                <p class="text-muted"> How can we help you?</p>
-                <p>All contact form fields are required.</p>
+                    <h3>Contact Form</h3>
+                    <p class="text-muted"> How can we help you?</p>
+                    <p>All contact form fields are required.</p>
                 </div>
-                <form class="row no-gutters">
+                <form class="row no-gutters" [formGroup]="contactForm" (ngSubmit)="contact()">
                     <div class="col-12 col-md-10 col-lg-8">
-                            <div class="textBox">
-                                    <input class="text" type="textbox" onkeyup="this.setAttribute('value', this.value);" value="" />
-                                    <label class="label">Full Name</label>
-                                    <label class="error"></label>
-                                </div>
+                        <div class="textBox">
+                            <input class="text" type="textbox" onkeyup="this.setAttribute('value', this.value);" value="" formControlName="full_name" [ngStyle]="!contactForm.controls['full_name'].valid && contactForm.controls['full_name'].touched ?{'border-color': '#EF9A9A'}:{}"
+                            />
+                            <label class="label" [ngStyle]="!contactForm.controls['full_name'].valid && contactForm.controls['full_name'].touched ?{'color': '#FF5252'}:{}">Full Name</label>
+                            <label class="error text-right" *ngIf="!contactForm.controls['full_name'].valid && contactForm.controls['full_name'].touched">Please Enter your full name</label>
+                        </div>
                     </div>
                     <div class="col-12 col-md-10 col-lg-8">
-                            <div class="textBox">
-                                    <input class="text" type="textbox" onkeyup="this.setAttribute('value', this.value);" value="" />
-                                    <label class="label">Email Address</label>
-                                    <label class="error"></label>
-                                </div>
+                        <div class="textBox">
+                            <input class="text" type="textbox" onkeyup="this.setAttribute('value', this.value);" value="" formControlName="phone_number" [ngStyle]="!contactForm.controls['phone_number'].valid && contactForm.controls['phone_number'].touched ?{'border-color': '#EF9A9A'}:{}"
+                            />
+                            <label class="label" [ngStyle]="!contactForm.controls['phone_number'].valid && contactForm.controls['phone_number'].touched ?{'color': '#FF5252'}:{}">Phone Number</label>
+                            <label class="error text-right" *ngIf="!contactForm.controls['phone_number'].valid && contactForm.controls['phone_number'].touched">Please Enter a valid Phone Number</label>
+                        </div>
                     </div>
                     <div class="col-12 col-md-10 col-lg-8">
-                            <div class="textBox">
-                                    <input class="text" type="textbox" onkeyup="this.setAttribute('value', this.value);" value="" />
-                                    <label class="label">Phone Number</label>
-                                    <label class="error"></label>
-                                </div>
+                        <div class="textBox">
+                            <input class="text" type="textbox" onkeyup="this.setAttribute('value', this.value);" value="" formControlName="email" [ngStyle]="!contactForm.controls['email'].valid && contactForm.controls['email'].touched ?{'border-color': '#EF9A9A'}:{}"
+                            />
+                            <label class="label" [ngStyle]="!contactForm.controls['email'].valid && contactForm.controls['email'].touched ?{'color': '#FF5252'}:{}">Email</label>
+                            <label class="error text-right" *ngIf="!contactForm.controls['email'].valid && contactForm.controls['email'].touched">Please Enter a valid email</label>
+                        </div>
                     </div>
                     <div class="col-12 col-md-10 col-lg-8">
-                        <textarea rows="4"></textarea>
+                        <div class="textBox">
+                            <input class="text" type="textbox" onkeyup="this.setAttribute('value', this.value);" value="" formControlName="subject" [ngStyle]="!contactForm.controls['subject'].valid && contactForm.controls['subject'].touched ?{'border-color': '#EF9A9A'}:{}"
+                            />
+                            <label class="label" [ngStyle]="!contactForm.controls['subject'].valid && contactForm.controls['subject'].touched ?{'color': '#FF5252'}:{}">Subject</label>
+                            <label class="error text-right" *ngIf="!contactForm.controls['subject'].valid && contactForm.controls['subject'].touched">Please Enter a valid subject</label>
+                        </div>
                     </div>
                     <div class="col-12 col-md-10 col-lg-8">
-                        <button type="submit" class="btn btn-secondary">Submit</button>
+                        <textarea rows="4" formControlName="description"></textarea>
+                        <label class="error text-right" *ngIf="!contactForm.controls['description'].valid && contactForm.controls['description'].touched">Please Enter description</label>
+                    </div>
+                    <div class="col-12 col-md-10 col-lg-8">
+                        <button type="submit" class="btn btn-secondary" [disabled]="!contactForm.valid">Submit</button>
                     </div>
                 </form>
             </div>
