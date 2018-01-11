@@ -11,7 +11,6 @@ import { EventComponent } from "./home/event/event.component";
 // Auth Module Component
 import { SigninComponent } from "./auth/signin/signin.component";
 import { SignupComponent } from "./auth/signup/signup.component";
-import { VerifyComponent } from "./auth/verify/verify.component";
 import { ResetComponent } from "./auth/reset/reset.component";
 import { AuthService } from "./auth/auth.service";
 import { AuthComponent } from "./auth/auth.component";
@@ -38,8 +37,7 @@ const routes: Routes = [
         path: 'auth', component: AuthComponent, children: [
             { path: 'signin', component: SigninComponent },
             { path: 'signup', component: SignupComponent },
-            { path: 'verify', component: VerifyComponent },
-            { path: 'reset', component: ResetComponent },
+            { path: 'reset', component: ResetComponent, canActivate:[AuthGaurd] },
         ]
     },
     {

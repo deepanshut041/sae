@@ -1,13 +1,14 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable,Observer } from "rxjs/Rx"
+import { DOMAIN } from "../shared/assets";
 /**
  * @description
  * @class
  */
 @Injectable()
 export class AuthService {
-  domain = "http://localhost:8000"
+  domain = DOMAIN
   authToken:any;
   email:any;
   username:any;

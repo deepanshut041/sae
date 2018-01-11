@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { UserService } from "../user.service";
+import { IMAGE_CLASSROOM } from "../../shared/assets";
 
 @Component({
   selector: "app-classroom",
@@ -10,7 +11,7 @@ import { UserService } from "../user.service";
 export class ClassroomComponent implements OnInit {
   
   classroom:any;
-  workshops_background="/assets/classroom.svg"
+  workshops_background = IMAGE_CLASSROOM
   constructor(private __userService:UserService) { 
 
   }

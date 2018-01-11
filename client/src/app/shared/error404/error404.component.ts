@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-
+import { IMAGE_404 } from "../assets";
 @Component({
   selector: "app-error404",
   templateUrl: "./error404.component.html",
@@ -7,7 +7,7 @@ import { Component, OnInit } from "@angular/core";
 })
 
 export class Error404Component implements OnInit {
-  err_404 = 'assets/404.svg'
+  err_404 = IMAGE_404
   constructor() { 
 
   }

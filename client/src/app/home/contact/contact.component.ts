@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-
+import { IMAGE_CONTACT } from "../../shared/assets";
 @Component({
   selector: "app-contact",
   templateUrl: "./contact.component.html",
@@ -8,7 +8,7 @@ import { Component, OnInit } from "@angular/core";
 
 export class ContactComponent implements OnInit {
 
-  contact_img = "/assets/contact.svg"
+  contact_img = IMAGE_CONTACT
   
   constructor() { 
 

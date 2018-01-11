@@ -1,7 +1,7 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, AfterViewInit } from "@angular/core";
 import { MainService } from "../services/main.service";
 import { Router } from "@angular/router";
-
+import { IMAGE_HEADER, IMAGE_ABOUT, IMAGE_LATEST } from "../../shared/assets";
 
 @Component({
   selector: "app-main",
@@ -9,17 +9,17 @@ import { Router } from "@angular/router";
   styleUrls: ["./main.component.css"]
 })
 
-export class MainComponent implements OnInit {
-  header_img = "/assets/header.svg"
-  about_img = "/assets/about.svg"
-  news_img = "/assets/latest_news.svg"
+export class MainComponent implements AfterViewInit {
+  header_img = IMAGE_HEADER
+  about_img = IMAGE_ABOUT
+  news_img = IMAGE_LATEST
   events
   workshops
   constructor(private __mainService:MainService, private router:Router) { 
 
   }
 
-  ngOnInit() {
+  ngAfterViewInit() {
     this.__mainService.getEvents().subscribe((events)=>{
       console.log(events['events']);
       this.events = events['events'];

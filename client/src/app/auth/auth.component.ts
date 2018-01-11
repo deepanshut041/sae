@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-
+import { IMAGE_AUTH } from "../shared/assets";
 @Component({
   selector: "app-auth",
   templateUrl: "./auth.component.html",
@@ -7,7 +7,7 @@ import { Component, OnInit } from "@angular/core";
 })
 
 export class AuthComponent implements OnInit {
-  auth_background = 'assets/auth.png'
+  auth_background = IMAGE_AUTH
   constructor() { 
 
   }
