@@ -44,4 +44,11 @@ export class UserService {
       });
     return this.http.get(this.domain + '/api/v1/user/classroom/' + id + '/', { headers: headers });
   }
+  getCurrentWorkshops(){
+    const headers = new HttpHeaders(
+      {
+        'Content-Type': 'application/json; charset=utf-8'
+      });
+    return this.http.get(this.domain + '/api/v1/workshops/latest/', {headers:headers})
+  }
 }

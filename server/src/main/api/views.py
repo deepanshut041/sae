@@ -43,6 +43,17 @@ class WorkshopListAPIView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class LatestWorkshopListAPIView(APIView):
+    """
+    docstring here
+        :param APIView: 
+    """
+    serializer_class = WorkshopModelSerializer
+    permission_classes = (IsAdminOrReadOnly,permissions.IsAuthenticatedOrReadOnly)
+    def get(self, request):
+        workshops = Workshop.objects.filter(reg_status=True)
+        serializer = WorkshopModelSerializer(workshops, many=True)
+        return Response({"workshops":serializer.data})
 
 class WorkshopDetailAPIView(APIView):
     """
