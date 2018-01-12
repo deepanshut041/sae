@@ -48,12 +48,23 @@ class LatestWorkshopListAPIView(APIView):
     docstring here
         :param APIView: 
     """
-    serializer_class = WorkshopModelSerializer
     permission_classes = (IsAdminOrReadOnly,permissions.IsAuthenticatedOrReadOnly)
+    def get_plans(self, workshop_id):
+        try:
+            return WorkshopPlan.objects.filter(workshop=workshop_id)
+        except Organiser.DoesNotExist:
+            raise Http404
+
     def get(self, request):
         workshops = Workshop.objects.filter(reg_status=True)
         serializer = WorkshopModelSerializer(workshops, many=True)
-        return Response({"workshops":serializer.data})
+        current_workshops = []
+        for current in serializer.data:
+            plans = self.get_plans(current['id'])
+            plans_serializer = WorkshopPlanModelSerializer(plans, many=True)
+            current.update({"plans":plans_serializer.data})
+            current_workshops.append(current)
+        return Response({"workshops":current_workshops})
 
 class WorkshopDetailAPIView(APIView):
     """
@@ -353,6 +364,7 @@ class ClassCourseView(APIView):
 
 # Contact Email View 
 
+
 class ContactUsAPIView(APIView):
     """
     docstring here
@@ -375,13 +387,13 @@ class ContactUsAPIView(APIView):
                 'phone_number': phone_number,
                 'description':description,
             })
-            to_email = "deepanshut041@gmail.com"
+            to_email = "saeakgec.event@gmail.com"
             send_mail = EmailMessage(
                         mail_subject, mail_message, to=[to_email]
             )
             send_mail.send()
             return Response({"status":"Email Sent"}, status=status.HTTP_201_CREATED)
         return Response({"status":"Email Not Sent"}, status=status.HTTP_400_BAD_REQUEST)   
-        
+   
 
 

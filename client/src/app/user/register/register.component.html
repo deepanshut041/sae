@@ -2,14 +2,25 @@
 <div>
     <form>
         <div class="form-group">
-            <label for="exampleFormControlSelect1">Example select</label>
-            <select class="form-control" id="exampleFormControlSelect1">
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
+            <label for="exampleFormControlSelect1">Select Workshop</label>
+            <select class="form-control" id="exampleFormControlSelect1" *ngIf="currentWorkshops" (change)="onWorkshopSelected($event.target.value)">
+                <option selected="true" disabled="disabled">Select Workshop</option>
+                <option *ngFor="let current of currentWorkshops" label="{{current.name}}">{{current.id}}</option>
             </select>
-          </div>
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlSelect1">Select Plan</label>
+            <select class="form-control" id="exampleFormControlSelect1" *ngIf="currentPlans" (change)=" onPlanSelected($event.target.value)">
+                <option selected="true" disabled="disabled">Select Plan</option>
+                <option *ngFor="let currentPlan of currentPlans" label="{{currentPlan.title}}  {{currentPlan.price}} ">{{currentPlan.id}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+                <label for="exampleFormControlSelect1">Team Limit</label>
+                <select class="form-control" id="exampleFormControlSelect1" *ngIf="memberLimits" (change)="onMemberSelected($event.target.value)">
+                    <option selected="true" disabled="disabled">Team Limit</option>
+                    <option *ngFor="let membersL of memberLimits">{{membersL}}</option>
+                </select>
+            </div>
     </form>
 </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, AfterViewInit } from "@angular/core";
 import { AuthService } from "../auth.service";
 import { Router } from "@angular/router";
 import { FormGroup, FormControl, FormBuilder, Validators, ReactiveFormsModule } from "@angular/forms";
@@ -11,7 +11,7 @@ import {CoreService} from '../../core/core.service'
   styleUrls: ["./signin.component.css"]
 })
 
-export class SigninComponent implements OnInit {
+export class SigninComponent implements OnInit,AfterViewInit {
 
   err: String;
   loginForm: FormGroup
@@ -31,6 +31,11 @@ export class SigninComponent implements OnInit {
       this.router.navigateByUrl('')
     }
     this.turnOffSpinner()
+  }
+  ngAfterViewInit(){
+    this._authService.status.subscribe(status => {
+      this.router.navigateByUrl(this._authGaurd.redirectUrl||'')
+  });
   }
   login() {
     this.err = null;
