@@ -1,6 +1,6 @@
 // Django Constant
-export const DOMAIN = "localhost:8000"
-export const DJANGO_ASSETS = ""
+export const DOMAIN = "."
+export const DJANGO_ASSETS = "/static/ang"
 
 // Images constant
 export const IMAGE_404 = DJANGO_ASSETS + "/assets/404.svg"

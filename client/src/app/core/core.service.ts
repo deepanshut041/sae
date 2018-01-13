@@ -36,5 +36,12 @@ export class CoreService {
     }
     return this.http.post(this.domain+'/api/v1/auth/verify/',token, {headers: headers});
   }
+  getCurrentWorkshops(){
+    const headers = new HttpHeaders(
+      {
+        'Content-Type': 'application/json; charset=utf-8'
+      });
+    return this.http.get(this.domain + '/api/v1/workshops/latest/', {headers:headers})
+  }
 
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, FormBuilder, Validators, ReactiveFormsModule } from "@angular/forms";
 import { UserService } from "../user.service";
+import { IMAGE_404 } from "../../shared/assets";
 @Component({
     selector: "app-register",
     templateUrl: "./register.component.html",
@@ -15,6 +16,7 @@ export class RegisterComponent implements OnInit {
     currentPlans: any[] = []
     teamLimit: number
     memberLimits: number[] = []
+    err_404 = IMAGE_404
     constructor(private fb: FormBuilder, private userService: UserService) {
         this.registerForm = this.fb.group({
             'workshop': [null, Validators.required],

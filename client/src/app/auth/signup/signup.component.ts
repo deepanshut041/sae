@@ -45,7 +45,21 @@ export class SignupComponent implements OnInit {
     },(err)=>{
       this.turnOffSpinner()
       let username_err = err.error['username'];
-      this.err = username_err[0]
+      let email_err = err.error['email'];
+      let password_err = err.error['password']
+      console.log(err)
+      if(username_err){
+        this.err = username_err[0]
+      }
+      else if(email_err){
+        this.err = email_err
+      }
+      else if(password_err){
+        this.err = password_err
+      }
+      else{
+        this.err = "Failed to register"
+      }
     })
   }
 

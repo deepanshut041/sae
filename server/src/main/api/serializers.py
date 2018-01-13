@@ -204,10 +204,13 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         """
         Check that the email of user is unique.
         """
+        if not email:
+            raise serializers.ValidationError("No email provided.")
+        email = email.lower()
         if User.objects.filter(email=email).exists():
             raise serializers.ValidationError("A user with that email already exists.")
         return email
-    
+
     def create(self, validated_data):
         username = validated_data['username']
         password = validated_data['password']

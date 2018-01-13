@@ -60,4 +60,26 @@ div.justify-content-end a:hover{
 #empty-navbar.do{
     display: block;
 }
+/* Modal Button */
+#modalButton button{
+    padding: 8px 40px;
+    border-radius: 25px;
+    background: transparent;
+    border: 2px solid rgb(245, 152, 77);
+    color: rgb(245, 152, 77);
+    transition: all 1s fade-in;
+    font-weight: 600;
+    margin-top: 10px;
+    margin-bottom: 10px;
 
+}
+#modalButton button:focus{
+    outline: none;
+}
+#modalButton button:hover{
+    background: rgb(245, 152, 77);
+    color: #fff;
+}
+.modal-body img{
+    padding: 5px 100px;
+}
