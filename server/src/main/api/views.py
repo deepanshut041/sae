@@ -220,8 +220,13 @@ class MemberListAPIView(APIView):
     
     serializer_class = MemberModelSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsAdminOrReadOnly)
+    def get_team(self):
+        try:
+            return Member.objects.filter(year__gte=3)
+        except Member.DoesNotExist:
+            raise Http404
     def get(self, request):
-        members = Member.objects.all()
+        members = self.get_team()
         serializer = MemberModelSerializer(members, many=True)
         return Response({"members":serializer.data})
 

@@ -200,6 +200,14 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         ]
         extra_kwargs = {"password":{"write_only":True}}
 
+    def validate_email(self, email):
+        """
+        Check that the email of user is unique.
+        """
+        if User.objects.filter(email=email).exists():
+            raise serializers.ValidationError("A user with that email already exists.")
+        return email
+    
     def create(self, validated_data):
         username = validated_data['username']
         password = validated_data['password']
@@ -214,7 +222,7 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         mail_subject = 'Activate your Sae-Akgec Account'
         message = render_to_string('acc_active_email.html', {
                 'user': user_obj,
-                'domain': 'localhost:8000',
+                'domain': 'sae-akgec.in',
                 'uid':urlsafe_base64_encode(force_bytes(user_obj.pk)).decode(),
                 'token':account_activation_token.make_token(user_obj),
             })
