@@ -329,6 +329,7 @@ class WorkshopEnrollmentModelSerializer(serializers.ModelSerializer):
             'user_id',
             'team_id',
             'workshop_id',
+            'plan_id',
             'payment_id',
             'leader_id',
             'enroll_date',
@@ -336,7 +337,6 @@ class WorkshopEnrollmentModelSerializer(serializers.ModelSerializer):
             'enroll_status',
             'user_college',
             'user_contact',
-            'user_local',
         ]
 
 
