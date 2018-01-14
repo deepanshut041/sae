@@ -38,8 +38,6 @@ export class SignupComponent implements OnInit {
   signup(){
     this.turnOnSpinner()
     this._authService.registerUser(this.registerForm.value).subscribe((response)=>{
-      console.log("User registered")
-      console.log(response)
       this.turnOffSpinner()
       this.turnOnSuccess()
     },(err)=>{
@@ -47,7 +45,6 @@ export class SignupComponent implements OnInit {
       let username_err = err.error['username'];
       let email_err = err.error['email'];
       let password_err = err.error['password']
-      console.log(err)
       if(username_err){
         this.err = username_err[0]
       }

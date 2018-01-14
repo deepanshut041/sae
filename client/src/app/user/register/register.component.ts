@@ -12,12 +12,15 @@ export class RegisterComponent implements OnInit, AfterViewInit {
 
     registerForm: FormGroup
     members: any[]
+    err: String;
     currentWorkshops: any[] = []
     currentPlans: any[] = []
     teamLimit: number
     memberLimits: number[] = []
     err_404 = IMAGE_404
     team_members: FormArray
+    paymentLink:any
+    email_pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     constructor(private fb: FormBuilder, private userService: UserService) {
         this.registerForm = this.fb.group({
             'team_id': [null, Validators.required],
@@ -29,6 +32,8 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit() {
+        this.turnOffSpinner()
+        this.turnOffSuccess()
         this.clearFormArray(this.team_members)
         this.userService.getCurrentWorkshops().subscribe((workshops) => {
             this.currentWorkshops = workshops['workshops']
@@ -74,8 +79,9 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     // Forms array createItem create new item, add item to form, clear fom values
     createItem(): FormGroup {
         return this.fb.group({
-            'username': [null, Validators.required],
-            'email': [null, Validators.required],
+            'email': [null, Validators.compose([
+                Validators.required, Validators.pattern (this.email_pattern)
+              ])],
             'user_contact': [null, Validators.required],
             'user_college': [null, Validators.required],
             'is_user_local': [null, Validators.required],
@@ -92,11 +98,40 @@ export class RegisterComponent implements OnInit, AfterViewInit {
 
     //register form
     register(){
-        console.log(this.registerForm.value)
+        this.turnOnSpinner()
         this.userService.postEnrollment(this.registerForm.value).subscribe((link)=>{
-            console.log(link)
+            this.turnOffSpinner()
+            this.turnOnSuccess()
+            this.paymentLink = link["link"]
         },(err)=>{
+            this.turnOffSpinner()
             console.log(err)
+            if(err.error['error']){
+                this.err = err.error['error']
+            }
+            else if(err.error['detail']){
+                this.err = "Please ensure all members are registred on sae-akgec"
+            }
+            else{
+                this.err = "Please ensure information is correctly provided and try again"
+            }
         })
     }
+
+    turnOffSpinner(){
+        document.getElementById("form").style.display = "block";
+        document.getElementById("spinner").style.display = "none";
+      }
+      turnOnSpinner(){
+        document.getElementById("form").style.display = "none";
+        document.getElementById("spinner").style.display = "block";
+      }
+      turnOffSuccess(){
+        document.getElementById("form").style.display = "block";
+        document.getElementById("verifyEmailAlert").style.display = "none";
+      }
+      turnOnSuccess(){
+        document.getElementById("form").style.display = "none";
+        document.getElementById("verifyEmailAlert").style.display = "block";
+      }
 }

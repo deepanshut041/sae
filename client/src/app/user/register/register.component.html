@@ -1,53 +1,110 @@
 <!-- Register Component -->
-<div>
-    <form [formGroup]="registerForm" (ngSubmit)="register()">
-        <div class="form-group">
-            <label for="exampleFormControlSelect1">Team Name</label>
-            <input formControlName="team_id" placeholder="Team Name">
+<div id="main">
+    <form [formGroup]="registerForm" (ngSubmit)="register()" id="form">
+        <div id="formHeader">
+            <h3 class="text-center">Registration form</h3>
+            <p class="text-center text-muted">If you have already registred then check your mail box for payment link</p>
         </div>
-        <div class="form-group">
-            <label for="exampleFormControlSelect1">Select Workshop</label>
-            <select class="form-control" id="exampleFormControlSelect1" formControlName="workshop" *ngIf="currentWorkshops">
-                <option *ngFor="let current of currentWorkshops" [ngValue]="current.id">{{current.name}}</option>
-            </select>
+        <div class="row no-gutters justify-content-center">
+            <div class="col-12 col-md-8 col-lg-6">
+                <div class="textBox">
+                    <input class="text" type="textbox" onkeyup="this.setAttribute('value', this.value);" value="" formControlName="team_id" [ngStyle]="!registerForm.controls['team_id'].valid && registerForm.controls['team_id'].touched ?{'border-color': '#EF9A9A'}:{}"
+                    />
+                    <label class="label" [ngStyle]="!registerForm.controls['team_id'].valid && registerForm.controls['team_id'].touched ?{'color': '#FF5252'}:{}">Team Name</label>
+                    <label class="error text-right" *ngIf="!registerForm.controls['team_id'].valid && registerForm.controls['team_id'].touched">Please Enter a valid Team id</label>
+                </div>
+                <div class="textBox selectBox">
+                    <select class="text" id="exampleFormControlSelect1" formControlName="workshop" *ngIf="currentWorkshops" onkeyup="this.setAttribute('value', this.value);"
+                        [ngStyle]="!registerForm.controls['workshop'].valid && registerForm.controls['workshop'].touched ?{'border-color': '#EF9A9A'}:{}">
+                        <option *ngFor="let current of currentWorkshops" [ngValue]="current.id">{{current.name}}</option>
+                    </select>
+                    <label class="label" [ngStyle]="!registerForm.controls['workshop'].valid && registerForm.controls['workshop'].touched ?{'color': '#FF5252'}:{}">Select Workshop</label>
+                    <label class="error text-right" *ngIf="!registerForm.controls['workshop'].valid && registerForm.controls['workshop'].touched">Please select a workshop</label>
+                </div>
+                <div class="textBox selectBox">
+                    <select class="text" id="exampleFormControlSelect1" formControlName="plan" *ngIf="currentPlans" onkeyup="this.setAttribute('value', this.value);"
+                        [ngStyle]="!registerForm.controls['plan'].valid && registerForm.controls['plan'].touched ?{'border-color': '#EF9A9A'}:{}">
+                        <option *ngFor="let currentPlan of currentPlans" [ngValue]="currentPlan.id">{{currentPlan.title}} {{currentPlan.price}} </option>
+                    </select>
+                    <label class="label" [ngStyle]="!registerForm.controls['plan'].valid && registerForm.controls['plan'].touched ?{'color': '#FF5252'}:{}">Select Plan</label>
+                    <label class="error text-right" *ngIf="!registerForm.controls['plan'].valid && registerForm.controls['plan'].touched">Please select a plan</label>
+                </div>
+                <div class="textBox selectBox">
+                    <select class="text" id="exampleFormControlSelect1" *ngIf="memberLimits" onkeyup="this.setAttribute('value', this.value);"
+                        (change)="onMemberSelected($event.target.value)">
+                        <option *ngFor="let membersL of memberLimits">{{membersL}}</option>
+                    </select>
+                    <label class="label">Members</label>
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="exampleFormControlSelect1">Select Plan</label>
-            <select class="form-control" id="exampleFormControlSelect1" formControlName="plan" *ngIf="currentPlans">
-                <option *ngFor="let currentPlan of currentPlans" [ngValue]="currentPlan.id">{{currentPlan.title}} {{currentPlan.price}} </option>
-            </select>
+        <div>
+            <hr class="text-muted">
+            <h3 class="text-center">Members Detail</h3>
         </div>
-        <div class="form-group">
-            <label for="exampleFormControlSelect1">Team Limit</label>
-            <select class="form-control" id="exampleFormControlSelect1" *ngIf="memberLimits" (change)="onMemberSelected($event.target.value)">
-                <option *ngFor="let membersL of memberLimits">{{membersL}}</option>
-            </select>
-        </div>
-        <div class="row no-gutters">
-            <div formArrayName="team_members" *ngFor="let item of registerForm.get('team_members').controls; let i = index;">
+        <div class="row no-gutters justify-content-center">
+            <div formArrayName="team_members" class="col-12 col-md-6 col-lg-4" *ngFor="let item of registerForm.get('team_members').controls; let i = index;">
                 <div [formGroupName]="i">
-                    <div>
-                        <input formControlName="username" placeholder="Username">
+                    <h6 class="text-center">Member {{i+1}}</h6>
+                    <div class="textBox">
+                        <input class="text" type="textbox" onkeyup="this.setAttribute('value', this.value);" value="" formControlName="email">
+                        <label class="label">Email</label>
+                    </div>
+                    <div class="textBox">
+                        <input class="text" type="textbox" onkeyup="this.setAttribute('value', this.value);" value="" formControlName="user_contact">
+                        <label class="label">Phone No.</label>
+                    </div>
+                    <div class="textBox">
+                        <input class="text" type="textbox" onkeyup="this.setAttribute('value', this.value);" value="" formControlName="user_college">
+                        <label class="label">College Name</label>
                     </div>
                     <div>
-                        <input formControlName="email" placeholder="Email">
-                    </div>
-                    <div>
-                        <input formControlName="user_contact" placeholder="Phone No">
-                    </div>
-                    <div>
-                        <input formControlName="user_college" placeholder="College">
-                    </div>
-                    <div>
-                        <label>Is Local</label>
+                        <p class="text-muted">Are you from Ajay Kumar Garg Enginnering College </p>
+                        <label class="text-muted">Yes</label>
                         <input type="radio" formControlName="is_user_local" [value]="true">
-                        <label>Outside</label>
+                        <label class="text-muted">No</label>
                         <input type="radio" formControlName="is_user_local" [value]="false">
                     </div>
                 </div>
             </div>
         </div>
-        <button class="btn btn-theme btn-block" type="submit" [disabled]="!registerForm.valid">
-                <i class="fa fa-lock"></i>Register</button>
+        <div class="text-center">
+            <button class="btn btn-theme btn-register" type="submit" [disabled]="!registerForm.valid">Register</button>
+        </div>
+        <div class="row" *ngIf="err">
+            <div class="col-12">
+                <div class="alert alert-danger" role="alert">
+                    {{err}}
+                </div>
+            </div>
+        </div>
     </form>
+    <div class="text-center spinner" id="spinner">
+        <br>
+        <br>
+        <i class="fa fa-spinner fa-4x fa-spin" aria-hidden="true"></i>
+        <br>
+        <h4>Please Wait!</h4>
+        <br>
+        <br>
+        <br>
+    </div>
+    <div class="text-center hide" id="verifyEmailAlert">
+        <div *ngIf="paymentLink">
+            <div class="verify-alert-icon" id="verifyEmailAlertIcon" >
+                <i class="fa fa-check fa-2x"></i>
+            </div>
+            <div class="verify-alert-message" id="verifyEmailAlertMsg">
+                <p>You have been successfully registered</p>
+                <p>
+                    <a href="{{paymentLink}}">
+                        <button class="btn btn-success">Make Payment</button>
+                    </a>
+                </p>
+            </div>
+        </div>
+        <div>
+            There was an issue while registration please contact us or register again
+        </div>
+    </div>
 </div>
