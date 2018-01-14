@@ -23,7 +23,7 @@ from django.views import View
 from django.template.loader import render_to_string
 
 from instamojo_wrapper import Instamojo
-api = Instamojo(api_key='9474b726f61d6d2cf2d420437740074e', auth_token='8db275e2aaf013cfab88614cffd02a3a', endpoint='https://test.instamojo.com/api/1.1/')
+api = Instamojo(api_key='9474b726f61d6d2cf2d420437740074e', auth_token='8db275e2aaf013cfab88614cffd02a3a', endpoint='https://www.instamojo.com/api/1.1/')
 
 class WorkshopListAPIView(APIView):
     """

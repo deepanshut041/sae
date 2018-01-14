@@ -322,7 +322,6 @@ class WorkshopEnrollmentModelSerializer(serializers.ModelSerializer):
     docstring here
     :param serializers.ModelSerializer: 
     """
-    token = serializers.CharField(allow_blank=True, read_only=True)
     class Meta:
         model = WorkshopEnrollment
         fields = [
