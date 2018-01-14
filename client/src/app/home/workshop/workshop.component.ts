@@ -20,10 +20,8 @@ export class WorkshopComponent implements OnInit {
     this.__mainService.getWorkshop(this.workshop_name).subscribe(
       (workshop) => {
         this.workshop = workshop
-        console.log(workshop)
       },
       (error) => {
-        console.log(error)
       })
   }
 }

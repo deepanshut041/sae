@@ -21,11 +21,9 @@ export class MainComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     this.__mainService.getEvents().subscribe((events)=>{
-      console.log(events['events']);
       this.events = events['events'];
     })
     this.__mainService.getWorkshops().subscribe((workshops)=>{
-      console.log(workshops['workshops']);
       this.workshops = workshops['workshops']
     })
   }

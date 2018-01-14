@@ -31,11 +31,9 @@ export class ContactComponent implements OnInit {
   contact(){
     let contactModal = document.getElementById("modalButton")
     this.mainService.contactUs(this.contactForm.value).subscribe((res)=>{
-      console.log(res)
       this.reset()
       contactModal.click()
     },(err)=>{
-      console.log(err)
     })
   }
   reset() {

@@ -20,10 +20,9 @@ export class EventComponent implements OnInit {
     this.__mainService.getEvent(this.event_id).subscribe(
       (event) => {
         this.event = event;
-        console.log(event)
       },
       (error) => {
-        console.log(error)
+        
       })
   }
 }
