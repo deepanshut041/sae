@@ -298,7 +298,7 @@ class MemberListAPIView(APIView):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsAdminOrReadOnly)
     def get_team(self):
         try:
-            return Member.objects.filter(year__gte=3)
+            return Member.objects.all().order_by('-year')
         except Member.DoesNotExist:
             raise Http404
     def get(self, request):
