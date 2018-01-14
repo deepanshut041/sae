@@ -22,7 +22,8 @@ from django.http import HttpResponse
 from django.views import View
 from django.template.loader import render_to_string
 
-
+from instamojo_wrapper import Instamojo
+api = Instamojo(api_key='9474b726f61d6d2cf2d420437740074e', auth_token='8db275e2aaf013cfab88614cffd02a3a', endpoint='https://test.instamojo.com/api/1.1/')
 
 class WorkshopListAPIView(APIView):
     """
@@ -193,7 +194,7 @@ class UserEnrollmentView(APIView):
         if team_limit < len(members):
             return Response({"error":"Sorry but team provided exceeed team limit"}, status=status.HTTP_400_BAD_REQUEST)
         leader = members[0]
-        leader_model = self.get_user(leader['email'])
+        leader_model = self.get_user(leader['email'].lower())
         leader_serializer = UserModelSerializer(leader_model)
         if not leader_serializer:
             return Response({"error":"Sorry but any of team member is not registerd"}, status=status.HTTP_400_BAD_REQUEST)
@@ -208,7 +209,6 @@ class UserEnrollmentView(APIView):
             new_member['team_id'] = data['team_id']
             new_member['plan_id'] = plan_serializer.data['id']
             new_member['workshop_id'] = workshop_serializer.data['id']
-            new_member['payment_id'] = ''
             new_member['is_user_local'] = member['is_user_local']
             new_member['user_college'] = member['user_college']
             new_member['user_contact'] = member['user_contact']
@@ -216,11 +216,22 @@ class UserEnrollmentView(APIView):
             new_member['user_id'] = user_serializer.data['id']
             new_member_seralizer = WorkshopEnrollmentModelSerializer(data=new_member)
             if not new_member_seralizer.is_valid():
+                print(new_member_seralizer.errors)
                 return Response({"error":"Sorry any of yout team member is already registred"}, status=status.HTTP_400_BAD_REQUEST) 
             new_members_seralizer.append(new_member_seralizer)
         for serializer in new_members_seralizer:
             serializer.save()
-        return Response({"link":"created"}, status=status.HTTP_201_CREATED)
+        response = api.payment_request_create(
+                amount=str(plan_serializer.data['price']),
+                purpose= workshop_serializer.data['name'],
+                send_email=True,
+                email=leader['email'].lower(),
+                buyer_name=data['team_id'],
+                phone=leader['user_contact'],
+                redirect_url=request.build_absolute_uri("/user/payment")
+            )
+        print(response)
+        return Response({"link":response['payment_request']['longurl']}, status=status.HTTP_201_CREATED)
 
 
 
