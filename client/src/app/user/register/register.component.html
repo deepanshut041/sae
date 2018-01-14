@@ -43,7 +43,7 @@
             <h3 class="text-center">Members Detail</h3>
         </div>
         <div class="row no-gutters justify-content-center">
-            <div formArrayName="team_members" class="col-12 col-md-6 col-lg-4" *ngFor="let item of registerForm.get('team_members').controls; let i = index;">
+            <div formArrayName="team_members" class="col-12 col-md-6 col-lg-4" *ngFor="let item of registerForm.get('team_members')['controls']; let i = index;">
                 <div [formGroupName]="i">
                     <h6 class="text-center">Member {{i+1}}</h6>
                     <div class="textBox">
