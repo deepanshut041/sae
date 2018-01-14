@@ -144,25 +144,22 @@ class PreWorkshopMaterial(models.Model):
 
 class WorkshopEnrollment(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE,related_name='user')
-    team_id = models.CharField(max_length=30, null=False, editable=False)
+    team_id = models.CharField(max_length=30, null=False)
     workshop_id = models.ForeignKey(Workshop, on_delete=models.CASCADE)
-    payment_id = models.CharField(max_length=200)
+    plan_id = models.ForeignKey(WorkshopPlan, on_delete=models.CASCADE)
+    payment_id = models.CharField(max_length=100,null=True)
     leader_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name='leader')
     enroll_date = models.DateField(default=timezone.now, editable=False)
     is_user_local = models.BooleanField(default=True)
-    enroll_status = models.BooleanField(default=True)
+    enroll_status = models.BooleanField(default=False)
+    user_college = models.CharField(max_length=100, null=False  )
+    user_contact = models.CharField(max_length=20,null=False)
 
     class Meta:
         unique_together = ('user_id', 'workshop_id','enroll_status')
     def __str__(self):
-        return str(self.workshop_id) + " " + str(self.team_id)
+        return str(self.workshop_id) + "  - " + str(self.team_id)
 
-class UserProfile(models.Model):
-    user_college = models.CharField(max_length=100, null=False)
-    user_id = models.OneToOneField(User, on_delete=models.CASCADE)
-    user_contact = models.IntegerField(null=False)
-    user_address = models.TextField(null=False)
-    user_local = models.BooleanField(default=True)
 
 
 

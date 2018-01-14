@@ -1,29 +1,53 @@
 <!-- Register Component -->
-<!-- <div>
-    <form>
+<div>
+    <form [formGroup]="registerForm" (ngSubmit)="register()">
+        <div class="form-group">
+            <label for="exampleFormControlSelect1">Team Name</label>
+            <input formControlName="team_id" placeholder="Team Name">
+        </div>
         <div class="form-group">
             <label for="exampleFormControlSelect1">Select Workshop</label>
-            <select class="form-control" id="exampleFormControlSelect1" *ngIf="currentWorkshops" (change)="onWorkshopSelected($event.target.value)">
-                <option selected="true" disabled="disabled">Select Workshop</option>
-                <option *ngFor="let current of currentWorkshops" label="{{current.name}}">{{current.id}}</option>
+            <select class="form-control" id="exampleFormControlSelect1" formControlName="workshop" *ngIf="currentWorkshops">
+                <option *ngFor="let current of currentWorkshops" [ngValue]="current.id">{{current.name}}</option>
             </select>
         </div>
         <div class="form-group">
             <label for="exampleFormControlSelect1">Select Plan</label>
-            <select class="form-control" id="exampleFormControlSelect1" *ngIf="currentPlans" (change)=" onPlanSelected($event.target.value)">
-                <option selected="true" disabled="disabled">Select Plan</option>
-                <option *ngFor="let currentPlan of currentPlans" label="{{currentPlan.title}}  {{currentPlan.price}} ">{{currentPlan.id}}</option>
+            <select class="form-control" id="exampleFormControlSelect1" formControlName="plan" *ngIf="currentPlans">
+                <option *ngFor="let currentPlan of currentPlans" [ngValue]="currentPlan.id">{{currentPlan.title}} {{currentPlan.price}} </option>
             </select>
         </div>
         <div class="form-group">
-                <label for="exampleFormControlSelect1">Team Limit</label>
-                <select class="form-control" id="exampleFormControlSelect1" *ngIf="memberLimits" (change)="onMemberSelected($event.target.value)">
-                    <option selected="true" disabled="disabled">Team Limit</option>
-                    <option *ngFor="let membersL of memberLimits">{{membersL}}</option>
-                </select>
+            <label for="exampleFormControlSelect1">Team Limit</label>
+            <select class="form-control" id="exampleFormControlSelect1" *ngIf="memberLimits" (change)="onMemberSelected($event.target.value)">
+                <option *ngFor="let membersL of memberLimits">{{membersL}}</option>
+            </select>
+        </div>
+        <div class="row no-gutters">
+            <div formArrayName="team_members" *ngFor="let item of registerForm.get('team_members').controls; let i = index;">
+                <div [formGroupName]="i">
+                    <div>
+                        <input formControlName="username" placeholder="Username">
+                    </div>
+                    <div>
+                        <input formControlName="email" placeholder="Email">
+                    </div>
+                    <div>
+                        <input formControlName="user_contact" placeholder="Phone No">
+                    </div>
+                    <div>
+                        <input formControlName="user_college" placeholder="College">
+                    </div>
+                    <div>
+                        <label>Is Local</label>
+                        <input type="radio" formControlName="is_user_local" [value]="true">
+                        <label>Outside</label>
+                        <input type="radio" formControlName="is_user_local" [value]="false">
+                    </div>
+                </div>
             </div>
+        </div>
+        <button class="btn btn-theme btn-block" type="submit" [disabled]="!registerForm.valid">
+                <i class="fa fa-lock"></i>Register</button>
     </form>
-</div> -->
-<div [ngStyle]="{'background-image': 'url('+err_404+')'}" id="main">
-    <h1 class="text-center">Registration start soon</h1>
 </div>

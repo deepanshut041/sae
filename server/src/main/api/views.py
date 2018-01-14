@@ -6,12 +6,12 @@ from .permission import IsAdminOrReadOnly, IsSuperuserOrWriteOnly, IsUserEnrolle
 from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
 from ..models import (Workshop, Project, Member, Timeline, Organiser, Event,
- WorkshopFaqs, WorkshopPlan, EventTeam, ProjectMaterial, PreWorkshopMaterial, WorkshopEnrollment, UserProfile)
+ WorkshopFaqs, WorkshopPlan, EventTeam, ProjectMaterial, PreWorkshopMaterial, WorkshopEnrollment)
 from .serializers import ( WorkshopModelSerializer, ProjectModelSerializer,
                             MemberModelSerializer, TimelineModelSerializer,OrganiserModelSerializer,EventModelSerializer,
                              WorkshopFaqsModelSerializer, WorkshopPlanModelSerializer, EventTeamModelSerializer,
                              UserRegisterSerializer,UserLoginSerializer, ProjectMaterialModelSerializer,  PreWorkshopMaterialModelSerializer,
-                             WorkshopEnrollmentModelSerializer, UserProfileModelSerializer, UserModelSerializer)
+                             WorkshopEnrollmentModelSerializer, UserModelSerializer)
 
 from .token import account_activation_token
 from django.core.mail import EmailMessage
@@ -157,6 +157,36 @@ class EventListAPIView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class UserEnrollmentView(APIView):
+
+    # Getting current workshop 
+    def get_workshop(self, pk):
+        try:
+            return Workshop.objects.get(pk=pk)
+        except Workshop.DoesNotExist:
+            raise Http404
+
+    def get_plan(self, pk):
+        try:
+            return WorkshopPlan.objects.get(pk=pk)
+        except WorkshopPlan.DoesNotExist:
+            raise Http404
+
+    
+    def post(self, request):
+        data = request.data
+        workshop_id = data['workshop']
+        workshop = self.get_workshop(workshop_id)
+        workshop_serializer = WorkshopModelSerializer(workshop)
+        if not workshop_serializer['reg_status']:
+            return Response({"err":"Sorry but registration are not available"}, status=status.HTTP_400_BAD_REQUEST)
+        plan_id = data['plan']
+        plan = self.get_plan(plan_id)
+        plan_serializer = WorkshopPlanModelSerializer(plan)
+        
+        return Response({"status":"created"}, status=status.HTTP_201_CREATED)
+
 
 
 class EventDetailAPIView(APIView):

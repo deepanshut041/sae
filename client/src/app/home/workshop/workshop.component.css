@@ -58,7 +58,7 @@
     padding:0px 10px 10px 15px;
     font-weight: 600;
 }
-#description p{
+#description div.text-muted{
     padding: 15px;
 }
 #description .date-container h5{

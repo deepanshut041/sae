@@ -51,4 +51,12 @@ export class UserService {
       });
     return this.http.get(this.domain + '/api/v1/workshops/latest/', {headers:headers})
   }
+  postEnrollment(data) {
+    const headers = new HttpHeaders(
+      {
+        'Content-Type': 'application/json; charset=utf-8',
+        'Authorization': 'JWT ' + this.authToken
+      });
+    return this.http.post(this.domain + '/api/v1/user/enroll/',data, { headers: headers });
+  }
 }

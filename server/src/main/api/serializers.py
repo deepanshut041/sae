@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.db.models import Q
 from rest_framework_jwt.settings import api_settings
 from ..models import (Workshop, Project, Event, Timeline, Member, Organiser, WorkshopPlan,
- WorkshopFaqs, EventTeam, ProjectMaterial, PreWorkshopMaterial, WorkshopEnrollment, UserProfile)
+ WorkshopFaqs, EventTeam, ProjectMaterial, PreWorkshopMaterial, WorkshopEnrollment)
 #  For Sending Email
 from django.template.loader import render_to_string
 from .token import account_activation_token
@@ -334,21 +334,10 @@ class WorkshopEnrollmentModelSerializer(serializers.ModelSerializer):
             'enroll_date',
             'is_user_local',
             'enroll_status',
-        ]
-
-class UserProfileModelSerializer(serializers.ModelSerializer):
-    """
-    docstring here
-    :param serializers.ModelSerializer: 
-    """
-    class Meta:
-        model = UserProfile
-        fields = [
-            'id',
             'user_college',
-            'user_id',
             'user_contact',
-            'user_address',
             'user_local',
         ]
+
+
 
