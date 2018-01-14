@@ -6,6 +6,7 @@
 
 #header {
     color: white;
+    background-position: center;
 }
 
 #header h1 {
@@ -16,7 +17,7 @@
 
 #header h4 {
     font-weight: 600;
-    margin-bottom: 100px;
+    padding-bottom: 100px;
 }
 
 /* Logo Style goes here */
@@ -26,6 +27,7 @@
     margin-top: -80px;
     background: #fff;
     padding: 3px;
+    width: 160px;
     border-radius: 80px;
 }
 
