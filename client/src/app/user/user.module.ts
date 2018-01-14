@@ -9,10 +9,10 @@ import { CourseComponent } from "./course/course.component";
 import { RegisterComponent } from "./register/register.component";
 import { UserComponent } from "./user.component";
 import { UserService } from "./user.service";
-
+import { PaymentComponent } from "./payment/payment.component";
 @NgModule({
   declarations: [
-    ClassroomComponent, CourseComponent, RegisterComponent, UserComponent
+    ClassroomComponent, CourseComponent, RegisterComponent, UserComponent, PaymentComponent
   ],
   imports: [
     CommonModule, HttpClientModule, FormsModule, ReactiveFormsModule, RouterModule

@@ -1,0 +1,14 @@
+#main{
+    height: 100vh;
+    padding-top: 40vh;
+    background-size: cover;
+    background-position: center;
+}
+
+#main div{
+    background: #fff;
+    padding: 30px;
+    font-weight: 400;
+    max-width: 300px;
+    margin: auto;
+}

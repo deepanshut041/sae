@@ -20,6 +20,7 @@ import { ClassroomComponent } from "./user/classroom/classroom.component";
 import { CourseComponent } from "./user/course/course.component";
 import { RegisterComponent } from "./user/register/register.component";
 import { UserComponent } from "./user/user.component";
+import { PaymentComponent } from "./user/payment/payment.component";
 
 // Shared Component
 import { Error404Component } from "./shared/error404/error404.component";
@@ -37,17 +38,18 @@ const routes: Routes = [
         path: 'auth', component: AuthComponent, children: [
             { path: 'signin', component: SigninComponent },
             { path: 'signup', component: SignupComponent },
-            { path: 'reset', component: ResetComponent, canActivate:[AuthGaurd] },
+            { path: 'reset', component: ResetComponent, canActivate: [AuthGaurd] },
         ]
     },
     {
-        path: 'user', component: UserComponent,canActivate:[AuthGaurd], children: [
+        path: 'user', component: UserComponent, canActivate: [AuthGaurd], children: [
             { path: 'classroom', component: ClassroomComponent },
             { path: 'course/:id', component: CourseComponent },
-            { path: 'register', component: RegisterComponent }
+            { path: 'register', component: RegisterComponent },
+            { path: 'payment', component: PaymentComponent }
         ]
     },
-    {path:'**', component:Error404Component}
+    { path: '**', component: Error404Component }
 ]
 
 @NgModule({
