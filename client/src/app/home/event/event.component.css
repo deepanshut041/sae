@@ -7,17 +7,18 @@
 #header {
     color: white;
     background-position: center;
+    background-size: cover;
 }
 
 #header h1 {
-    padding-top: 100px;
+    padding-top: 150px;
     padding-bottom: 20px;
     font-weight: 400;
 }
 
 #header h4 {
     font-weight: 600;
-    padding-bottom: 100px;
+    padding-bottom: 150px;
 }
 
 /* Logo Style goes here */

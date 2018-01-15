@@ -2,6 +2,27 @@
     background: #fff;
 }
 
+#notice {
+    background-color: #656684;
+    color: #fff;
+    padding: 10px;
+    padding-bottom: 5px;
+}
+
+#notice button {
+    margin-left: 20px;
+    background: #656684;
+    border-radius: 0px;
+    border: .1px solid #f0ad4e;
+    color: #f0ad4e;
+    transition: all .6s;
+}
+
+#notice button:hover {
+    background: #f0ad4e;
+    color: #fff;
+}
+
 h3 {
     padding-top: 30px;
     padding-bottom: 30px;
@@ -37,10 +58,10 @@ form {
     display: inline-flex;
     margin-bottom: 3vh;
 }
-.selectBox{
+
+.selectBox {
     height: 55px;
 }
-
 
 .textBox .text {
     font-weight: 500;
@@ -80,9 +101,11 @@ form {
     -webkit-transition-timing-function: cubic-bezier(.68, -0.55, .27, 1.55);
     transition-timing-function: cubic-bezier(.68, -0.55, .27, 1.55);
 }
+
 .textBox.selectBox .label {
     bottom: 16px;
 }
+
 .textBox .error {
     position: absolute;
     margin-top: 40px;
@@ -148,4 +171,9 @@ div.col-lg-4 {
     border: 1px solid #656684;
     padding: 7px 50px;
     border-radius: 0px;
+}
+
+.modal .modal-header{
+    background: #656684;
+    color: #f0ad4e;
 }

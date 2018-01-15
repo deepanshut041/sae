@@ -138,7 +138,7 @@
                 <div *ngFor="let plan of workshop.plans" class="plan-container" [ngStyle]="{'border': '2px solid #fff'}">
                     <div>
                         <div class="text-center">
-                            <p [ngStyle]="{'background': workshop.theme_color}">Team Limit : {{plan.team_limit}}</p>
+                            <p [ngStyle]="{'background': workshop.theme_color}">Maximum Members: {{plan.team_limit}}</p>
                         </div>
                         <div class="plan-details text-center">
                             <h6 [ngStyle]="{'color': workshop.theme_color}">

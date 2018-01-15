@@ -12,6 +12,8 @@
 /* Header Style goes here */
 #header{
     color:white;
+    background: cover;
+    background-position: center;
 }
 #header h1{
     padding-top:100px;

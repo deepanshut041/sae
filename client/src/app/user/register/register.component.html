@@ -1,5 +1,8 @@
 <!-- Register Component -->
 <div id="main">
+    <div id="notice">
+        <h5 class="text-center">Step by Step guide on how to register <button class="btn btn-theme" data-toggle="modal" data-target="#instModal">Know More</button></h5>
+    </div>
     <form [formGroup]="registerForm" (ngSubmit)="register()" id="form">
         <div id="formHeader">
             <h3 class="text-center">Registration form</h3>
@@ -24,7 +27,7 @@
                 <div class="textBox selectBox">
                     <select class="text" id="exampleFormControlSelect1" formControlName="plan" *ngIf="currentPlans" onkeyup="this.setAttribute('value', this.value);"
                         [ngStyle]="!registerForm.controls['plan'].valid && registerForm.controls['plan'].touched ?{'border-color': '#EF9A9A'}:{}">
-                        <option *ngFor="let currentPlan of currentPlans" [ngValue]="currentPlan.id">{{currentPlan.title}} {{currentPlan.price}} </option>
+                        <option *ngFor="let currentPlan of currentPlans" [ngValue]="currentPlan.id">{{currentPlan.price}} {{currentPlan.title}}</option>
                     </select>
                     <label class="label" [ngStyle]="!registerForm.controls['plan'].valid && registerForm.controls['plan'].touched ?{'color': '#FF5252'}:{}">Select Plan</label>
                     <label class="error text-right" *ngIf="!registerForm.controls['plan'].valid && registerForm.controls['plan'].touched">Please select a plan</label>
@@ -108,3 +111,29 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="instModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Instructions</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p class="text-muted">
+            <strong>Step 1:</strong> You are required to form a group [maximum members:5].<br>
+            <strong>Step 2:</strong> All the members of the group are required to Sign-up on the website.<br>
+            <strong>Step 3:</strong> After signing up, you are required to verify the confirmation link on your
+            registered mail.<br>
+            <strong>Step 4:</strong> Anyone member of your group can now register your team for the
+            workshop.<br>
+            <strong>Step 5:</strong> The payment link would be sent to the first member of the team.<br>
+            <strong>Step 6:</strong> Proceed for the payment.<br>
+            <strong>Step 7:</strong> Whoa!! You are registered successfully for the workshop.<br>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
