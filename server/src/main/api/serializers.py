@@ -337,6 +337,7 @@ class WorkshopEnrollmentModelSerializer(serializers.ModelSerializer):
             'enroll_status',
             'user_college',
             'user_contact',
+            'ref_code',
         ]
 
 
