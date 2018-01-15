@@ -6,7 +6,7 @@
     <form [formGroup]="registerForm" (ngSubmit)="register()" id="form">
         <div id="formHeader">
             <h3 class="text-center">Registration form</h3>
-            <p class="text-center text-muted">If you have already registred then check your mail box for payment link</p>
+            <p class="text-center text-muted">If your team have already registred then please check your mail box for payment link</p>
         </div>
         <div class="row no-gutters justify-content-center">
             <div class="col-12 col-md-8 col-lg-6">
@@ -27,17 +27,10 @@
                 <div class="textBox selectBox">
                     <select class="text" id="exampleFormControlSelect1" formControlName="plan" *ngIf="currentPlans" onkeyup="this.setAttribute('value', this.value);"
                         [ngStyle]="!registerForm.controls['plan'].valid && registerForm.controls['plan'].touched ?{'border-color': '#EF9A9A'}:{}">
-                        <option *ngFor="let currentPlan of currentPlans" [ngValue]="currentPlan.id">{{currentPlan.price}} {{currentPlan.title}}</option>
+                        <option *ngFor="let currentPlan of currentPlans" [ngValue]="currentPlan.id">{{currentPlan.price / currentPlan.team_limit}} {{currentPlan.title}}</option>
                     </select>
                     <label class="label" [ngStyle]="!registerForm.controls['plan'].valid && registerForm.controls['plan'].touched ?{'color': '#FF5252'}:{}">Select Plan</label>
                     <label class="error text-right" *ngIf="!registerForm.controls['plan'].valid && registerForm.controls['plan'].touched">Please select a plan</label>
-                </div>
-                <div class="textBox selectBox">
-                    <select class="text" id="exampleFormControlSelect1" *ngIf="memberLimits" onkeyup="this.setAttribute('value', this.value);"
-                        (change)="onMemberSelected($event.target.value)">
-                        <option *ngFor="let membersL of memberLimits">{{membersL}}</option>
-                    </select>
-                    <label class="label">Members</label>
                 </div>
             </div>
         </div>
@@ -63,7 +56,7 @@
                     </div>
                     <div class="textBox">
                         <input class="text" type="textbox" onkeyup="this.setAttribute('value', this.value);" value="" formControlName="ref_code">
-                        <label class="label">Referral Code</label>
+                        <label class="label">Student Number of Referrer</label>
                     </div>
                     <div>
                         <p class="text-muted">Are you from Ajay Kumar Garg Enginnering College </p>

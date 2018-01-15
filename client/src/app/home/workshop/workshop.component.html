@@ -6,7 +6,7 @@
             <h4>Registration</h4>
             <p *ngIf="workshop.reg_status">{{workshop.reg_start_date}} to {{workshop.reg_end_date}}</p>
             <p *ngIf="!workshop.reg_status">Registration are closed!!</p>
-            <div><a [routerLink]="['/user/register']">
+            <div *ngIf="workshop.reg_status"><a [routerLink]="['/user/register']">
                 <button (mouseover)="hover = true" (mouseout)="hover = false" [ngStyle]="hover
                         ?{
                             'border': '1px solid ' + workshop.theme_color,
@@ -19,7 +19,7 @@
                             'background': 'transparent',
                             'color': workshop.theme_color,
                             'transition':'all .3s'
-                        }">Enroll Now</button>
+                        }" [disabled]="!workshop.reg_status">Enroll Now</button>
            </a> </div>
         </div>
     </header>

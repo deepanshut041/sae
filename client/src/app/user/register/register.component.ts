@@ -11,12 +11,10 @@ import { IMAGE_404 } from "../../shared/assets";
 export class RegisterComponent implements OnInit, AfterViewInit {
 
     registerForm: FormGroup
-    members: any[]
     err: String;
     currentWorkshops: any[] = []
     currentPlans: any[] = []
     teamLimit: number
-    memberLimits: number[] = []
     err_404 = IMAGE_404
     team_members: FormArray
     paymentLink:any
@@ -45,7 +43,6 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     ngAfterViewInit() {
         this.registerForm.controls['workshop'].valueChanges.subscribe((value) => {
             this.currentPlans = []
-            this.memberLimits = []
             this.clearFormArray(this.team_members)
             let workshops = this.currentWorkshops.filter(workshop => {
                 if (workshop['id'] == value) {
@@ -63,18 +60,11 @@ export class RegisterComponent implements OnInit, AfterViewInit {
                     return (true)
                 }
             })
-            this.memberLimits = []
-            for (let i = 0; i < this.teamLimit; i++) {
-                this.memberLimits[i] = i + 1
+            for (let i = 1; i < this.teamLimit; i++) {
+                this.addItem() 
             }
 
         });
-    }
-    onMemberSelected(deviceValue) {
-        this.clearFormArray(this.team_members)
-        for (let i = 1; i < deviceValue; i++) {
-            this.addItem()
-        }
     }
     // Forms array createItem create new item, add item to form, clear fom values
     createItem(): FormGroup {
