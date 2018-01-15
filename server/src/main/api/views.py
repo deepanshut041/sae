@@ -204,7 +204,7 @@ class UserEnrollmentView(APIView):
             user_model = self.get_user(member['email'])
             user_serializer = UserModelSerializer(user_model)
             if not user_serializer:
-                return Response({"error":"Sorry but any of team member is not registerd"}, status=status.HTTP_400_BAD_REQUEST)
+                return Response({"error":"Sorry but" + member['email'] +"is not registerd"}, status=status.HTTP_400_BAD_REQUEST)
             new_member = {}
             new_member['team_id'] = data['team_id']
             new_member['plan_id'] = plan_serializer.data['id']
@@ -218,7 +218,7 @@ class UserEnrollmentView(APIView):
             new_member_seralizer = WorkshopEnrollmentModelSerializer(data=new_member)
             if not new_member_seralizer.is_valid():
                 print(new_member_seralizer.errors)
-                return Response({"error":"Sorry any of yout team member is already registred"}, status=status.HTTP_400_BAD_REQUEST) 
+                return Response({"error":"Sorry" + user_serializer.data['first_name'] + user_serializer.data['last_name'] + "is already registred in workshop"}, status=status.HTTP_400_BAD_REQUEST) 
             new_members_seralizer.append(new_member_seralizer)
         for serializer in new_members_seralizer:
             serializer.save()
@@ -232,8 +232,6 @@ class UserEnrollmentView(APIView):
                 redirect_url=request.build_absolute_uri("/user/payment")
             )
         return Response({"link":response['payment_request']['longurl']}, status=status.HTTP_201_CREATED)
-
-
 
 class EventDetailAPIView(APIView):
     """

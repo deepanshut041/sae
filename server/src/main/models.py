@@ -154,7 +154,7 @@ class WorkshopEnrollment(models.Model):
     enroll_status = models.BooleanField(default=False)
     user_college = models.CharField(max_length=100, null=False  )
     user_contact = models.CharField(max_length=20,null=False)
-    ref_code = models.CharField(max_lenght=20, default="no")
+    ref_code = models.CharField(max_length=20, default="no")
 
     class Meta:
         unique_together = ('user_id', 'workshop_id','enroll_status')
