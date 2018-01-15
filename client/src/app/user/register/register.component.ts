@@ -85,6 +85,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
             'user_contact': [null, Validators.required],
             'user_college': [null, Validators.required],
             'is_user_local': [null, Validators.required],
+            'ref_code': [null]
         });
     }
     addItem(): void {

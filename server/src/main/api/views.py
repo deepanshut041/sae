@@ -214,6 +214,7 @@ class UserEnrollmentView(APIView):
             new_member['user_contact'] = member['user_contact']
             new_member['leader_id'] = leader_serializer.data['id']
             new_member['user_id'] = user_serializer.data['id']
+            new_member['ref_code'] = member['ref_code']
             new_member_seralizer = WorkshopEnrollmentModelSerializer(data=new_member)
             if not new_member_seralizer.is_valid():
                 print(new_member_seralizer.errors)
@@ -230,7 +231,6 @@ class UserEnrollmentView(APIView):
                 phone=leader['user_contact'],
                 redirect_url=request.build_absolute_uri("/user/payment")
             )
-        print(response)
         return Response({"link":response['payment_request']['longurl']}, status=status.HTTP_201_CREATED)
 
 
