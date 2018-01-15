@@ -4,6 +4,7 @@ from django.db.models import Q
 from rest_framework_jwt.settings import api_settings
 from ..models import (Workshop, Project, Event, Timeline, Member, Organiser, WorkshopPlan,
  WorkshopFaqs, EventTeam, ProjectMaterial, PreWorkshopMaterial, WorkshopEnrollment)
+from django.utils.translation import ugettext_lazy as _
 #  For Sending Email
 from django.template.loader import render_to_string
 from .token import account_activation_token
@@ -339,6 +340,15 @@ class WorkshopEnrollmentModelSerializer(serializers.ModelSerializer):
             'user_contact',
             'ref_code',
         ]
+
+
+class EmailSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+
+
+class PasswordTokenSerializer(serializers.Serializer):
+    password = serializers.CharField(label=_("Password"), style={'input_type': 'password'})
+    token = serializers.CharField()
 
 
 
