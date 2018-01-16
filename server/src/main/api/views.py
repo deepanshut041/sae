@@ -21,10 +21,7 @@ from django.utils.encoding import force_bytes, force_text
 from django.http import HttpResponse
 from django.views import View
 from django.template.loader import render_to_string
-# from django.utils.translation import ugettext_lazy as _
-# from django.conf import settings
-# from django.core.exceptions import ValidationError
-# from django.utils import timezone
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 
 from instamojo_wrapper import Instamojo
 api = Instamojo(api_key='9474b726f61d6d2cf2d420437740074e', auth_token='8db275e2aaf013cfab88614cffd02a3a', endpoint='https://www.instamojo.com/api/1.1/')
@@ -515,5 +512,24 @@ class ResetPassword(ApiView):
         send_mail.send()
         return Response({"ok":"Email has been sent to your account"}, status=status.HTTP_400_BAD_REQUEST)
 
+class PasswordChange(APIView):
+    def get_user(self, pk):
+        try:
+            return User.objects.get(pk=pk)
+        except User.DoesNotExist:
+            raise Http404
+    def post(self,request):
+
+        user_id = 1
+        user = self.get_user(user_id)
+        user_seralizer = UserPasswordSerializer(user)
+        if not user_seralizer:
+            return Response({"err":"Invalid link"}, status=status.HTTP_400_BAD_REQUEST)
+        password = user_seralizer.data['id']
+        if password != request.data['token']:
+            return Response({"err":"Invalid link or link expired"}, status=status.HTTP_400_BAD_REQUEST)
+        
+
+        
 
 
