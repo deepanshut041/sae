@@ -355,13 +355,14 @@ class WorkshopEnrollmentModelSerializer(serializers.ModelSerializer):
         ]
 
 
-# class EmailSerializer(serializers.Serializer):
-#     email = serializers.EmailField()
+class EmailSerializer(serializers.Serializer):
+    email = serializers.EmailField()
 
 
-# class PasswordTokenSerializer(serializers.Serializer):
-#     password = serializers.CharField(label=_("Password"), style={'input_type': 'password'})
-#     token = serializers.CharField()
+class PasswordTokenSerializer(serializers.Serializer):
+    password = serializers.CharField(style={'input_type': 'password'})
+    token = serializers.CharField()
+    uid=serializers.CharField()
 
 
 

@@ -11,7 +11,7 @@ from .serializers import ( WorkshopModelSerializer, ProjectModelSerializer,
                             MemberModelSerializer, TimelineModelSerializer,OrganiserModelSerializer,EventModelSerializer,
                              WorkshopFaqsModelSerializer, WorkshopPlanModelSerializer, EventTeamModelSerializer,
                              UserRegisterSerializer,UserLoginSerializer, ProjectMaterialModelSerializer,  PreWorkshopMaterialModelSerializer,
-                             WorkshopEnrollmentModelSerializer, UserModelSerializer, UserPasswordSerializer)
+                             WorkshopEnrollmentModelSerializer, UserModelSerializer, UserPasswordSerializer, EmailSerializer, PasswordTokenSerializer)
 
 from .token import account_activation_token
 from django.core.mail import EmailMessage
@@ -187,9 +187,9 @@ class UserEnrollmentView(APIView):
         workshop_serializer = WorkshopModelSerializer(workshop)
         if not workshop_serializer['reg_status']:
             return Response({"error":"Sorry but registration are not available"}, status=status.HTTP_400_BAD_REQUEST)
-        team_enrolled = WorkshopEnrollment.objects.filter(workshop_id=workshop_serializer.data['id'],team_id=data['team_id']))
-        if team_enrolled.exists:
-            return Response({"error":"Sorry but team name is already enrolled please try again with another name"}, status=status.HTTP_400_BAD_REQUEST)
+        # team_enrolled = WorkshopEnrollment.objects.filter(workshop_id=workshop_serializer.data['id'],team_id=data['team_id'])
+        # if team_enrolled.exists:
+        #     return Response({"error":"Sorry but team name is already enrolled please try again with another name"}, status=status.HTTP_400_BAD_REQUEST)
         plan_id = data['plan']
         plan = self.get_plan(plan_id)
         plan_serializer = WorkshopPlanModelSerializer(plan)
@@ -201,7 +201,7 @@ class UserEnrollmentView(APIView):
         leader_model = self.get_user(leader['email'].lower())
         leader_serializer = UserModelSerializer(leader_model)
         if not leader_serializer:
-            return Response({"error":"Sorry but any of team member is not registerd"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error":"Sorry but" + leader['email'] +"is not registerd, please signup on website and try again"}, status=status.HTTP_400_BAD_REQUEST)
 
         new_members_seralizer = []
         for member in members:
@@ -478,56 +478,62 @@ class ContactUsAPIView(APIView):
 
 # Forget Password view
 
-class ResetPassword(ApiView):
-
-
+class ForgotPassword(APIView):
+    serializer_class = EmailSerializer
+    permission_classes = (permissions.AllowAny,)
     def get_user(self, email):
         try:
             return User.objects.get(email=email)
-        except User.DoesNotExist:
-            raise Http404
+        except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+            return none
 
     def post(self,request):
-        email = request.data['email']
+        email = request.data['email'].lower()
         if not email:
             return Response({"err":"Please send email for password reset"}, status=status.HTTP_400_BAD_REQUEST)
         
-        user = self.get(email)
-        user_seralizer = UserPasswordSerializer(user)
-        if not user_seralizer:
-            return Response({"err":"Email dosen't exist"}, status=status.HTTP_400_BAD_REQUEST)
+        user = self.get_user(email)
         
+        if not user:
+            return Response({"err":"Email dosen't exist"}, status=status.HTTP_400_BAD_REQUEST)
+        user_seralizer = UserPasswordSerializer(user)
         password = user_seralizer.data['password']
         mail_subject = 'Reset password of your Sae-Akgec Account'
         message = render_to_string('reset_password_email.html', {
                 'user': user_seralizer.data['first_name'] + "  " + user_seralizer.data['last_name'],
                 'domain': 'sae-akgec.in',
                 'uid': urlsafe_base64_encode(force_bytes(user_seralizer.data['id'])).decode(),
-                'token':password
+                'token':urlsafe_base64_encode(force_bytes(password)).decode()
             })
         to_email = user_seralizer.data['email']
         send_mail = EmailMessage(
                     mail_subject, message, to=[to_email]
         )
         send_mail.send()
-        return Response({"ok":"Email has been sent to your account"}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({"ok":"Email has been sent to your account"}, status=status.HTTP_200_OK)
 
-class PasswordChange(APIView):
-    def get_user(self, pk):
-        try:
-            return User.objects.get(pk=pk)
-        except User.DoesNotExist:
-            raise Http404
+class ResetPassword(APIView):
+    serializer_class = PasswordTokenSerializer
+    permission_classes = (permissions.AllowAny,)
     def post(self,request):
-
-        user_id = 1
-        user = self.get_user(user_id)
-        user_seralizer = UserPasswordSerializer(user)
-        if not user_seralizer:
+        data = request.data
+        try:
+            uid = force_text(urlsafe_base64_decode(data['uid']))
+            token = force_text(urlsafe_base64_decode(data['token']))
+            user = User.objects.get(pk=uid)
+        except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+            user = None
+        if not user:
             return Response({"err":"Invalid link"}, status=status.HTTP_400_BAD_REQUEST)
-        password = user_seralizer.data['id']
-        if password != request.data['token']:
+        user_serializer = UserPasswordSerializer(user)
+        password = user_serializer.data['password']
+        print(token)
+        if password != token:
             return Response({"err":"Invalid link or link expired"}, status=status.HTTP_400_BAD_REQUEST)
+        user.set_password(data['password'])
+        user.save()
+        return Response({"ok":"Your password has been suceesfully reset"}, status=status.HTTP_200_OK)
+
         
 
         

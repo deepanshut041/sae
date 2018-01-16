@@ -38,7 +38,7 @@ const routes: Routes = [
         path: 'auth', component: AuthComponent, children: [
             { path: 'signin', component: SigninComponent },
             { path: 'signup', component: SignupComponent },
-            { path: 'reset', component: ResetComponent, canActivate: [AuthGaurd] },
+            { path: 'reset', component: ResetComponent },
         ]
     },
     {

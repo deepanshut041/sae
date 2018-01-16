@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { AuthService } from "../auth.service";
+import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({
   selector: "app-reset-admin",
@@ -9,7 +10,17 @@ import { AuthService } from "../auth.service";
 
 export class ResetComponent implements OnInit {
   alertMsg:String="";
-  constructor(private _authService:AuthService) { 
+  token:String;
+  uid:String;
+  constructor(private _authService:AuthService, private route:ActivatedRoute, private router:Router) { 
+    route.params.subscribe((params)=>{
+      this.token = params['t']
+      this.uid = params['u']
+      if(!this.uid || !this.token){
+        this.router.navigate([''])
+      }
+      console.log(this.token, this.uid)
+    })
   }
   ngOnInit() {
   }
@@ -80,9 +91,4 @@ export class ResetComponent implements OnInit {
 
   //   }
   // }
-
-  // logout(){
-  //   this._authService.logout();
-  // }
-
 }
