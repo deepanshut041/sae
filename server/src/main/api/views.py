@@ -11,7 +11,7 @@ from .serializers import ( WorkshopModelSerializer, ProjectModelSerializer,
                             MemberModelSerializer, TimelineModelSerializer,OrganiserModelSerializer,EventModelSerializer,
                              WorkshopFaqsModelSerializer, WorkshopPlanModelSerializer, EventTeamModelSerializer,
                              UserRegisterSerializer,UserLoginSerializer, ProjectMaterialModelSerializer,  PreWorkshopMaterialModelSerializer,
-                             WorkshopEnrollmentModelSerializer, UserModelSerializer, EmailSerializer,PasswordTokenSerializer)
+                             WorkshopEnrollmentModelSerializer, UserModelSerializer)
 
 from .token import account_activation_token
 from django.core.mail import EmailMessage
@@ -21,10 +21,10 @@ from django.utils.encoding import force_bytes, force_text
 from django.http import HttpResponse
 from django.views import View
 from django.template.loader import render_to_string
-from django.utils.translation import ugettext_lazy as _
-from django.conf import settings
-from django.core.exceptions import ValidationError
-from django.utils import timezone
+# from django.utils.translation import ugettext_lazy as _
+# from django.conf import settings
+# from django.core.exceptions import ValidationError
+# from django.utils import timezone
 
 from instamojo_wrapper import Instamojo
 api = Instamojo(api_key='9474b726f61d6d2cf2d420437740074e', auth_token='8db275e2aaf013cfab88614cffd02a3a', endpoint='https://www.instamojo.com/api/1.1/')
@@ -190,6 +190,9 @@ class UserEnrollmentView(APIView):
         workshop_serializer = WorkshopModelSerializer(workshop)
         if not workshop_serializer['reg_status']:
             return Response({"error":"Sorry but registration are not available"}, status=status.HTTP_400_BAD_REQUEST)
+        team_enrolled = WorkshopEnrollment.objects.filter(workshop_id=workshop_serializer.data['id'],team_id=data['team_id']))
+        if team_enrolled.exists:
+            return Response({"error":"Sorry but team name is already enrolled please try again with another name"}, status=status.HTTP_400_BAD_REQUEST)
         plan_id = data['plan']
         plan = self.get_plan(plan_id)
         plan_serializer = WorkshopPlanModelSerializer(plan)
@@ -205,7 +208,7 @@ class UserEnrollmentView(APIView):
 
         new_members_seralizer = []
         for member in members:
-            user_model = self.get_user(member['email'])
+            user_model = self.get_user(member['email'].lower())
             user_serializer = UserModelSerializer(user_model)
             if not user_serializer:
                 return Response({"error":"Sorry but" + member['email'] +"is not registerd, please signup on website and try again"}, status=status.HTTP_400_BAD_REQUEST)
@@ -479,68 +482,74 @@ class ContactUsAPIView(APIView):
         return Response({"status":"Email Not Sent"}, status=status.HTTP_400_BAD_REQUEST)
 
 
-class ResetPasswordRequestToken(APIView):
-    parser_classes = (parsers.FormParser, parsers.MultiPartParser, parsers.JSONParser,)
-    renderer_classes = (renderers.JSONRenderer,)
-    serializer_class = EmailSerializer
+# def get_password_reset_token_expiry_time():
+#     """
+#     Returns the password reset token expirty time in hours (default: 24)
+#     Set Django SETTINGS.DJANGO_REST_MULTITOKENAUTH_RESET_TOKEN_EXPIRY_TIME to overwrite this time
+#     :return: expiry time
+#     """
+#     # get token validation time
+#     return getattr(settings, 'DJANGO_REST_MULTITOKENAUTH_RESET_TOKEN_EXPIRY_TIME', 24)
 
-    def post(self, request, *args, **kwargs):
-        serializer = self.serializer_class(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        email = serializer.validated_data['email']
+# class ResetPasswordRequestToken(APIView):
+#     parser_classes = (parsers.FormParser, parsers.MultiPartParser, parsers.JSONParser,)
+#     renderer_classes = (renderers.JSONRenderer,)
+#     serializer_class = EmailSerializer
 
-        # before we continue, delete all existing expired tokens
-        password_reset_token_validation_time = get_password_reset_token_expiry_time()
+#     def post(self, request, *args, **kwargs):
+#         serializer = self.serializer_class(data=request.data)
+#         serializer.is_valid(raise_exception=True)
+#         email = serializer.validated_data['email']
 
-        # datetime.now minus expiry hours
-        now_minus_expiry_time = timezone.now() - timedelta(hours=password_reset_token_validation_time)
+#         # before we continue, delete all existing expired tokens
+#         password_reset_token_validation_time = get_password_reset_token_expiry_time()
 
-        # delete all tokens where created_at < now - 24 hours
-        ResetPasswordToken.objects.filter(created_at__lte=now_minus_expiry_time).delete()
+#         # datetime.now minus expiry hours
+#         now_minus_expiry_time = timezone.now() - timedelta(hours=password_reset_token_validation_time)
 
-        # find a user by email address (case insensitive search)
-        users = User.objects.filter(email__iexact=email)
+#         # delete all tokens where created_at < now - 24 hours
+#         ResetPasswordToken.objects.filter(created_at__lte=now_minus_expiry_time).delete()
 
-        active_user_found = False
+#         # find a user by email address (case insensitive search)
+#         users = User.objects.filter(email__iexact=email)
 
-        # iterate over all users and check if there is any user that is active
-        # also check whether the password can be changed (is useable), as there could be users that are not allowed
-        # to change their password (e.g., LDAP user)
-        for user in users:
-            if user.is_active and user.has_usable_password():
-                active_user_found = True
+#         active_user_found = False
 
-        # No active user found, raise a validation error
-        if not active_user_found:
-            raise ValidationError({
-                'email': ValidationError(
-                    _("There is no active user associated with this e-mail address or the password can not be changed"),
-                    code='invalid')}
-            )
+#         # iterate over all users and check if there is any user that is active
+#         # also check whether the password can be changed (is useable), as there could be users that are not allowed
+#         # to change their password (e.g., LDAP user)
+#         for user in users:
+#             if user.is_active and user.has_usable_password():
+#                 active_user_found = True
 
-        # last but not least: iterate over all users that are active and can change their password
-        # and create a Reset Password Token and send a signal with the created token
-        for user in users:
-            if user.is_active and user.has_usable_password():
-                # define the token as none for now
-                token = None
+#         # No active user found, raise a validation error
+#         if not active_user_found:
+#             raise ValidationError({
+#                 'email': ValidationError(
+#                     _("There is no active user associated with this e-mail address or the password can not be changed"),
+#                     code='invalid')}
+#             )
 
-                # check if the user already has a token
-                if user.password_reset_tokens.all().count() > 0:
-                    # yes, already has a token, re-use this token
-                    token = user.password_reset_tokens.all()[0]
-                else:
-                    # no token exists, generate a new token
-                    token = ResetPasswordToken.objects.create(
-                        user=user,
-                        user_agent=request.META['HTTP_USER_AGENT'],
-                        ip_address=request.META['REMOTE_ADDR']
-                    )
-                # send a signal that the password token was created
-                # let whoever receives this signal handle sending the email for the password reset
-                reset_password_token_created.send(sender=self.__class__, reset_password_token=token)
-        # done
-        return Response({'status': 'OK'})
-   
+#         # last but not least: iterate over all users that are active and can change their password
+#         # and create a Reset Password Token and send a signal with the created token
+#         for user in users:
+#             if user.is_active and user.has_usable_password():
+#                 # define the token as none for now
+#                 token = None
 
-
+#                 # check if the user already has a token
+#                 if user.password_reset_tokens.all().count() > 0:
+#                     # yes, already has a token, re-use this token
+#                     token = user.password_reset_tokens.all()[0]
+#                 else:
+#                     # no token exists, generate a new token
+#                     token = ResetPasswordToken.objects.create(
+#                         user=user,
+#                         user_agent=request.META['HTTP_USER_AGENT'],
+#                         ip_address=request.META['REMOTE_ADDR']
+#                     )
+#                 # send a signal that the password token was created
+#                 # let whoever receives this signal handle sending the email for the password reset
+#                 reset_password_token_created.send(sender=self.__class__, reset_password_token=token)
+#         # done
+#         return Response({'status': 'OK'})
