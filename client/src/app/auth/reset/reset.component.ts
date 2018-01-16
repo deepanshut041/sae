@@ -1,6 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { AuthService } from "../auth.service";
 import { ActivatedRoute, Router } from "@angular/router";
+import { FormGroup, FormControl, FormBuilder, Validators, ReactiveFormsModule, AbstractControl } from "@angular/forms";
+import { matchOtherValidator } from "./validator";
+
 
 @Component({
   selector: "app-reset-admin",
@@ -9,20 +12,27 @@ import { ActivatedRoute, Router } from "@angular/router";
 })
 
 export class ResetComponent implements OnInit {
-  alertMsg:String="";
-  token:String;
-  uid:String;
-  constructor(private _authService:AuthService, private route:ActivatedRoute, private router:Router) { 
-    route.params.subscribe((params)=>{
+  alertMsg: String = "";
+  token: String;
+  uid: String;
+  resetForm: FormGroup
+  iserr: boolean = false;
+  constructor(private _authService: AuthService, private route: ActivatedRoute, private router: Router, private fb: FormBuilder) {
+    route.queryParams.subscribe((params) => {
       this.token = params['t']
       this.uid = params['u']
-      if(!this.uid || !this.token){
+      if (!this.uid || !this.token) {
         this.router.navigate([''])
       }
-      console.log(this.token, this.uid)
     })
   }
   ngOnInit() {
+    this.resetForm = this.fb.group({
+      'password': [null, Validators.compose([Validators.required, Validators.minLength(6)])],
+      'token': [this.token],
+      'uid': [this.uid],
+      'confirm_password': [null, [Validators.required, matchOtherValidator('password')]]
+    })
   }
   verifyAlert() {
     this.hideVerifyBody();
@@ -32,11 +42,8 @@ export class ResetComponent implements OnInit {
     elemMsg.className = "verify-alert-message";
     var elem2 = document.getElementById("verifyEmailAlert");
     elem2.className = "text-center display";
-    setTimeout(() => {
-      this.showVerifyBody();
-      elem2.className = "text-center hide";
-    }, 2000);
   }
+
 
   errorAlert() {
     this.hideVerifyBody();
@@ -46,10 +53,6 @@ export class ResetComponent implements OnInit {
     elemMsg.className = "verify-alert-error-message";
     var elem2 = document.getElementById("verifyEmailAlert");
     elem2.className = "text-center display";
-    setTimeout(() => {
-      this.showVerifyBody();
-      elem2.className = "text-center hide";
-    }, 2000);
   }
 
   showSpinner() {
@@ -72,23 +75,20 @@ export class ResetComponent implements OnInit {
     elem1.className = "panel-body text-center hide";
   }
 
-  // submitForm(Oldassword,newPassword,confirmPassword) {
-  //   if (newPassword === confirmPassword) {
-  //     this.hideVerifyBody();
-  //     this.showSpinner();
-      
-  //       this._authService.getUser().updatePassword(newPassword).then(()=>{
-  //         this.alertMsg = "Changed your Password";
-  //         this.hideSpinner();
-  //         this.verifyAlert();
-  //       }).catch((err)=>{
-  //         this.alertMsg = err.message;
-  //         this.hideSpinner();
-  //         this.errorAlert();
-  //       })
-  //   }
-  //   else{
-
-  //   }
-  // }
+  reset() {
+    this.hideVerifyBody();
+    this.showSpinner();
+    this._authService.resetPassword(this.resetForm.value).subscribe(() => {
+      this.iserr = false
+      this.alertMsg = "Changed your Password sucessfully now you can signin with new password";
+      this.hideSpinner();
+      this.verifyAlert();
+    }, (err) => {
+      this.iserr = true;
+      this.alertMsg = err.error['err'];
+      this.hideSpinner();
+      this.errorAlert();
+    }
+    )
+  }
 }

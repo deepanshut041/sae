@@ -1,7 +1,8 @@
-#verify div.main{
+#verify div.main {
     min-height: 100vh;
 }
-.panel{
+
+.panel {
     background: #ffffff;
     padding: 20px;
     padding-bottom: 10px;
@@ -9,42 +10,45 @@
     box-shadow: 5px 10px 10px -2px rgba(0, 0, 0, 0.479);
 }
 
-.panel .panel-head p span{
+.panel .panel-head p span {
     color: #656684;
 }
 
-.panel .panel-head h4{
+.panel .panel-head h4 {
     text-transform: uppercase;
     font-weight: 100;
 }
 
-
-.panel .panel-body .verify-button-box{
+.panel .panel-body .verify-button-box {
     padding: 10px;
 }
-.panel .panel-body .verify-button-box button{
+
+.panel .panel-body .verify-button-box button {
     border-radius: 0px;
     width: 100%;
     background: #656684;
     text-transform: capitalize;
 }
-.panel .panel-body .verify-button-box button:hover{
+
+.panel .panel-body .verify-button-box button:hover {
     cursor: pointer;
 }
-.hide{
+
+.hide {
     display: none;
     -webkit-transition: all 1 ease-out;
     -moz-transition: all 1 ease-out;
     transition: all 1 ease-out;
 }
-.display{
+
+.display {
     display: block;
     -webkit-transition: all 1 ease-in .5;
     -moz-transition: all 1 ease-in .5;
     transition: all 1 ease-in .5;
 }
 
-#verifyEmailAlert .verify-alert-icon{
+#verifyEmailAlert .verify-alert-icon {
     padding: 20px;
     color: #f0ad4e!important;
     font-size: 70px;
@@ -52,7 +56,7 @@
     -webkit-text-stroke: 20px #fff;
 }
 
-#verifyEmailAlert .verify-alert-error-icon{
+#verifyEmailAlert .verify-alert-error-icon {
     padding: 20px;
     color: #721c24!important;
     font-size: 70px;
@@ -60,7 +64,7 @@
     -webkit-text-stroke: 20px #fff;
 }
 
-#verifyEmailAlert .verify-alert-message{
+#verifyEmailAlert .verify-alert-message {
     color: #28a745;
     font-size: 32px;
     -webkit-transition: all 1 ease-in 1;
@@ -68,7 +72,7 @@
     transition: all 1 ease-in 1;
 }
 
-#verifyEmailAlert .verify-alert-error-message{
+#verifyEmailAlert .verify-alert-error-message {
     color: #721c24;
     font-size: 32px;
     -webkit-transition: all 1 ease-in 1;
@@ -76,7 +80,7 @@
     transition: all 1 ease-in 1;
 }
 
-.spinner{
+.spinner {
     color: #656684;
     background-color: #fff;
 }
@@ -88,8 +92,9 @@
     height: 45px;
     display: inline-flex;
     margin-bottom: 3vh;
-  }
-  .textBox .text {
+}
+
+.textBox .text {
     font-weight: 500;
     width: calc(100% - 2vw);
     height: 27px;
@@ -105,13 +110,13 @@
     font-size: 20px;
     -webkit-transition: border-color 0.45s linear;
     transition: border-color 0.45s linear;
-  }
-  
-  .textBox > input.text:focus {
+}
+
+.textBox>input.text:focus {
     border-color: #656684;
-  }
-  
-  .textBox .label {
+}
+
+.textBox .label {
     opacity: 0.7;
     pointer-events: none;
     z-index: 1;
@@ -125,26 +130,35 @@
     transition-property: opacity bottom font-size;
     -webkit-transition-duration: 0.45s;
     transition-duration: 0.45s;
-    -webkit-transition-timing-function: cubic-bezier(.68,-0.55,.27,1.55);
-    transition-timing-function: cubic-bezier(.68,-0.55,.27,1.55);
-  }
-  
-  .textBox .error {
+    -webkit-transition-timing-function: cubic-bezier(.68, -0.55, .27, 1.55);
+    transition-timing-function: cubic-bezier(.68, -0.55, .27, 1.55);
+}
+
+.textBox .error {
     position: absolute;
-    margin-top: 48px;
+    margin-top: 40px;
     width: 100%;
-    color: #e74c3c;
-    text-align: center;
-  }
-  
-  .textBox > input.text:focus ~ .label, .textBox > input.text:not([value=""]) ~ .label {
+    color: #FF5252;
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.error-border {
+    border-color: #FF5252;
+}
+
+.textBox>input.text:focus~.label, .textBox>input.text:not([value=""])~.label {
     opacity: 1;
     z-index: 1;
     bottom: 55%;
     font-size: 12px;
-  }
-  
-  .textBox > input.text:focus ~ .label {
+    color: #81C784;
+}
+
+.textBox>input.text:focus~.label {
     color: #656684;
-  }
-  
+}
+
+.textBox>input.text:not([value=""]) {
+    border-color: #A5D6A7;
+}

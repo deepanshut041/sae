@@ -11,19 +11,21 @@
         <div class="panel-body text-center" id="resetPasswordBody">
           <div class="row justify-content-center">
             <div class="col-lg-8">
-              <form>
+              <form [formGroup]="resetForm" (ngSubmit)="reset()">
                 <div class="textBox">
-                  <input class="text" type="password" onkeyup="this.setAttribute('value', this.value);" value="" />
-                  <label class="label">New Password</label>
-                  <label class="error"></label>
+                  <input class="text" type="password" onkeyup="this.setAttribute('value', this.value);" value="" formControlName="password" [ngStyle]="!resetForm.controls['password'].valid && resetForm.controls['password'].touched ?{'border-color': '#EF9A9A'}:{}"
+                  />
+                  <label class="label" [ngStyle]="!resetForm.controls['password'].valid && resetForm.controls['password'].touched ?{'color': '#FF5252'}:{}">Password</label>
+                  <label class="error text-right" *ngIf="!resetForm.controls['password'].valid && resetForm.controls['password'].touched">Please Enter a valid password</label>
                 </div>
                 <div class="textBox">
-                  <input class="text" type="password" onkeyup="this.setAttribute('value', this.value);" value="" />
-                  <label class="label">Confirm Password</label>
-                  <label class="error"></label>
+                  <input class="text" type="password" onkeyup="this.setAttribute('value', this.value);" value="" formControlName="confirm_password" [ngStyle]="!resetForm.controls['confirm_password'].valid && resetForm.controls['confirm_password'].touched ?{'border-color': '#EF9A9A'}:{}"
+                  />
+                  <label class="label" [ngStyle]="!resetForm.controls['confirm_password'].valid && resetForm.controls['confirm_password'].touched ?{'color': '#FF5252'}:{}">Confirm Password</label>
+                  <label class="error text-right" *ngIf="!resetForm.controls['confirm_password'].valid && resetForm.controls['confirm_password'].touched">Password didn't match</label>
                 </div>
                 <div class="verify-button-box" id="resetPassWordButton">
-                  <button class="btn" type="submit">Reset</button>
+                  <button class="btn" type="submit" [disabled]="!resetForm.valid">Reset</button>
                 </div>
               </form>
             </div>
@@ -31,7 +33,8 @@
         </div>
         <div class="text-center hide" id="verifyEmailAlert">
           <div class="verify-alert-icon" id="verifyEmailAlertIcon">
-            <i class="fa fa-check fa-2x"></i>
+            <i class="fa fa-check fa-2x" *ngIf="!iserr"></i>
+            <i class="fa fa-times fa-2x" *ngIf="iserr"></i>
           </div>
           <div class="verify-alert-message" id="verifyEmailAlertMsg">
             <p>{{alertMsg}}</p>

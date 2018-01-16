@@ -28,6 +28,14 @@ export class AuthService {
     const headers = new HttpHeaders({'Content-Type':'application/json; charset=utf-8'});
     return this.http.post(this.domain+'/api/v1/auth/login/',user, {headers: headers});
   }
+  forgotPassword(email){
+    const headers = new HttpHeaders({'Content-Type':'application/json; charset=utf-8'});
+    return this.http.post(this.domain+'/api/v1/auth/password/forgot/',email, {headers: headers});
+  }
+  resetPassword(form){
+    const headers = new HttpHeaders({'Content-Type':'application/json; charset=utf-8'});
+    return this.http.post(this.domain+'/api/v1/auth/password/reset/',form, {headers: headers});
+  }
 
   getUsers(){
     const headers = new HttpHeaders(
