@@ -11,7 +11,7 @@ from .serializers import ( WorkshopModelSerializer, ProjectModelSerializer,
                             MemberModelSerializer, TimelineModelSerializer,OrganiserModelSerializer,EventModelSerializer,
                              WorkshopFaqsModelSerializer, WorkshopPlanModelSerializer, EventTeamModelSerializer,
                              UserRegisterSerializer,UserLoginSerializer, ProjectMaterialModelSerializer,  PreWorkshopMaterialModelSerializer,
-                             WorkshopEnrollmentModelSerializer, UserModelSerializer)
+                             WorkshopEnrollmentModelSerializer, UserModelSerializer, UserPasswordSerializer)
 
 from .token import account_activation_token
 from django.core.mail import EmailMessage
@@ -480,3 +480,40 @@ class ContactUsAPIView(APIView):
         return Response({"status":"Email Not Sent"}, status=status.HTTP_400_BAD_REQUEST)
 
 # Forget Password view
+
+class ResetPassword(ApiView):
+
+
+    def get_user(self, email):
+        try:
+            return User.objects.get(email=email)
+        except User.DoesNotExist:
+            raise Http404
+
+    def post(self,request):
+        email = request.data['email']
+        if not email:
+            return Response({"err":"Please send email for password reset"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        user = self.get(email)
+        user_seralizer = UserPasswordSerializer(user)
+        if not user_seralizer:
+            return Response({"err":"Email dosen't exist"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        password = user_seralizer.data['password']
+        mail_subject = 'Reset password of your Sae-Akgec Account'
+        message = render_to_string('reset_password_email.html', {
+                'user': user_seralizer.data['first_name'] + "  " + user_seralizer.data['last_name'],
+                'domain': 'sae-akgec.in',
+                'uid': urlsafe_base64_encode(force_bytes(user_seralizer.data['id'])).decode(),
+                'token':password
+            })
+        to_email = user_seralizer.data['email']
+        send_mail = EmailMessage(
+                    mail_subject, message, to=[to_email]
+        )
+        send_mail.send()
+        return Response({"ok":"Email has been sent to your account"}, status=status.HTTP_400_BAD_REQUEST)
+
+
+

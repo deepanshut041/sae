@@ -185,6 +185,17 @@ class UserModelSerializer(serializers.ModelSerializer):
         'first_name',
         'last_name']
 
+class UserPasswordSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = ['id',
+        'username',
+        'email',
+        'password',
+        'first_name',
+        'last_name']
+
 class UserRegisterSerializer(serializers.ModelSerializer):
     """
     docstring here
