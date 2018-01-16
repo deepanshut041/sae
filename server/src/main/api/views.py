@@ -187,9 +187,9 @@ class UserEnrollmentView(APIView):
         workshop_serializer = WorkshopModelSerializer(workshop)
         if not workshop_serializer['reg_status']:
             return Response({"error":"Sorry but registration are not available"}, status=status.HTTP_400_BAD_REQUEST)
-        # team_enrolled = WorkshopEnrollment.objects.filter(workshop_id=workshop_serializer.data['id'],team_id=data['team_id'])
-        # if team_enrolled.exists:
-        #     return Response({"error":"Sorry but team name is already enrolled please try again with another name"}, status=status.HTTP_400_BAD_REQUEST)
+        team_enrolled = WorkshopEnrollment.objects.filter(workshop_id=workshop_serializer.data['id'],team_id=data['team_id'])
+        if team_enrolled.count() > 0:
+            return Response({"error":"Sorry but team name is already enrolled please try again with another name"}, status=status.HTTP_400_BAD_REQUEST)
         plan_id = data['plan']
         plan = self.get_plan(plan_id)
         plan_serializer = WorkshopPlanModelSerializer(plan)
@@ -218,7 +218,7 @@ class UserEnrollmentView(APIView):
             new_member['user_contact'] = member['user_contact']
             new_member['leader_id'] = leader_serializer.data['id']
             new_member['user_id'] = user_serializer.data['id']
-            new_member['ref_code'] = member['ref_code']
+            new_member['ref_code'] = member['ref_code'] or "no code"
             new_member_seralizer = WorkshopEnrollmentModelSerializer(data=new_member)
             if not new_member_seralizer.is_valid():
                 print(new_member_seralizer.errors)
@@ -226,16 +226,17 @@ class UserEnrollmentView(APIView):
             new_members_seralizer.append(new_member_seralizer)
         for serializer in new_members_seralizer:
             serializer.save()
-        response = api.payment_request_create(
-                amount=str(plan_serializer.data['price']),
-                purpose= workshop_serializer.data['name'],
-                send_email=True,
-                email=leader['email'].lower(),
-                buyer_name=data['team_id'],
-                phone=leader['user_contact'],
-                redirect_url=request.build_absolute_uri("/user/payment")
-            )
-        return Response({"link":response['payment_request']['longurl']}, status=status.HTTP_201_CREATED)
+        # response = api.payment_request_create(
+        #         amount=str(plan_serializer.data['price']),
+        #         purpose= workshop_serializer.data['name'],
+        #         send_email=True,
+        #         email=leader['email'].lower(),
+        #         buyer_name=data['team_id'],
+        #         phone=leader['user_contact'],
+        #         redirect_url=request.build_absolute_uri("/user/payment")
+        #     )
+        # return Response({"link":response['payment_request']['longurl']}, status=status.HTTP_201_CREATED)
+        return Response({"link": "created"}, status=status.HTTP_201_CREATED)
 
 class EventDetailAPIView(APIView):
     """

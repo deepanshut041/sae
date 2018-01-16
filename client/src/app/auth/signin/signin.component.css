@@ -1,7 +1,6 @@
-#login-page{
+#login-page {
     padding: 100px 0px;
     height: 100vh;
-    
 }
 
 .form-login {
@@ -27,13 +26,13 @@
     max-width: 100%;
 }
 
-
 .btn-theme {
     color: #fff;
     background-color: #656684;
     border-color: #656684;
 }
-.checkbox{
+
+.checkbox {
     margin-top: 10px;
 }
 
@@ -46,14 +45,14 @@
     padding: 15px;
 }
 
-.spinner{
+.spinner {
     color: #656684;
     background-color: #fff;
     margin: auto;
     max-width: 330px;
 }
 
-div.alert-danger{
+div.alert-danger {
     font-size: 14px;
 }
 
@@ -64,8 +63,9 @@ div.alert-danger{
     height: 45px;
     display: inline-flex;
     margin-bottom: 3vh;
-  }
-  .textBox .text {
+}
+
+.textBox .text {
     font-weight: 500;
     width: calc(100% - 2vw);
     height: 27px;
@@ -81,13 +81,13 @@ div.alert-danger{
     font-size: 20px;
     -webkit-transition: border-color 0.45s linear;
     transition: border-color 0.45s linear;
-  }
-  
-  .textBox > input.text:focus {
+}
+
+.textBox>input.text:focus {
     border-color: #656684;
-  }
-  
-  .textBox .label {
+}
+
+.textBox .label {
     opacity: 0.7;
     pointer-events: none;
     z-index: 1;
@@ -101,34 +101,35 @@ div.alert-danger{
     transition-property: opacity bottom font-size;
     -webkit-transition-duration: 0.45s;
     transition-duration: 0.45s;
-    -webkit-transition-timing-function: cubic-bezier(.68,-0.55,.27,1.55);
-    transition-timing-function: cubic-bezier(.68,-0.55,.27,1.55);
-  }
-  
-  .textBox .error {
+    -webkit-transition-timing-function: cubic-bezier(.68, -0.55, .27, 1.55);
+    transition-timing-function: cubic-bezier(.68, -0.55, .27, 1.55);
+}
+
+.textBox .error {
     position: absolute;
     margin-top: 40px;
     width: 100%;
     color: #FF5252;
     font-size: 12px;
     font-weight: 400;
-  }
-  .error-border{
+}
+
+.error-border {
     border-color: #FF5252;
-  }
-  
-  .textBox > input.text:focus ~ .label, .textBox > input.text:not([value=""]) ~ .label {
+}
+
+.textBox>input.text:focus~.label, .textBox>input.text:not([value=""])~.label {
     opacity: 1;
     z-index: 1;
     bottom: 55%;
     font-size: 12px;
     color: #81C784;
-  }
-  
-  .textBox > input.text:focus ~ .label {
+}
+
+.textBox>input.text:focus~.label {
     color: #656684;
-  }
-  .textBox > input.text:not([value=""]){
+}
+
+.textBox>input.text:not([value=""]) {
     border-color: #A5D6A7;
-  }
-  
+}

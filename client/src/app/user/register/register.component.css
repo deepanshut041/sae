@@ -43,13 +43,6 @@ form {
     padding: 30px;
 }
 
-.spinner {
-    color: #656684;
-    background-color: #fff;
-    margin: auto;
-    max-width: 330px;
-}
-
 .textBox {
     position: relative;
     width: 100%;
@@ -87,6 +80,7 @@ form {
 
 .textBox .label {
     opacity: 0.7;
+    pointer-events: none;
     z-index: 1;
     color: #656684;
     position: absolute;
@@ -101,11 +95,9 @@ form {
     -webkit-transition-timing-function: cubic-bezier(.68, -0.55, .27, 1.55);
     transition-timing-function: cubic-bezier(.68, -0.55, .27, 1.55);
 }
-
-.textBox.selectBox .label {
-    bottom: 16px;
+.selectBox .label{
+    bottom: 13px;
 }
-
 .textBox .error {
     position: absolute;
     margin-top: 40px;
@@ -173,7 +165,7 @@ div.col-lg-4 {
     border-radius: 0px;
 }
 
-.modal .modal-header{
+.modal .modal-header {
     background: #656684;
     color: #f0ad4e;
 }
