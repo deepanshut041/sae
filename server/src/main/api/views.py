@@ -449,8 +449,6 @@ class ClassCourseView(APIView):
         return Response(course_response)
 
 # Contact Email View 
-
-
 class ContactUsAPIView(APIView):
     """
     docstring here
@@ -481,75 +479,4 @@ class ContactUsAPIView(APIView):
             return Response({"status":"Email Sent"}, status=status.HTTP_201_CREATED)
         return Response({"status":"Email Not Sent"}, status=status.HTTP_400_BAD_REQUEST)
 
-
-# def get_password_reset_token_expiry_time():
-#     """
-#     Returns the password reset token expirty time in hours (default: 24)
-#     Set Django SETTINGS.DJANGO_REST_MULTITOKENAUTH_RESET_TOKEN_EXPIRY_TIME to overwrite this time
-#     :return: expiry time
-#     """
-#     # get token validation time
-#     return getattr(settings, 'DJANGO_REST_MULTITOKENAUTH_RESET_TOKEN_EXPIRY_TIME', 24)
-
-# class ResetPasswordRequestToken(APIView):
-#     parser_classes = (parsers.FormParser, parsers.MultiPartParser, parsers.JSONParser,)
-#     renderer_classes = (renderers.JSONRenderer,)
-#     serializer_class = EmailSerializer
-
-#     def post(self, request, *args, **kwargs):
-#         serializer = self.serializer_class(data=request.data)
-#         serializer.is_valid(raise_exception=True)
-#         email = serializer.validated_data['email']
-
-#         # before we continue, delete all existing expired tokens
-#         password_reset_token_validation_time = get_password_reset_token_expiry_time()
-
-#         # datetime.now minus expiry hours
-#         now_minus_expiry_time = timezone.now() - timedelta(hours=password_reset_token_validation_time)
-
-#         # delete all tokens where created_at < now - 24 hours
-#         ResetPasswordToken.objects.filter(created_at__lte=now_minus_expiry_time).delete()
-
-#         # find a user by email address (case insensitive search)
-#         users = User.objects.filter(email__iexact=email)
-
-#         active_user_found = False
-
-#         # iterate over all users and check if there is any user that is active
-#         # also check whether the password can be changed (is useable), as there could be users that are not allowed
-#         # to change their password (e.g., LDAP user)
-#         for user in users:
-#             if user.is_active and user.has_usable_password():
-#                 active_user_found = True
-
-#         # No active user found, raise a validation error
-#         if not active_user_found:
-#             raise ValidationError({
-#                 'email': ValidationError(
-#                     _("There is no active user associated with this e-mail address or the password can not be changed"),
-#                     code='invalid')}
-#             )
-
-#         # last but not least: iterate over all users that are active and can change their password
-#         # and create a Reset Password Token and send a signal with the created token
-#         for user in users:
-#             if user.is_active and user.has_usable_password():
-#                 # define the token as none for now
-#                 token = None
-
-#                 # check if the user already has a token
-#                 if user.password_reset_tokens.all().count() > 0:
-#                     # yes, already has a token, re-use this token
-#                     token = user.password_reset_tokens.all()[0]
-#                 else:
-#                     # no token exists, generate a new token
-#                     token = ResetPasswordToken.objects.create(
-#                         user=user,
-#                         user_agent=request.META['HTTP_USER_AGENT'],
-#                         ip_address=request.META['REMOTE_ADDR']
-#                     )
-#                 # send a signal that the password token was created
-#                 # let whoever receives this signal handle sending the email for the password reset
-#                 reset_password_token_created.send(sender=self.__class__, reset_password_token=token)
-#         # done
-#         return Response({'status': 'OK'})
+# Forget Password view

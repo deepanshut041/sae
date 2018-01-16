@@ -161,6 +161,15 @@ class WorkshopEnrollment(models.Model):
     def __str__(self):
         return str(self.workshop_id) + "  - " + str(self.team_id)
 
+class PasswordResetModel(models.Model):
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    user_email = models.EmailField(null=False)
+    token = models.CharField(max_length=255)
+    token_date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return str(self.token)
+    
 
 
 
