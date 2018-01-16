@@ -4,22 +4,17 @@
             <h2 class="form-login-heading">sign in now</h2>
             <div class="login-wrap" id="form">
                 <div class="textBox">
-                    <input class="text" type="textbox" onkeyup="this.setAttribute('value', this.value);" value="" formControlName="email"
-                    [ngStyle]="!loginForm.controls['email'].valid && loginForm.controls['email'].touched ?{'border-color': '#EF9A9A'}:{}"
+                    <input class="text" type="textbox" onkeyup="this.setAttribute('value', this.value);" value="" formControlName="email" [ngStyle]="!loginForm.controls['email'].valid && loginForm.controls['email'].touched ?{'border-color': '#EF9A9A'}:{}"
                     />
-                    <label class="label"
-                    [ngStyle]="!loginForm.controls['email'].valid && loginForm.controls['email'].touched ?{'color': '#FF5252'}:{}">Email</label>
-                    <label class="error text-right" *ngIf="!loginForm.controls['email'].valid && loginForm.controls['email'].touched"
-                    >Please Enter a valid email</label>
+                    <label class="label" [ngStyle]="!loginForm.controls['email'].valid && loginForm.controls['email'].touched ?{'color': '#FF5252'}:{}">Email</label>
+                    <label class="error text-right" *ngIf="!loginForm.controls['email'].valid && loginForm.controls['email'].touched">Please Enter a valid email</label>
                 </div>
                 <div class="textBox">
                     <input class="text" type="password" onkeyup="this.setAttribute('value', this.value);" value="" formControlName="password"
-                    [ngStyle]="!loginForm.controls['password'].valid && loginForm.controls['password'].touched ?{'border-color': '#EF9A9A'}:{}"
+                        [ngStyle]="!loginForm.controls['password'].valid && loginForm.controls['password'].touched ?{'border-color': '#EF9A9A'}:{}"
                     />
-                    <label class="label"
-                    [ngStyle]="!loginForm.controls['password'].valid && loginForm.controls['password'].touched ?{'color': '#FF5252'}:{}">Password</label>
-                    <label class="error text-right" *ngIf="!loginForm.controls['password'].valid && loginForm.controls['password'].touched"
-                    >Please Enter a valid Password</label>
+                    <label class="label" [ngStyle]="!loginForm.controls['password'].valid && loginForm.controls['password'].touched ?{'color': '#FF5252'}:{}">Password</label>
+                    <label class="error text-right" *ngIf="!loginForm.controls['password'].valid && loginForm.controls['password'].touched">Please Enter a valid Password</label>
                 </div>
                 <label class="checkbox">
                     <span class="pull-right">
@@ -51,17 +46,44 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                             <h4 class="modal-title">Forgot Password ?</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                         </div>
-                        <div class="modal-body">
-                            <p>Enter your e-mail address below to reset your password.</p>
-                            <input type="text" name="email" placeholder="Email" autocomplete="off" class="form-control placeholder-no-fix">
-
-                        </div>
-                        <div class="modal-footer">
-                            <button data-dismiss="modal" class="btn btn-default" type="button">Cancel</button>
-                            <button class="btn btn-theme" type="button">Submit</button>
+                        <form [formGroup]="forgotForm" (ngSubmit)="forgot()" id="forgot">
+                            <div class="modal-body">
+                                <p>Enter your e-mail address below to reset your password.</p>
+                                <div class="textBox">
+                                    <input class="text" type="textbox" onkeyup="this.setAttribute('value', this.value);" value="" formControlName="email" [ngStyle]="!forgotForm.controls['email'].valid && forgotForm.controls['email'].touched ?{'border-color': '#EF9A9A'}:{}"
+                                    />
+                                    <label class="label" [ngStyle]="!forgotForm.controls['email'].valid && forgotForm.controls['email'].touched ?{'color': '#FF5252'}:{}">Email</label>
+                                    <label class="error text-right" *ngIf="!forgotForm.controls['email'].valid && forgotForm.controls['email'].touched">Please Enter a valid email</label>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button data-dismiss="modal" class="btn btn-default" type="button">Cancel</button>
+                                <button class="btn btn-theme" type="submit" [disabled]="!forgotForm.valid">Submit</button>
+                            </div>
+                        </form>
+                        <div id="emailSubmit">
+                            <div class="modal-body">
+                                <div class="alert alert-danger" role="alert" id="errAlert">
+                                    Email doesn't exist please try again with a valid email
+                                </div>
+                                <div class="alert alert-success" role="alert" id="emailAlert">
+                                    Password reset link has been sent to your email address
+                                </div>
+                                <div class="text-center spinner" id="spinner2">
+                                    <br>
+                                    <br>
+                                    <i class="fa fa-spinner fa-4x fa-spin" aria-hidden="true"></i>
+                                    <br>
+                                    <h4>Please Wait!</h4>
+                                    <br>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button data-dismiss="modal" class="btn btn-default" type="button">Close</button>
+                            </div>
                         </div>
                     </div>
                 </div>

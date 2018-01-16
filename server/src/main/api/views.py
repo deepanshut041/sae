@@ -485,7 +485,7 @@ class ForgotPassword(APIView):
         try:
             return User.objects.get(email=email)
         except(TypeError, ValueError, OverflowError, User.DoesNotExist):
-            return none
+            return None
 
     def post(self,request):
         email = request.data['email'].lower()

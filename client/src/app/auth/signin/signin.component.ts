@@ -15,6 +15,7 @@ export class SigninComponent implements OnInit,AfterViewInit {
 
   err: String;
   loginForm: FormGroup
+  forgotForm:FormGroup
   email_pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
   constructor(private _authService: AuthService, private router: Router,
      private _authGaurd:AuthGaurd, private fb:FormBuilder, private coreService:CoreService) {
@@ -23,14 +24,19 @@ export class SigninComponent implements OnInit,AfterViewInit {
         'email':[null, Validators.compose([
           Validators.required, Validators.pattern (this.email_pattern)
         ])]
-      }) 
+      })
+      this.forgotForm = fb.group({
+        'email':[null, Validators.compose([Validators.required, Validators.pattern (this.email_pattern)])]
+      })  
+      
   }
 
   ngOnInit() {
     if(this._authGaurd.isLoggedIn){
       this.router.navigateByUrl('')
     }
-    this.turnOffSpinner()
+    this.turnOffSpinner();
+    this.turnOnFBody();
   }
   ngAfterViewInit(){
     this._authService.status.subscribe(status => {
@@ -57,6 +63,17 @@ export class SigninComponent implements OnInit,AfterViewInit {
     )
   }
 
+  forgot(){
+    this.turnOnFSpinner()
+    this._authService.forgotPassword(this.forgotForm.value).subscribe((success)=>{
+      this.turnOnFSuccess()
+    },(err)=>{
+      this.turnOnFError()
+      setTimeout(() => {
+        this.turnOnFBody();
+      }, 4000);
+    })
+  }
   turnOffSpinner(){
     document.getElementById("form").style.display = "block";
     document.getElementById("spinner").style.display = "none";
@@ -64,6 +81,31 @@ export class SigninComponent implements OnInit,AfterViewInit {
   turnOnSpinner(){
     document.getElementById("form").style.display = "none";
     document.getElementById("spinner").style.display = "block";
+  }
+
+  turnOnFBody(){
+    document.getElementById("forgot").style.display = "block";
+    document.getElementById("emailSubmit").style.display = "none";
+  }
+  turnOffFBody(){
+    document.getElementById("forgot").style.display = "none";
+    document.getElementById("emailSubmit").style.display = "block";
+  }
+  turnOnFSpinner(){
+    this.turnOffFBody()
+    document.getElementById("errAlert").style.display = "none";
+    document.getElementById("emailAlert").style.display = "none";
+    document.getElementById("spinner2").style.display = "block";
+  }
+  turnOnFSuccess(){
+    document.getElementById("errAlert").style.display = "err";
+    document.getElementById("emailAlert").style.display = "block";
+    document.getElementById("spinner2").style.display = "none";
+  }
+  turnOnFError(){
+    document.getElementById("errAlert").style.display = "block";
+    document.getElementById("emailAlert").style.display = "none";
+    document.getElementById("spinner2").style.display = "none";
   }
   
 

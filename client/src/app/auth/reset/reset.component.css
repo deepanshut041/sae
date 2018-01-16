@@ -66,15 +66,15 @@
 
 #verifyEmailAlert .verify-alert-message {
     color: #28a745;
-    font-size: 32px;
+    font-size: 16px;
     -webkit-transition: all 1 ease-in 1;
     -moz-transition: all 1 ease-in 1;
     transition: all 1 ease-in 1;
 }
 
 #verifyEmailAlert .verify-alert-error-message {
-    color: #721c24;
-    font-size: 32px;
+    color: #656684;
+    font-size: 16px;
     -webkit-transition: all 1 ease-in 1;
     -moz-transition: all 1 ease-in 1;
     transition: all 1 ease-in 1;
