@@ -1,7 +1,9 @@
 <!-- Register Component -->
 <div id="main">
     <div id="notice">
-        <h5 class="text-center">Step by Step guide on how to register <button class="btn btn-theme" data-toggle="modal" data-target="#instModal">Know More</button></h5>
+        <h5 class="text-center">Step by Step guide on how to register
+            <button class="btn btn-theme" data-toggle="modal" data-target="#instModal">Know More</button>
+        </h5>
     </div>
     <form [formGroup]="registerForm" (ngSubmit)="register()" id="form">
         <div id="formHeader">
@@ -19,6 +21,7 @@
                 <div class="textBox selectBox">
                     <select class="text" id="exampleFormControlSelect1" formControlName="workshop" *ngIf="currentWorkshops" onkeyup="this.setAttribute('value', this.value);"
                         [ngStyle]="!registerForm.controls['workshop'].valid && registerForm.controls['workshop'].touched ?{'border-color': '#EF9A9A'}:{}">
+                        <option [ngValue]="null" selected>---select---</option>
                         <option *ngFor="let current of currentWorkshops" [ngValue]="current.id">{{current.name}}</option>
                     </select>
                     <label class="label" [ngStyle]="!registerForm.controls['workshop'].valid && registerForm.controls['workshop'].touched ?{'color': '#FF5252'}:{}">Select Workshop</label>
@@ -27,6 +30,7 @@
                 <div class="textBox selectBox">
                     <select class="text" id="exampleFormControlSelect1" formControlName="plan" *ngIf="currentPlans" onkeyup="this.setAttribute('value', this.value);"
                         [ngStyle]="!registerForm.controls['plan'].valid && registerForm.controls['plan'].touched ?{'border-color': '#EF9A9A'}:{}">
+                        <option [ngValue]="null" selected>---select---</option>
                         <option *ngFor="let currentPlan of currentPlans" [ngValue]="currentPlan.id">{{currentPlan.price / currentPlan.team_limit}} {{currentPlan.title}}</option>
                     </select>
                     <label class="label" [ngStyle]="!registerForm.controls['plan'].valid && registerForm.controls['plan'].touched ?{'color': '#FF5252'}:{}">Select Plan</label>
@@ -50,8 +54,29 @@
                         <input class="text" type="textbox" onkeyup="this.setAttribute('value', this.value);" value="" formControlName="user_contact">
                         <label class="label">Phone No.</label>
                     </div>
+                    <div class="textBox selectBox">
+                        <select class="text" formControlName="user_branch" onkeyup="this.setAttribute('value', this.value);">
+                            <option [value]="'EN'">Electrical & Electronics(EN)</option>
+                            <option [value]="'CSE'">Computer Science</option>
+                            <option [value]="'IT'">Information Technology</option>
+                            <option [value]="'ECE'">Electronics & Communication</option>
+                            <option [value]="'EI'">Electronics & Instrumentation</option>
+                            <option [value]="'ME'">Mechanical</option>
+                            <option [value]="'CE'">Civil Engineering</option>
+                        </select>
+                        <label class="label">Branch</label>
+                    </div>
+                    <div class="textBox selectBox">
+                        <select class="text" formControlName="user_year" onkeyup="this.setAttribute('value', this.value);">
+                            <option [value]=1 selected>1st Year</option>
+                            <option [value]=2>2nd Year</option>
+                            <option [value]=3>3rd Year</option>
+                            <option [value]=4>4th Year</option>
+                        </select>
+                        <label class="label">Year</label>
+                    </div>
                     <div class="textBox">
-                        <input class="text" type="textbox" onkeyup="this.setAttribute('value', this.value);" value="" formControlName="user_college">
+                        <input class="text" type="textbox" onkeyup="this.setAttribute('value', this.value);" value="Ajay Kumar Garg Engineering College" formControlName="user_college">
                         <label class="label">College Name</label>
                     </div>
                     <div class="textBox">
@@ -91,7 +116,7 @@
     </div>
     <div class="text-center hide" id="verifyEmailAlert">
         <div *ngIf="paymentLink">
-            <div class="verify-alert-icon" id="verifyEmailAlertIcon" >
+            <div class="verify-alert-icon" id="verifyEmailAlertIcon">
                 <i class="fa fa-check fa-2x"></i>
             </div>
             <div class="verify-alert-message" id="verifyEmailAlertMsg">
@@ -111,27 +136,33 @@
 
 <div class="modal fade" id="instModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Instructions</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Instructions</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="text-muted">
+                    <strong>Step 1:</strong> You are required to form a group [maximum members: 5, Inter-College, Inter-Branch or
+                    Inter-Year]
+                    <br>
+                    <strong>Step 2:</strong> All the members of the group are required to Sign-up on the website.
+                    <br>
+                    <strong>Step 3:</strong> After signing up, you are required to verify the confirmation link on your registered
+                    mail.
+                    <br>
+                    <strong>Step 4:</strong> Anyone member of your group can now register your team for the workshop.
+                    <br>
+                    <strong>Step 5:</strong> The payment link would be sent to the first member of the team.
+                    <br>
+                    <strong>Step 6:</strong> Proceed for the payment.
+                    <br>
+                    <strong>Step 7:</strong> Whoa!! You are registered successfully for the workshop.
+                    <br>
+                </p>
+            </div>
         </div>
-        <div class="modal-body">
-          <p class="text-muted">
-            <strong>Step 1:</strong> You are required to form a group [maximum members: 5, Inter-College,
-            Inter-Branch or Inter-Year]<br>
-            <strong>Step 2:</strong> All the members of the group are required to Sign-up on the website.<br>
-            <strong>Step 3:</strong> After signing up, you are required to verify the confirmation link on your
-            registered mail.<br>
-            <strong>Step 4:</strong> Anyone member of your group can now register your team for the
-            workshop.<br>
-            <strong>Step 5:</strong> The payment link would be sent to the first member of the team.<br>
-            <strong>Step 6:</strong> Proceed for the payment.<br>
-            <strong>Step 7:</strong> Whoa!! You are registered successfully for the workshop.<br>
-          </p>
-        </div>
-      </div>
     </div>
-  </div>
+</div>

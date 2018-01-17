@@ -187,7 +187,7 @@ class UserEnrollmentView(APIView):
         workshop_serializer = WorkshopModelSerializer(workshop)
         if not workshop_serializer['reg_status']:
             return Response({"error":"Sorry but registration are not available"}, status=status.HTTP_400_BAD_REQUEST)
-        team_enrolled = WorkshopEnrollment.objects.filter(workshop_id=workshop_serializer.data['id'],team_id=data['team_id'])
+        team_enrolled = WorkshopEnrollment.objects.filter(workshop_id=workshop_serializer.data['id'],team_id=data['team_id'].lower())
         if team_enrolled.count() > 0:
             return Response({"error":"Sorry but team name is already enrolled please try again with another name"}, status=status.HTTP_400_BAD_REQUEST)
         plan_id = data['plan']
@@ -210,11 +210,13 @@ class UserEnrollmentView(APIView):
             if not user_serializer:
                 return Response({"error":"Sorry but" + member['email'] +"is not registerd, please signup on website and try again"}, status=status.HTTP_400_BAD_REQUEST)
             new_member = {}
-            new_member['team_id'] = data['team_id']
+            new_member['team_id'] = data['team_id'].lower()
             new_member['plan_id'] = plan_serializer.data['id']
             new_member['workshop_id'] = workshop_serializer.data['id']
             new_member['is_user_local'] = member['is_user_local']
             new_member['user_college'] = member['user_college']
+            new_member['user_branch'] = member['user_branch']
+            new_member['user_year'] = member['user_year']
             new_member['user_contact'] = member['user_contact']
             new_member['leader_id'] = leader_serializer.data['id']
             new_member['user_id'] = user_serializer.data['id']
@@ -226,17 +228,16 @@ class UserEnrollmentView(APIView):
             new_members_seralizer.append(new_member_seralizer)
         for serializer in new_members_seralizer:
             serializer.save()
-        # response = api.payment_request_create(
-        #         amount=str(plan_serializer.data['price']),
-        #         purpose= workshop_serializer.data['name'],
-        #         send_email=True,
-        #         email=leader['email'].lower(),
-        #         buyer_name=data['team_id'],
-        #         phone=leader['user_contact'],
-        #         redirect_url=request.build_absolute_uri("/user/payment")
-        #     )
-        # return Response({"link":response['payment_request']['longurl']}, status=status.HTTP_201_CREATED)
-        return Response({"link": "created"}, status=status.HTTP_201_CREATED)
+        response = api.payment_request_create(
+                amount=str(plan_serializer.data['price']),
+                purpose= workshop_serializer.data['name'],
+                send_email=True,
+                email=leader['email'].lower(),
+                buyer_name=data['team_id'],
+                phone=leader['user_contact'],
+                redirect_url=request.build_absolute_uri("/user/payment")
+            )
+        return Response({"link":response['payment_request']['longurl']}, status=status.HTTP_201_CREATED)
 
 class EventDetailAPIView(APIView):
     """

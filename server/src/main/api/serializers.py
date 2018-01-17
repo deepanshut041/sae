@@ -352,6 +352,8 @@ class WorkshopEnrollmentModelSerializer(serializers.ModelSerializer):
             'user_college',
             'user_contact',
             'ref_code',
+            'user_year',
+            'user_branch'
         ]
 
 

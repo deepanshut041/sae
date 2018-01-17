@@ -152,7 +152,9 @@ class WorkshopEnrollment(models.Model):
     enroll_date = models.DateField(default=timezone.now, editable=False)
     is_user_local = models.BooleanField(default=True)
     enroll_status = models.BooleanField(default=False)
-    user_college = models.CharField(max_length=100, null=False  )
+    user_college = models.CharField(max_length=100, null=False)
+    user_branch = models.CharField(max_length=50, null=False, default="Need to be given")
+    user_year = models.IntegerField(null=False, default=1)
     user_contact = models.CharField(max_length=20,null=False)
     ref_code = models.CharField(max_length=20, default="no")
 

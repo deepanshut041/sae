@@ -52,10 +52,6 @@ form {
     margin-bottom: 3vh;
 }
 
-.selectBox {
-    height: 55px;
-}
-
 .textBox .text {
     font-weight: 500;
     width: calc(100% - 2vw);
@@ -96,7 +92,10 @@ form {
     transition-timing-function: cubic-bezier(.68, -0.55, .27, 1.55);
 }
 .selectBox .label{
-    bottom: 13px;
+    opacity: 1;
+    z-index: 1;
+    bottom: 55%;
+    font-size: 12px;
 }
 .textBox .error {
     position: absolute;
@@ -106,6 +105,7 @@ form {
     font-size: 12px;
     font-weight: 400;
 }
+
 
 .error-border {
     border-color: #FF5252;

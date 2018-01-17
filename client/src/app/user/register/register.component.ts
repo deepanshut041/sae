@@ -23,7 +23,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         this.registerForm = this.fb.group({
             'team_id': [null, Validators.required],
             'workshop': [null, Validators.required],
-            'plan': ['', Validators.required],
+            'plan': [null, Validators.required],
             'team_members': this.fb.array([this.createItem()])
         })
         this.team_members = this.registerForm.get('team_members') as FormArray
@@ -73,9 +73,11 @@ export class RegisterComponent implements OnInit, AfterViewInit {
                 Validators.required, Validators.pattern (this.email_pattern)
               ])],
             'user_contact': [null, Validators.required],
-            'user_college': [null, Validators.required],
-            'is_user_local': [null, Validators.required],
-            'ref_code': [null]
+            'user_college': ['Ajay Kumar Garg Engineering College', Validators.required],
+            'is_user_local': [true, Validators.required],
+            'ref_code': [null],
+            'user_branch':['EN'],
+            'user_year':[1],
         });
     }
     addItem(): void {
