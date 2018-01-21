@@ -536,6 +536,36 @@ class ResetPassword(APIView):
         user.save()
         return Response({"ok":"Your password has been suceesfully reset"}, status=status.HTTP_200_OK)
 
+class WorkshopEnrollmentView(APIView):
+    permission_classes = (permissions.IsAdminUser,)
+
+    def get_user(self, pk):
+        try:
+            return User.objects.get(pk=pk)
+        except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+            return None
+
+    def get(self, request):
+        enrollments = WorkshopEnrollment.objects.all()
+        enrollments_serializer = WorkshopEnrollmentModelSerializer(enrollments, many=True)
+        response = []
+        for enrollment in enrollments_serializer.data:
+            if enrollment['enroll_status'] == True:
+                user = self.get_user(enrollment['user_id'])
+                enrollment.pop('id', None)
+                user_serializer = UserModelSerializer(user)
+                user_response = user_serializer.data
+                user_response.pop('id', None)
+                user_response.update(enrollment)
+                response.append(user_response)
+        return Response(response, status=status.HTTP_200_OK)
+
+
+
+
+
+
+
         
 
         
